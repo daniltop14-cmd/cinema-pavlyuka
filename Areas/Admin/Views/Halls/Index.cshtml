@@ -1,0 +1,10 @@
+@model List<Hall>
+@{ ViewData["Title"] = "Кинозалы"; }
+<h1>Кинозалы</h1>
+<div class="hall-grid">@foreach (var item in Model) { <article class="hall-card @item.Color">
+<span class="hall-orb">
+</span>
+<h2>@item.Name</h2>
+<p>@item.Rows рядов × @item.SeatsPerRow мест</p>
+<a class="btn btn-outline" asp-action="Edit" asp-route-id="@item.Id">Настроить зал</a>
+</article> }</div>

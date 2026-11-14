@@ -1,0 +1,35 @@
+@model List<Review>
+@{ ViewData["Title"] = "Отзывы"; }
+<h1>Отзывы</h1>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Автор</th>
+<th>Оценка</th>
+<th>Текст</th>
+<th>Статус</th>
+<th>Действия</th>
+</tr>
+</thead>
+<tbody>@foreach (var item in Model) { <tr>
+<td>@item.User.DisplayName<br />
+<small>@item.CreatedAtUtc.ToString("dd.MM.yyyy")</small>
+</td>
+<td>@item.Rating / 5</td>
+<td>@item.Text</td>
+<td>@(item.Status == ReviewStatus.Pending ? "На модерации" : item.Status == ReviewStatus.Approved ? "Одобрен" : "Отклонён")</td>
+<td>@if (User.IsInRole("Admin")) { <form asp-action="Moderate" method="post">
+<input type="hidden" name="id" value="@item.Id" />
+<input type="hidden" name="approved" value="true" />
+<button class="link-button">Одобрить</button>
+</form>
+<form asp-action="Moderate" method="post">
+<input type="hidden" name="id" value="@item.Id" />
+<input type="hidden" name="approved" value="false" />
+<button class="link-button danger">Отклонить</button>
+</form> }</td>
+</tr> }</tbody>
+</table>
+</div>
+<partial name="_Pager" />

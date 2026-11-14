@@ -1,0 +1,22 @@
+@model List<ContactMessage>
+@{ ViewData["Title"] = "Обращения"; }
+<h1>Обращения</h1>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Дата</th>
+<th>Отправитель</th>
+<th>Email</th>
+<th>Сообщение</th>
+</tr>
+</thead>
+<tbody>@foreach (var item in Model) { <tr>
+<td>@item.CreatedAtUtc.ToString("dd.MM.yyyy HH:mm") UTC</td>
+<td>@item.Name</td>
+<td>@item.Email</td>
+<td>@item.Message</td>
+</tr> }</tbody>
+</table>
+</div>
+<partial name="_Pager" />

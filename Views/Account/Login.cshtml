@@ -1,0 +1,21 @@
+@model LoginModel
+@{ ViewData["Title"] = "Вход"; }
+<section class="shell page-section auth-wrap">
+<div class="eyebrow">С ВОЗВРАЩЕНИЕМ В КИНО</div>
+<h1>Снова в кино<span class="red">.</span>
+</h1>
+<form asp-action="Login" method="post" class="panel form-panel">
+<input asp-for="ReturnUrl" type="hidden" />
+<div asp-validation-summary="All" class="validation">
+</div>
+<label asp-for="Email">Электронная почта</label>
+<input asp-for="Email" type="email" required autocomplete="username" />
+<label asp-for="Password">Пароль</label>
+<input asp-for="Password" required autocomplete="current-password" />
+<label class="check-label">
+<input asp-for="RememberMe" /> Запомнить меня</label>
+<button class="btn full-width">Войти ↗</button>
+<p class="mt-4 muted">Первый раз здесь? <a class="text-link" asp-action="Register">Создать аккаунт</a>
+</p>
+</form>
+</section>

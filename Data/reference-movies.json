@@ -1,0 +1,268 @@
+[
+  {
+    "Title": "Роллинг Лауд. Дикое веселье",
+    "Genre": "комедия",
+    "Country": "США",
+    "DurationMinutes": 95,
+    "AgeRating": 18,
+    "PosterPath": "/images/covers/movie-01.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Шкатулка проклятия. Зло внутри",
+    "Genre": "ужасы",
+    "Country": "Индонезия",
+    "DurationMinutes": 102,
+    "AgeRating": 18,
+    "PosterPath": "/images/covers/movie-02.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Отверженные",
+    "Genre": "драма, мелодрама",
+    "Country": "Франция, Бельгия",
+    "DurationMinutes": 179,
+    "AgeRating": 18,
+    "PosterPath": "/images/covers/movie-03.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Навар",
+    "Genre": "драма, криминал",
+    "Country": "Россия",
+    "DurationMinutes": 85,
+    "AgeRating": 18,
+    "PosterPath": "/images/covers/movie-04.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Живая книга",
+    "Genre": "фэнтези, приключения, семейный",
+    "Country": "Россия",
+    "DurationMinutes": 110,
+    "AgeRating": 6,
+    "PosterPath": "/images/covers/movie-05.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Рождение империи",
+    "Genre": "история, биография, драма",
+    "Country": "Россия",
+    "DurationMinutes": 139,
+    "AgeRating": 12,
+    "PosterPath": "/images/covers/movie-06.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Барашек Шон и Чудище Лохматое",
+    "Genre": "мультфильм, комедия, семейный",
+    "Country": "Великобритания",
+    "DurationMinutes": 91,
+    "AgeRating": 6,
+    "PosterPath": "/images/covers/movie-07.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Цикл зверя",
+    "Genre": "ужасы, триллер, криминал",
+    "Country": "Великобритания",
+    "DurationMinutes": 112,
+    "AgeRating": 18,
+    "PosterPath": "/images/covers/movie-08.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Чудо-Юдо",
+    "Genre": "фэнтези, приключения, семейный",
+    "Country": "Россия",
+    "DurationMinutes": 108,
+    "AgeRating": 6,
+    "PosterPath": "/images/covers/movie-09.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Сказка о потерянном времени",
+    "Genre": "приключения, детский",
+    "Country": "Россия",
+    "DurationMinutes": 90,
+    "AgeRating": 6,
+    "PosterPath": "/images/covers/movie-10.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Морозко",
+    "Genre": "фэнтези, семейный",
+    "Country": "Россия",
+    "DurationMinutes": 98,
+    "AgeRating": 6,
+    "PosterPath": "/images/covers/movie-11.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Руки Вверх! 2",
+    "Genre": "музыка, биография, мелодрама",
+    "Country": "Россия",
+    "DurationMinutes": 101,
+    "AgeRating": 16,
+    "PosterPath": "/images/covers/movie-12.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Битва моторов",
+    "Genre": "приключения, драма",
+    "Country": "Россия",
+    "DurationMinutes": 140,
+    "AgeRating": 12,
+    "PosterPath": "/images/covers/movie-13.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Романовы: Преданность и предательство",
+    "Genre": "драма, история, биография",
+    "Country": "Россия",
+    "DurationMinutes": 126,
+    "AgeRating": 16,
+    "PosterPath": "/images/covers/movie-14.svg",
+    "DayOffset": -7
+  },
+  {
+    "Title": "Приключения пингвиненка",
+    "Genre": "комедия, приключения, семейный",
+    "Country": "Россия",
+    "DurationMinutes": 90,
+    "AgeRating": 6,
+    "PosterPath": "/images/covers/movie-15.svg",
+    "TrailerUrl": "https://mediaserver.etobilet.ru/upload/movie/trailer/mp4/Pingvin2min_TLR_S_RU_XX_RU_6_51_2K_NULL_20260922_BMR_IOP_OV_original_filename_9142_3546_hq.mp4",
+    "DayOffset": 7
+  },
+  {
+    "Title": "Психопатка",
+    "Genre": "ужасы, триллер, комедия",
+    "Country": "Великобритания, Ирландия",
+    "DurationMinutes": 102,
+    "AgeRating": 18,
+    "PosterPath": "/images/covers/movie-16.svg",
+    "TrailerUrl": "https://mediaserver.etobilet.ru/upload/movie/trailer/mp4/trejler_18___1__original_filename_9144_134_hq.mp4",
+    "DayOffset": 7
+  },
+  {
+    "Title": "Лучшее лето в жизни",
+    "Genre": "комедия, детектив",
+    "Country": "Россия",
+    "DurationMinutes": 90,
+    "AgeRating": 6,
+    "PosterPath": "/images/covers/movie-17.svg",
+    "TrailerUrl": null,
+    "DayOffset": 7
+  },
+  {
+    "Title": "Лиля",
+    "Genre": "драма, мелодрама",
+    "Country": "Россия",
+    "DurationMinutes": 146,
+    "AgeRating": 18,
+    "PosterPath": "/images/covers/movie-18.svg",
+    "TrailerUrl": "https://mediaserver.etobilet.ru/upload/movie/trailer/mp4/LILYA_TLR_S_RU_XX_RU_18_51_2K_AK_20261001_CDL_IOP_OV_original_filename_9164_6813_hq.mp4",
+    "DayOffset": 7
+  },
+  {
+    "Title": "Инфлюенсер",
+    "Genre": "триллер",
+    "Country": "США, Дания, Великобритания",
+    "DurationMinutes": 102,
+    "AgeRating": 18,
+    "PosterPath": "/images/covers/movie-19.svg",
+    "TrailerUrl": "https://mediaserver.etobilet.ru/upload/movie/trailer/mp4/Influencer_TLR_1_S_RU_XX_RU_51_2K_20261002_DCS_IOP_OV_original_filename_9163_9227_hq.mp4",
+    "DayOffset": 7
+  },
+  {
+    "Title": "Лето будет общим",
+    "Genre": "драма",
+    "Country": "Россия",
+    "DurationMinutes": 78,
+    "AgeRating": 18,
+    "PosterPath": "/images/covers/movie-20.svg",
+    "TrailerUrl": null,
+    "DayOffset": 7
+  },
+  {
+    "Title": "Турбозавры. Суперфильм",
+    "Genre": "мультфильм, фантастика, приключения",
+    "Country": "Россия",
+    "DurationMinutes": 75,
+    "AgeRating": 6,
+    "PosterPath": "/images/covers/movie-21.svg",
+    "TrailerUrl": "https://mediaserver.etobilet.ru/upload/movie/trailer/mp4/TurbozavrySuperfilm_TRL_F_RU_XX_RU_6_51_2K_20260205_CP_IOP_OV_original_filename_9149_7650_hq.mp4",
+    "DayOffset": 14
+  },
+  {
+    "Title": "Рокки — это я",
+    "Genre": "биография, драма",
+    "Country": "США",
+    "DurationMinutes": 128,
+    "AgeRating": 18,
+    "PosterPath": "/images/covers/movie-22.svg",
+    "TrailerUrl": "https://mediaserver.etobilet.ru/upload/movie/trailer/mp4/Rocky_TLR_1_S_RU_XX_RU_51_2K_20260730_DCS_IOP_OV_original_filename_9159_3401_hq.mp4",
+    "DayOffset": 14
+  },
+  {
+    "Title": "Колотун и волшебное королевство",
+    "Genre": "фэнтези, приключения, семейный",
+    "Country": "Россия",
+    "DurationMinutes": 90,
+    "AgeRating": 6,
+    "PosterPath": "/images/covers/movie-23.svg",
+    "TrailerUrl": "https://mediaserver.etobilet.ru/upload/movie/trailer/mp4/KOLOTUN_TLR_60SEC_S_RU_XX_RU_6_51_2K_AK_20260907_IOP_OV_original_filename_9147_4454_hq.mp4",
+    "DayOffset": 14
+  },
+  {
+    "Title": "Дедмобиль",
+    "Genre": "комедия, семейный",
+    "Country": "Россия",
+    "DurationMinutes": 90,
+    "AgeRating": 12,
+    "PosterPath": "/images/covers/movie-24.svg",
+    "TrailerUrl": "https://mediaserver.etobilet.ru/upload/movie/trailer/mp4/trejler_1min_12_original_filename_9145_6049_hq.mp4",
+    "DayOffset": 14
+  },
+  {
+    "Title": "Бумажный тигр",
+    "Genre": "триллер, драма, криминал",
+    "Country": "Франция, США, Польша, Италия",
+    "DurationMinutes": 115,
+    "AgeRating": 18,
+    "PosterPath": "/images/covers/movie-25.svg",
+    "TrailerUrl": "https://mediaserver.etobilet.ru/upload/movie/trailer/mp4/PaperTiger_TLR_2_F_RU_XX_51_2K_20260817_IOP_OV_original_filename_9165_4715_hq.mp4",
+    "DayOffset": 14
+  },
+  {
+    "Title": "Дворняшка",
+    "Genre": "мультфильм, комедия, приключения",
+    "Country": "США, Франция, Бельгия",
+    "DurationMinutes": 85,
+    "AgeRating": 6,
+    "PosterPath": "/images/covers/movie-26.svg",
+    "TrailerUrl": null,
+    "DayOffset": 14
+  },
+  {
+    "Title": "Голодные игры: Рассвет Жатвы",
+    "Genre": "фантастика, фэнтези, боевик",
+    "Country": "США",
+    "DurationMinutes": 150,
+    "AgeRating": 12,
+    "PosterPath": "/images/covers/movie-27.svg",
+    "TrailerUrl": "https://mediaserver.etobilet.ru/upload/movie/trailer/mp4/SOTR_TLR_5_S_RU_XX_RU_12_51_2K_20261013_ARN_IOP_OV_original_filename_9167_6755_hq.mp4",
+    "DayOffset": 21
+  },
+  {
+    "Title": "Александр I",
+    "Genre": "история, биография, драма",
+    "Country": "Россия",
+    "DurationMinutes": 90,
+    "AgeRating": 12,
+    "PosterPath": "/images/covers/movie-28.svg",
+    "TrailerUrl": "https://mediaserver.etobilet.ru/upload/movie/trailer/mp4/trejler_12__1__original_filename_9151_9920_hq.mp4",
+    "DayOffset": 21
+  }
+]

@@ -1,0 +1,36 @@
+@model List<Session>
+@{ ViewData["Title"] = "Сеансы"; }
+<div class="section-head">
+<h1>Сеансы</h1>
+<a class="btn" asp-action="Edit">Создать сеанс +</a>
+</div>
+<p class="muted">Между показами автоматически учитывается 20 минут на уборку.</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Фильм</th>
+<th>Зал</th>
+<th>Начало</th>
+<th>До (с уборкой)</th>
+<th>Цена</th>
+<th>Действия</th>
+</tr>
+</thead>
+<tbody>@foreach (var item in Model) { <tr>
+<td>@item.Movie.Title</td>
+<td>@item.Hall.Name</td>
+<td>@item.StartsAt.ToString("dd.MM.yyyy HH:mm")</td>
+<td>@item.EndsAt.ToString("HH:mm")</td>
+<td>@item.Price.ToString("0") ₽</td>
+<td class="table-actions">
+<a asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
+<form asp-action="Delete" method="post" data-confirm="Удалить сеанс без заказов?">
+<input type="hidden" name="id" value="@item.Id" />
+<button class="link-button danger">Удалить</button>
+</form>
+</td>
+</tr> }</tbody>
+</table>
+</div>
+<partial name="_Pager" />

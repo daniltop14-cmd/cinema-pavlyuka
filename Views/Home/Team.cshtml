@@ -1,0 +1,24 @@
+@model List<TeamMember>
+@{ ViewData["Title"] = "Команда и распределение задач"; }
+<section class="shell page-section">
+<div class="eyebrow">ЗА КАДРОМ</div>
+<h1>Команда проекта<span class="red">.</span>
+</h1>
+<p class="lead-copy">Распределение задач. Имена и обязанности редактируются в административной панели.</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Участник</th>
+<th>Роль</th>
+<th>Выполненные задачи</th>
+</tr>
+</thead>
+<tbody>@foreach (var member in Model) { <tr>
+<td>@member.Name</td>
+<td>@member.Role</td>
+<td>@member.Tasks</td>
+</tr> }</tbody>
+</table>
+</div>
+</section>

@@ -1,0 +1,36 @@
+@model Movie
+@{ ViewData["Title"] = Model.Id == 0 ? "Новый фильм" : "Изменить фильм"; }
+<h1>@ViewData["Title"]</h1>
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data" class="panel form-panel readable">
+<div asp-validation-summary="All" class="validation">
+</div>
+<label asp-for="Title">Название</label>
+<input asp-for="Title" required maxlength="150" />
+<label asp-for="Genre">Жанр</label>
+<input asp-for="Genre" required maxlength="60" />
+<label asp-for="Country">Страна</label>
+<input asp-for="Country" maxlength="100" />
+<label asp-for="DurationMinutes">Продолжительность, минут</label>
+<input asp-for="DurationMinutes" type="number" min="1" max="600" required />
+<label asp-for="AgeRating">Возрастное ограничение</label>
+<select asp-for="AgeRating">
+<option value="0">0+</option>
+<option value="6">6+</option>
+<option value="12">12+</option>
+<option value="16">16+</option>
+<option value="18">18+</option>
+</select>
+<label asp-for="Description">Описание</label>
+<textarea asp-for="Description" rows="5" required maxlength="8000">
+</textarea>
+<label asp-for="ReleaseDate">Дата выхода</label>
+<input asp-for="ReleaseDate" type="date" required />
+<label asp-for="TrailerUrl">Ссылка на трейлер (HTTPS, необязательно)</label>
+<input asp-for="TrailerUrl" type="url" maxlength="500" />
+<label for="poster">Постер (JPEG / PNG, до 3 МБ)</label>
+<input id="poster" name="poster" type="file" accept="image/jpeg,image/png" />
+<label class="check-label">
+<input asp-for="IsFeatured" /> Меморандум / выделить фильм</label>
+<button class="btn">Сохранить фильм</button>
+<a asp-action="Index">Отмена</a>
+</form>

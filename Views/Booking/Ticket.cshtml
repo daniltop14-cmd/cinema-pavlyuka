@@ -1,0 +1,43 @@
+@model Booking
+@{ ViewData["Title"] = "Электронные билеты"; }
+<section class="shell page-section readable">
+<div class="no-print">
+<div class="eyebrow">03 / УВИДИМСЯ НА СЕАНСЕ</div>
+<h1>Ваши билеты готовы<span class="red">.</span>
+</h1>
+<p class="muted">Сохраните билеты через печать в PDF или покажите их с экрана.</p>
+</div>@foreach (var item in Model.BookingSeats) { <article class="ticket">
+<div class="ticket-top">
+<strong>Кинотеатр им. Павлюка</strong>
+<span>ЭЛЕКТРОННЫЙ БИЛЕТ · @Model.Session.Movie.AgeRating+</span>
+</div>
+<h2>@Model.Session.Movie.Title</h2>
+<p>@Model.Session.StartsAt.ToString("dd MMMM yyyy · HH:mm")</p>
+<div class="ticket-grid">
+<div>
+<span>Зал</span>
+<strong>@Model.Session.Hall.Name</strong>
+</div>
+<div>
+<span>Ряд</span>
+<strong>@item.Seat.Row</strong>
+</div>
+<div>
+<span>Место</span>
+<strong>@item.Seat.Number</strong>
+</div>
+<div>
+<span>Стоимость</span>
+<strong>@item.Price.ToString("0") ₽</strong>
+</div>
+</div>
+<div class="ticket-bottom">
+<span>Заказ № @Model.Id · Билет @Model.Id-@item.Id</span>
+<strong>ОПЛАЧЕНО</strong>
+</div>
+
+</article> }<div class="no-print">
+<button class="btn" type="button" data-print>Печать / сохранить PDF</button>
+<a class="btn btn-outline" asp-controller="Account" asp-action="Orders">Мои заказы</a>
+</div>
+</section>

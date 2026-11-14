@@ -1,0 +1,9 @@
+<nav class="account-nav" aria-label="Личный кабинет">
+<a asp-controller="Account" asp-action="Orders" asp-route-filter="tickets">Мои билеты</a>
+<a asp-controller="Account" asp-action="Orders" asp-route-filter="active">Активные брони</a>
+<a asp-controller="Account" asp-action="Orders" asp-route-filter="cancelled">Отменённые</a>
+<a asp-controller="Account" asp-action="Orders">История покупок</a>
+<a asp-controller="Account" asp-action="Profile">Мой профиль</a>@if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Панель управления ↗</a> }<form asp-controller="Account" asp-action="Logout" method="post">
+<button class="link-button">Выйти</button>
+</form>
+</nav>

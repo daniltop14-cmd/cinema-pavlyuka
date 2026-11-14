@@ -1,0 +1,36 @@
+@model ContactMessage
+@{ ViewData["Title"] = "Контакты"; var settings = (Dictionary<string, string>)ViewBag.Settings; }
+<section class="shell page-section">
+<div class="eyebrow">БУДЕМ НА СВЯЗИ</div>
+<h1>До встречи в кинотеатре им. Павлюка<span class="red">.</span>
+</h1>
+<div class="two-columns">
+<div>
+<div class="panel">
+<h2>Как нас найти</h2>
+<p>@settings.GetValueOrDefault("Address")</p>
+<p>@settings.GetValueOrDefault("Phone")</p>
+<p>@settings.GetValueOrDefault("Email")</p>
+<p>@settings.GetValueOrDefault("Hours")</p>
+
+</div>
+<iframe class="contact-map" title="Карта проезда" src="https://maps.google.com/maps?q=@(Uri.EscapeDataString(settings.GetValueOrDefault("MapQuery", "Самара")))&amp;output=embed" loading="lazy">
+</iframe>
+</div>
+<form asp-action="Contacts" method="post" class="panel form-panel">
+<h2>Напишите нам</h2>
+<p class="muted">Сообщение получит администратор кинотеатра.</p>
+<div asp-validation-summary="All" class="validation">
+</div>
+<label asp-for="Name">Ваше имя</label>
+<input asp-for="Name" required maxlength="80" autocomplete="name" />
+<label asp-for="Email">Электронная почта</label>
+<input asp-for="Email" type="email" required maxlength="150" autocomplete="email" />
+<label asp-for="Message">Сообщение</label>
+<textarea asp-for="Message" required minlength="5" maxlength="4000" rows="6">
+</textarea>
+<p class="muted small">Отправляя форму, вы соглашаетесь на обработку указанных данных для ответа на обращение.</p>
+<button class="btn">Отправить сообщение ↗</button>
+</form>
+</div>
+</section>

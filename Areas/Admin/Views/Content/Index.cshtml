@@ -1,0 +1,29 @@
+@model List<ContentModel>
+@{ ViewData["Title"] = ViewBag.Kind == "faq" ? "Вопросы и ответы" : ViewBag.Kind == "team" ? "Команда" : "Услуги"; }
+<div class="section-head">
+<h1>@ViewData["Title"]</h1>
+<a class="btn" asp-action="Edit" asp-route-kind="@ViewBag.Kind">Добавить +</a>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Название</th>
+<th>Содержание</th>
+<th>Действия</th>
+</tr>
+</thead>
+<tbody>@foreach (var item in Model) { <tr>
+<td>@item.Title<br />@item.Extra</td>
+<td>@item.Text</td>
+<td class="table-actions">
+<a asp-action="Edit" asp-route-kind="@ViewBag.Kind" asp-route-id="@item.Id">Изменить</a>
+<form asp-action="Delete" method="post" data-confirm="Удалить запись?">
+<input type="hidden" name="kind" value="@ViewBag.Kind" />
+<input type="hidden" name="id" value="@item.Id" />
+<button class="link-button danger">Удалить</button>
+</form>
+</td>
+</tr> }</tbody>
+</table>
+</div>

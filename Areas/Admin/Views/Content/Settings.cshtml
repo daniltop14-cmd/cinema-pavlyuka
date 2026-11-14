@@ -1,0 +1,22 @@
+@model List<SiteSetting>
+@{ ViewData["Title"] = "Главная и контакты"; var labels = new Dictionary<string, string> { ["Name"] = "Название кинотеатра", ["CoverCatalogVersion"] = "Версия набора обложек", ["Tagline"] = "Слоган", ["About"] = "О кинотеатре", ["Promo"] = "Текст акции", ["Address"] = "Адрес", ["Phone"] = "Телефон", ["Email"] = "Электронная почта", ["Hours"] = "Режим работы", ["MapQuery"] = "Адрес на карте", ["SocialVk"] = "Ссылка ВКонтакте", ["SocialTelegram"] = "Ссылка Телеграм" }; }
+@{
+    for (var i = 0; i < 7; i++)
+    {
+        labels[$"Banner{i}Image"] = $"Баннер {i + 1}: путь изображения";
+        labels[$"Banner{i}Title"] = $"Баннер {i + 1}: название";
+        labels[$"Banner{i}Target"] = $"Баннер {i + 1}: ссылка на страницу сайта";
+    }
+    for (var i = 0; i < 3; i++)
+    {
+        labels[$"News{i}Image"] = $"Новость {i + 1}: путь изображения";
+        labels[$"News{i}Title"] = $"Новость {i + 1}: заголовок";
+        labels[$"News{i}Text"] = $"Новость {i + 1}: текст";
+        labels[$"News{i}Date"] = $"Новость {i + 1}: дата публикации";
+    }
+}
+<h1>Главная и контакты</h1>
+<p class="muted">Путь изображения начинается с /images/ или /uploads/, ссылка баннера ведёт на внутреннюю страницу сайта.</p>
+<form asp-action="Settings" method="post" class="panel form-panel readable">@foreach (var item in Model) { <label for="setting-@item.Key">@labels.GetValueOrDefault(item.Key, item.Key)</label>
+<textarea id="setting-@item.Key" name="values[@item.Key]" rows="@(item.Value.Length > 100 ? 4 : 2)" required maxlength="8000">@item.Value</textarea> }<button class="btn">Сохранить настройки</button>
+</form>

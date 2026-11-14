@@ -1,0 +1,39 @@
+@model List<Hall>
+@{ ViewData["Title"] = "О кинотеатре"; }
+<section class="shell page-section">
+<div class="eyebrow">ПРОСТРАНСТВО ДЛЯ ВПЕЧАТЛЕНИЙ</div>
+<h1>Кинотеатр им. Павлюка<span class="red">.</span>
+</h1>
+<p class="lead-copy">@ViewBag.About</p>
+<img class="wide-image" src="~/images/reference/340_about-1_big.jpg" alt="Иллюстрация оборудования и кресел кинозала" />
+<div class="feature-grid">
+<article class="panel">
+<span class="eyebrow">01 / ИЗОБРАЖЕНИЕ</span>
+<h3>Каждая деталь в 4K</h3>
+<p>Лазерные проекторы и большой экран помогают погрузиться в историю.</p>
+</article>
+<article class="panel">
+<span class="eyebrow">02 / ЗВУК</span>
+<h3>В центре событий</h3>
+<p>Объёмная звуковая система 7.1: от тихого шёпота до масштабных сцен.</p>
+</article>
+<article class="panel">
+<span class="eyebrow">03 / КОМФОРТ</span>
+<h3>Приятно остаться</h3>
+<p>Мягкие кресла, просторное фойе, кинобар и удобное онлайн-бронирование.</p>
+</article>
+</div>
+<h2 class="mt-5">Четыре зала для ваших историй</h2>
+<div class="hall-grid">@foreach (var hall in Model) { <article class="hall-card @hall.Color">
+<span class="hall-orb">
+</span>
+<span>@hall.Rows рядов × @hall.SeatsPerRow мест</span>
+<h3>@hall.Name</h3>
+<p>@hall.Description</p>
+</article> }</div>
+<div class="panel mt-4">
+<h2>Место встречи с кино</h2>
+<p>Кинотеатр объединяет четыре зала, зону ожидания и кинобар. Здесь можно провести вечер с друзьями, семейный выходной или арендовать зал для своего события.</p>
+<a class="btn" asp-controller="Movies" asp-action="Index">Выбрать фильм ↗</a>
+</div>
+</section>

@@ -1,0 +1,15 @@
+@model Movie
+<article class="movie-card">
+<a class="poster-wrap" asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id">
+<img src="@Model.PosterPath" alt="Постер фильма «@Model.Title»" loading="lazy" width="500" height="750" />
+<span class="age">@Model.AgeRating+</span>@if (Model.IsFeatured) { <span class="premiere">Премьера</span> }<span class="poster-cta">О фильме ↗</span>
+</a>
+<div class="movie-meta">@Model.Genre <span>·</span> @Model.DurationMinutes мин</div>
+<h3>
+<a asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id">@Model.Title</a>
+</h3>
+<div class="card-actions">
+<a class="text-link" asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id">Подробнее</a>
+<a class="btn btn-small" asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id" asp-fragment="sessions">Купить билет ↗</a>
+</div>
+</article>

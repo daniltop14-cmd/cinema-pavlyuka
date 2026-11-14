@@ -1,0 +1,20 @@
+@model Session
+@{ ViewData["Title"] = Model.Id == 0 ? "Новый сеанс" : "Изменить сеанс"; }
+<h1>@ViewData["Title"]</h1>
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="panel form-panel readable">
+<div asp-validation-summary="All" class="validation">
+</div>
+<label asp-for="MovieId">Фильм</label>
+<select asp-for="MovieId" asp-items="ViewBag.Movies">
+</select>
+<label asp-for="HallId">Кинозал</label>
+<select asp-for="HallId" asp-items="ViewBag.Halls">
+</select>
+<label asp-for="StartsAt">Начало (местное время кинотеатра)</label>
+<input asp-for="StartsAt" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}" required />
+<label asp-for="Price">Стоимость места, ₽</label>
+<input asp-for="Price" type="text" inputmode="decimal" required />
+<small class="muted">Используйте запятую для дробной части. Сеанс с заказами нельзя изменять.</small>
+<button class="btn">Сохранить сеанс</button>
+<a asp-action="Index">Отмена</a>
+</form>

@@ -1,0 +1,26 @@
+@model List<Review>
+@{ ViewData["Title"] = "Отзывы"; }
+<section class="shell page-section">
+<div class="eyebrow">ПОСЛЕ ФИНАЛЬНЫХ ТИТРОВ</div>
+<h1>Ваши впечатления<span class="red">.</span>
+</h1>
+<p class="lead-copy">Истории продолжаются в ваших отзывах.</p>
+<div class="review-grid">@foreach (var review in Model) { <article class="review-card">
+<div class="stars" aria-label="Оценка @review.Rating из 5">@(new string('★', review.Rating))</div>
+<p>@review.Text</p>
+<strong>@review.User.DisplayName</strong>
+<span>@review.CreatedAtUtc.ToString("dd MMMM yyyy")</span>
+</article> }</div>
+<partial name="_Pager" />
+<div class="panel readable mt-5">
+<h2>Как прошёл ваш вечер?</h2>@if (User.Identity?.IsAuthenticated == true) { <form asp-action="Create" method="post" class="form-panel">
+<label for="rating">Ваша оценка</label>
+<select id="rating" name="Rating">@for (var i = 5; i >= 1; i--) { <option value="@i">@i из 5</option> }</select>
+<label for="review-text">Ваш отзыв</label>
+<textarea id="review-text" name="Text" required minlength="5" maxlength="2000" rows="4">
+</textarea>
+<small class="muted">Отзыв появится после проверки администратором.</small>
+<button class="btn">Отправить отзыв ↗</button>
+</form> }else { <p>Войдите, чтобы поделиться впечатлениями.</p>
+<a class="btn" asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Reviews">Войти</a> }</div>
+</section>

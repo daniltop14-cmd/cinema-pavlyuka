@@ -1,0 +1,15 @@
+@model List<Service>
+@{ ViewData["Title"] = "Услуги"; }
+<section class="shell page-section">
+<div class="eyebrow">ДОПОЛНИТЕ СВОЙ ВЕЧЕР</div>
+<h1>Больше, чем сеанс<span class="red">.</span>
+</h1>
+<p class="lead-copy">Маленькие детали, из которых складывается большой вечер.</p>
+<div class="feature-grid">@foreach (var item in Model) { <article class="panel service-card">
+<img src="@item.ImagePath" alt="@item.Name" loading="lazy" />
+<h2>@item.Name</h2>
+<p>@item.Description</p>
+<strong>@(item.Price.HasValue ? $"от {item.Price:0} ₽" : "Стоимость по запросу")</strong>
+<a class="text-link" asp-action="Contacts">Узнать подробнее ↗</a>
+</article> }</div>
+</section>

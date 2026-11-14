@@ -1,0 +1,20 @@
+@model ContentModel
+@{ ViewData["Title"] = "Редактирование содержимого"; }
+<h1>@ViewData["Title"]</h1>
+<form asp-action="Edit" method="post" class="panel form-panel readable">
+<input asp-for="Id" type="hidden" />
+<input asp-for="Kind" type="hidden" />
+<div asp-validation-summary="All" class="validation">
+</div>
+<label asp-for="Title">@(Model.Kind == "faq" ? "Вопрос" : Model.Kind == "team" ? "Имя участника" : "Название услуги")</label>
+<input asp-for="Title" required maxlength="300" />
+<label asp-for="Text">@(Model.Kind == "faq" ? "Ответ" : Model.Kind == "team" ? "Выполненные задачи" : "Описание")</label>
+<textarea asp-for="Text" rows="6" required maxlength="3000">
+</textarea>@if (Model.Kind == "team") { <label asp-for="Extra">Роль в команде</label>
+<input asp-for="Extra" required maxlength="100" /> }@if (Model.Kind == "services") { <label asp-for="Price">Цена в рублях (необязательно)</label>
+<input asp-for="Price" type="text" inputmode="decimal" />
+<label asp-for="Extra">Путь изображения (/images/ или /uploads/)</label>
+<input asp-for="Extra" placeholder="/images/hall.svg" /> }@if (Model.Kind == "faq") { <label asp-for="Order">Порядок</label>
+<input asp-for="Order" type="number" /> }<button class="btn">Сохранить</button>
+<a asp-action="Index" asp-route-kind="@Model.Kind">Отмена</a>
+</form>

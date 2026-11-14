@@ -1,0 +1,24 @@
+@model RegisterModel
+@{ ViewData["Title"] = "Регистрация"; }
+<section class="shell page-section auth-wrap">
+<div class="eyebrow">ВАША ИСТОРИЯ НАЧИНАЕТСЯ</div>
+<h1>Добро пожаловать<span class="red">.</span>
+</h1>
+<form asp-action="Register" method="post" class="panel form-panel">
+<div asp-validation-summary="All" class="validation">
+</div>
+<label asp-for="DisplayName">Ваше имя</label>
+<input asp-for="DisplayName" required maxlength="80" autocomplete="name" />
+<label asp-for="Email">Электронная почта</label>
+<input asp-for="Email" type="email" required autocomplete="email" />
+<label asp-for="Password">Пароль</label>
+<input asp-for="Password" required minlength="8" autocomplete="new-password" />
+<small class="muted">От 8 символов, заглавная и строчная латинские буквы и цифра.</small>
+<label asp-for="ConfirmPassword">Повторите пароль</label>
+<input asp-for="ConfirmPassword" required autocomplete="new-password" />
+<p class="muted small">Создавая аккаунт, вы соглашаетесь с <a asp-controller="Home" asp-action="Legal">условиями обработки данных</a>.</p>
+<button class="btn full-width">Создать аккаунт ↗</button>
+<p class="mt-4 muted">Уже с нами? <a class="text-link" asp-action="Login">Войти</a>
+</p>
+</form>
+</section>

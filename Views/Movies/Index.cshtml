@@ -1,0 +1,7 @@
+@model ScheduleModel
+@inject CinemaClock Clock
+@{ ViewData["Title"] = "Афиша"; }
+<section class="shell page-section reference-affiche"><h1>Афиша</h1><form method="get" class="filter-bar"><div><label for="date">Дата просмотра</label><input id="date" name="date" type="date" value="@Model.Date.ToString("yyyy-MM-dd")" min="@Clock.Now.ToString("yyyy-MM-dd")" max="@Clock.Now.AddDays(30).ToString("yyyy-MM-dd")" /></div><div><label for="genre">Жанр</label><select id="genre" name="genre"><option value="">Все жанры</option>@foreach (var genre in Model.Genres) { <option value="@genre" selected="@(Model.Genre == genre)">@genre</option> }</select></div><button class="btn">Показать сеансы</button></form>
+<div class="date-strip">@for (var i = 0; i < 10; i++) { var day = Clock.Now.Date.AddDays(i); <a class="date-tab @(Model.Date == day ? "selected" : "")" asp-route-date="@day.ToString("yyyy-MM-dd")" asp-route-genre="@Model.Genre"><strong>@(i == 0 ? "Сегодня" : i == 1 ? "Завтра" : day.ToString("dddd"))</strong><span>@day.ToString("d MMMM")</span></a> }</div>
+@if (Model.Movies.Count == 0) { <div class="empty"><h2>На этот день сеансов не осталось</h2><p>Выберите другую дату или жанр.</p></div> }
+<div class="reference-sessions">@foreach (var movie in Model.Movies.OrderBy(x => x.Id)) { <partial name="_ScheduleMovie" model="@(new ScheduleCardModel { Movie = movie, Sessions = Model.Sessions.Where(x => x.MovieId == movie.Id).ToList() })" /> }</div></section>
