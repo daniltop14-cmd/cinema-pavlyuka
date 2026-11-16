@@ -1,5 +1,4 @@
-/* Пояснения к рукописным правилам стилей: комментарий описывает следующий блок. */
-/* Задаём общие цвета и размеры через CSS-переменные. */
+/* Светлая тема, баннерная лента, расписание и адаптивное оформление. Правила ниже применяются к HTML-классам в Razor-представлениях. */
 /* Светлая тема и пропорции сайта-образца rossiakino.ru. MVC остаётся своим. */
 :root {
   --bg: #fff;
@@ -11,361 +10,183 @@
   --red: #da3a76;
   --radius: 12px;
 }
-/* Задаём базовую типографику страницы. */
 body { background:#fff; color:#111318; font-family:Montserrat,"Segoe UI",Arial,sans-serif; font-size:14px; line-height:1.5; }
-/* Задаём базовую типографику страницы. */
 p { color:#36343a; }
-/* Задаём базовую типографику страницы. */
 h1,h2,h3 { letter-spacing:0; line-height:1.4; }
-/* Задаём базовую типографику страницы. */
 h1 { font-size:28px; line-height:40px; margin-bottom:24px; }
-/* Задаём внешний вид элементов, подходящих под селектор h2. */
 h2 { font-size:24px; line-height:32px; }
-/* Задаём внешний вид элементов, подходящих под селектор h3. */
 h3 { font-size:20px; line-height:28px; }
-/* Оформляем элемент при наведении указателя. */
 a:hover { color:#da3a76; }
-/* Задаём сетку и ширину контейнера. */
 .shell { width:calc(100% - 100px); max-width:1400px; }
-/* Задаём внешний вид элементов, подходящих под селектор .section. */
 .section { padding-block:40px; }
-/* Задаём внешний вид элементов, подходящих под селектор .page-section. */
 .page-section { padding-top:48px; padding-bottom:64px; }
-/* Задаём внешний вид элементов, подходящих под селектор .lead-copy. */
 .lead-copy { font-size:16px; line-height:1.8; }
-/* Задаём внешний вид элементов, подходящих под селектор .eyebrow. */
 .eyebrow { color:#817781; letter-spacing:.1em; }
-/* Задаём внешний вид поля формы или кнопки. */
 .btn { background:#da3a76; border-color:#da3a76; color:#fff; padding:13px 24px; border-radius:8px; font-weight:600; min-height:48px; }
-/* Оформляем элемент при наведении указателя. */
 .btn:hover { background:#c42966; border-color:#c42966; color:#fff; transform:none; }
-/* Задаём внешний вид поля формы или кнопки. */
 .btn-outline { background:transparent; color:#111318; border-color:#c7c0c8; }
-/* Оформляем элемент при наведении указателя. */
 .btn-outline:hover { background:#f5e8ef; border-color:#da3a76; color:#111318; }
-/* Задаём внешний вид поля формы или кнопки. */
 .btn-dark { background:#262628; border-color:#262628; color:white; }
-/* Оформляем элемент при наведении указателя. */
 .btn-dark:hover { background:#3c3c40; border-color:#3c3c40; }
-/* Задаём внешний вид поля формы или кнопки. */
 .btn-small { padding:8px 13px; min-height:36px; }
-/* Задаём внешний вид элементов, подходящих под селектор .panel. */
 .panel { background:#faf9fb; border:1px solid #e6e2e7; }
-/* Задаём внешний вид элементов, подходящих под селектор .section-head. */
 .section-head { margin-bottom:24px; }
-/* Задаём внешний вид элементов, подходящих под селектор .section-head h1,.section-head h2. */
 .section-head h1,.section-head h2 { margin-bottom:0; }
-/* Задаём внешний вид поля формы или кнопки. */
 input:not([type=checkbox]):not([type=hidden]),select,textarea { background:#fff; color:#111318; border-color:#d9d3dc; color-scheme:light; }
-/* Задаём внешний вид поля формы или кнопки. */
 input[hidden] { display:none!important; }
-/* Задаём внешний вид поля формы или кнопки. */
 .form-panel label { color:#222026; }
-/* Задаём внешний вид элементов, подходящих под селектор .muted. */
 .muted { color:#737075; }
-/* Задаём внешний вид элементов, подходящих под селектор .validation. */
 .validation { color:#ae174a; }
-/* Задаём внешний вид элементов, подходящих под селектор .notice.success. */
 .notice.success { background:#edf8f0; color:#276342; border-color:#bddcc6; }
-/* Задаём внешний вид элементов, подходящих под селектор .notice.error. */
 .notice.error { background:#fff0f3; color:#9e2144; border-color:#ecc0cf; }
-/* Задаём внешний вид элементов, подходящих под селектор .notice. */
 .notice { background:#f4f0f8; color:#48354f; border-color:#d8cade; }
-/* Оформляем навигацию или общий каркас страницы. */
 .reference-header { background:#fff; border-bottom:1px solid #e6e2e6; position:sticky; top:0; z-index:100; }
-/* Оформляем навигацию или общий каркас страницы. */
 .reference-header .header-inner { width:calc(100% - 40px); height:96px; margin:0 auto; gap:32px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-logo. */
 .reference-logo { flex-shrink:0; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-logo .desktop-logo. */
 .reference-logo .desktop-logo { width:160px; height:64px; object-fit:contain; }
-/* Задаём внешний вид элементов, подходящих под селектор .mobile-logo. */
 .mobile-logo { display:none; }
-/* Задаём внешний вид элементов, подходящих под селектор .refund-link. */
 .refund-link { display:flex; align-items:center; gap:12px; font-size:16px; font-weight:600; margin-left:44px; white-space:nowrap; }
-/* Задаём внешний вид элементов, подходящих под селектор .refund-link img. */
 .refund-link img { object-fit:contain; }
-/* Оформляем навигацию или общий каркас страницы. */
 .reference-header nav { margin-left:auto; gap:32px; align-items:center; font-size:16px; font-weight:600; }
-/* Оформляем элемент при наведении указателя. */
 .reference-header nav a:hover { color:#da3a76; text-decoration:none; }
-/* Оформляем навигацию или общий каркас страницы. */
 .reference-header .account-link { border:0; padding:0; font-size:16px; color:#111318; }
-/* Оформляем навигацию или общий каркас страницы. */
 .header-search { display:flex; align-items:center; justify-content:center; }
-/* Оформляем навигацию или общий каркас страницы. */
 .nav-dropdown { position:relative; }
-/* Оформляем навигацию или общий каркас страницы. */
 .nav-dropdown summary { font-size:16px; padding:0; font-weight:600; white-space:nowrap; }
-/* Оформляем навигацию или общий каркас страницы. */
 .nav-dropdown>div { position:absolute; top:36px; left:-16px; width:240px; display:flex; flex-direction:column; gap:0; padding:10px; background:#fff; border:1px solid #e7e1e8; border-radius:10px; box-shadow:0 12px 28px #26182618; }
-/* Оформляем навигацию или общий каркас страницы. */
 .nav-dropdown>div>a { padding:10px 12px; font-size:13px; border-radius:5px; font-weight:500; }
-/* Оформляем элемент при наведении указателя. */
 .nav-dropdown>div>a:hover { background:#f6f0f4; }
-/* Оформляем навигацию или общий каркас страницы. */
 .reference-header .menu-toggle { display:none; }
-/* Оформляем баннер или элемент слайдера. */
 .reference-hero { --banner-width:71.33vw; position:relative; width:100%; overflow:hidden; padding-top:48px; }
-/* Оформляем баннер или элемент слайдера. */
 .reference-banner-track { display:flex; gap:16px; transform:translateX(calc((100vw - var(--banner-width)) / 2 - (var(--banner-width) + 16px))); transition:transform .55s ease; }
-/* Оформляем баннер или элемент слайдера. */
 .reference-banner { display:block; width:var(--banner-width); flex:0 0 var(--banner-width); aspect-ratio:3.2/1; overflow:hidden; border-radius:12px; }
-/* Оформляем баннер или элемент слайдера. */
 .reference-banner img { display:block; width:100%; height:100%; object-fit:cover; }
-/* Оформляем баннер или элемент слайдера. */
 .reference-banner-dots { display:flex; align-items:center; justify-content:center; gap:8px; margin-top:14px; height:12px; }
-/* Задаём внешний вид элементов, подходящих под селектор .ref-dot. */
 .ref-dot { display:block; width:32px; height:8px; border-radius:10px; background:#dbd5d9; padding:0; transition:width .3s,background .3s; }
-/* Задаём внешний вид элементов, подходящих под селектор .ref-dot.active. */
 .ref-dot.active { background:#da3a76; width:96px; }
-/* Оформляем баннер или элемент слайдера. */
 .banner-pause { background:transparent; color:#8f7883; padding:0 3px; height:18px; line-height:18px; font-size:10px; }
-/* Оформляем баннер или элемент слайдера. */
 .banner-arrow { position:absolute; top:calc(50% + 10px); width:42px; height:42px; background:#fff9; color:#111318; border:1px solid #fff5; border-radius:50%; font-size:31px; line-height:36px; opacity:0; transition:opacity .2s; }
-/* Оформляем баннер или элемент слайдера. */
 .banner-arrow.previous { left:calc((100% - var(--banner-width)) / 2 + 16px); }
-/* Оформляем баннер или элемент слайдера. */
 .banner-arrow.next { right:calc((100% - var(--banner-width)) / 2 + 16px); }
-/* Показываем состояние фокуса для управления с клавиатуры. */
 .reference-hero:hover .banner-arrow,.reference-hero:focus-within .banner-arrow { opacity:1; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-schedule. */
 .reference-schedule { padding-top:16px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-schedule .section-head. */
 .reference-schedule .section-head { margin-bottom:24px; }
-/* Задаём внешний вид элементов, подходящих под селектор .search-toggle. */
 .search-toggle { background:transparent; padding:8px; margin-right:4px; }
-/* Задаём внешний вид элементов, подходящих под селектор #film-search. */
 #film-search { margin-bottom:20px; max-width:500px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-date-row. */
 .reference-date-row { display:flex; align-items:center; gap:8px; position:relative; }
-/* Задаём внешний вид элементов, подходящих под селектор .date-strip. */
 .date-strip { display:flex; gap:16px; padding:0; margin:0; width:100%; overflow-x:auto; scrollbar-width:none; scroll-behavior:smooth; }
-/* Задаём внешний вид элементов, подходящих под селектор .date-strip::-webkit-scrollbar. */
 .date-strip::-webkit-scrollbar { display:none; }
-/* Задаём внешний вид элементов, подходящих под селектор .date-tab. */
 .date-tab { display:flex; min-width:140px; flex-shrink:0; border:0; border-radius:8px; padding:10px; background:#ebe7eb; gap:3px; }
-/* Задаём внешний вид элементов, подходящих под селектор .date-tab strong. */
 .date-tab strong { font-size:16px; font-weight:600; line-height:24px; text-transform:capitalize; }
-/* Задаём внешний вид элементов, подходящих под селектор .date-tab span. */
 .date-tab span { font-size:14px; color:#29262d; line-height:20px; }
-/* Задаём внешний вид элементов, подходящих под селектор .date-tab.selected. */
 .date-tab.selected { background:#262628; border:0; color:white; }
-/* Задаём внешний вид элементов, подходящих под селектор .date-tab.selected span. */
 .date-tab.selected span { color:#fff; }
-/* Оформляем элемент при наведении указателя. */
 .date-tab:hover { background:#ded5dd; color:#111318; }
-/* Оформляем элемент при наведении указателя. */
 .date-tab.selected:hover { background:#363437; color:white; }
-/* Задаём внешний вид элементов, подходящих под селектор .dates-next. */
 .dates-next { background:#fff; position:absolute; right:0; width:36px; height:64px; display:flex; align-items:center; justify-content:center; box-shadow:-14px 0 15px #fffd; padding:0; border-radius:6px; }
-/* Задаём внешний вид элементов, подходящих под селектор .dates-next img. */
 .dates-next img { width:36px; height:40px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-sessions. */
 .reference-sessions { margin-top:72px; }
-/* Оформляем карточку или страницу фильма. */
 .reference-movie-row { display:grid; grid-template-columns:280px 1fr; gap:24px; margin-bottom:50px; min-height:400px; }
-/* Оформляем карточку или страницу фильма. */
 .reference-movie-row[hidden] { display:none; }
-/* Оформляем карточку или страницу фильма. */
 .reference-movie-poster { width:280px; height:400px; display:block; position:relative; border-radius:8px; overflow:hidden; }
-/* Оформляем карточку или страницу фильма. */
 .reference-movie-poster img { width:100%; height:100%; object-fit:cover; }
-/* Задаём внешний вид элементов, подходящих под селектор .memorandum. */
 .memorandum { background:#da3a76; color:#fff; font-size:12px; line-height:20px; padding:2px 8px; position:absolute; top:8px; left:8px; border-radius:3px; }
-/* Оформляем карточку или страницу фильма. */
 .reference-movie-info { padding:0; min-width:0; }
-/* Оформляем карточку или страницу фильма. */
 .movie-country { display:block; color:#787278; font-size:12px; margin-bottom:9px; }
-/* Оформляем карточку или страницу фильма. */
 .reference-movie-info h2 { font-size:20px; font-weight:700; line-height:32px; margin-bottom:6px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-film-meta. */
 .reference-film-meta { display:flex; align-items:center; gap:9px; font-size:14px; color:#625c64; }
-/* Задаём внешний вид элементов, подходящих под селектор .age-badge. */
 .age-badge { background:#ebe8ec; color:#383039; border-radius:4px; padding:1px 6px; font-size:12px; line-height:20px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-genre. */
 .reference-genre { margin-top:7px; color:#746e77; font-size:14px; margin-bottom:24px; }
-/* Задаём сетку и ширину контейнера. */
 .reference-time-grid { display:flex; flex-wrap:wrap; gap:32px 12px; padding-bottom:14px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-time. */
 .reference-time { background:#da3a76; border-radius:8px; min-width:82px; padding:9px 12px; display:flex; flex-direction:column; align-items:center; position:relative; color:#fff; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-time strong. */
 .reference-time strong { font-size:16px; line-height:24px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-time span. */
 .reference-time span { font-size:11px; color:#ffe8f1; margin-top:2px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-time small. */
 .reference-time small { font-size:11px; color:#fff; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-time b. */
 .reference-time b { position:absolute; bottom:-24px; color:#89818b; font-size:12px; font-weight:400; }
-/* Оформляем элемент при наведении указателя. */
 .reference-time:hover { background:#c62966; color:white; }
-/* Задаём внешний вид элементов, подходящих под селектор .film-details-link. */
 .film-details-link { display:inline-block; font-size:12px; color:#8a7381; margin-top:24px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-upcoming. */
 .reference-upcoming { padding-top:15px; padding-bottom:56px; }
-/* Задаём внешний вид элементов, подходящих под селектор .round-arrow. */
 .round-arrow { color:#111318; font-size:29px; font-weight:400; }
-/* Задаём сетку и ширину контейнера. */
 .reference-upcoming-grid { display:flex; gap:24px; overflow:auto; padding-bottom:20px; scrollbar-width:thin; scrollbar-color:#cfc4cc #f2eef1; }
-/* Задаём внешний вид элементов, подходящих под селектор .upcoming-card. */
 .upcoming-card { flex:0 0 calc((100% - 72px)/4); min-width:220px; }
-/* Оформляем карточку или страницу фильма. */
 .upcoming-poster { aspect-ratio:330/470; border-radius:8px; overflow:hidden; position:relative; }
-/* Оформляем карточку или страницу фильма. */
 .upcoming-poster img { width:100%; height:100%; object-fit:cover; }
-/* Оформляем карточку или страницу фильма. */
 .upcoming-poster>span { position:absolute; bottom:0; left:0; right:0; padding:11px 12px; background:#da3a76; color:#fff; font-size:14px; font-weight:600; }
-/* Задаём внешний вид элементов, подходящих под селектор .upcoming-card h3. */
 .upcoming-card h3 { font-size:16px; line-height:24px; margin-top:12px; margin-bottom:6px; }
-/* Задаём внешний вид элементов, подходящих под селектор .upcoming-card p. */
 .upcoming-card p { color:#7f7580; font-size:12px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-news. */
 .reference-news { padding-bottom:60px; }
-/* Задаём сетку и ширину контейнера. */
 .news-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
-/* Задаём внешний вид элементов, подходящих под селектор .news-card. */
 .news-card { display:block; color:#111318; }
-/* Задаём внешний вид элементов, подходящих под селектор .news-card img. */
 .news-card img { aspect-ratio:16/9; width:100%; object-fit:cover; border-radius:8px; margin-bottom:14px; }
-/* Задаём внешний вид элементов, подходящих под селектор .news-card>span. */
 .news-card>span { color:#837b85; font-size:12px; }
-/* Задаём внешний вид элементов, подходящих под селектор .news-card h3,.news-card h2. */
 .news-card h3,.news-card h2 { font-size:20px; line-height:28px; margin-top:8px; margin-bottom:8px; }
-/* Задаём внешний вид элементов, подходящих под селектор .news-card p. */
 .news-card p { font-size:14px; line-height:22px; color:#746d78; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-support. */
 .reference-support { display:flex; align-items:center; gap:56px; padding-block:48px 56px; border-top:1px solid #e9e4e9; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-support>img. */
 .reference-support>img { width:45%; max-width:535px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-support>div. */
 .reference-support>div { max-width:505px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-support h2. */
 .reference-support h2 { font-size:28px; line-height:40px; margin-bottom:16px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-support p. */
 .reference-support p { font-size:14px; line-height:22px; margin-bottom:24px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-extra. */
 .reference-extra { border-top:1px solid #ece7ed; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-extra .hall-card. */
 .reference-extra .hall-card { min-height:120px; }
-/* Оформляем навигацию или общий каркас страницы. */
 .reference-footer { padding-top:40px; padding-bottom:24px; background:#f5f3f5; border-top:1px solid #e9e5e9; }
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-main { display:grid; grid-template-columns:180px 1.3fr 1fr auto; gap:48px; align-items:start; }
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-logo { width:160px; height:64px; object-fit:contain; }
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-address p { font-size:13px; margin-bottom:5px; color:#4e4650; }
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-address small { color:#847b86; font-size:11px; }
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-main nav { display:grid; grid-template-columns:1fr 1fr; gap:12px 24px; font-size:13px; }
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-social { display:flex; gap:10px; }
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-social a { background:#38343a; color:#fff; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:700; border-radius:50%; font-size:13px; }
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-payments { display:flex; align-items:center; gap:16px; margin-block:28px; }
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-payments img { width:auto; height:22px; max-width:54px; }
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-payments span { color:#867a86; font-size:10px; margin-left:16px; }
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-bottom { border-color:#e3dce4; color:#887e8a; padding-block:20px 0; font-size:10px; }
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card,.hall-card.red,.hall-card.green,.hall-card.orange. */
 .hall-card,.hall-card.red,.hall-card.green,.hall-card.orange { background:#f8f5f9; color:#111318; border-color:#e3dce5; }
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card h3,.hall-card h2. */
 .hall-card h3,.hall-card h2 { margin-top:8px; }
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card p. */
 .hall-card p { color:#6b5f6f; }
-/* Задаём внешний вид элементов, подходящих под селектор .hall-orb. */
 .hall-orb { opacity:.35; }
-/* Задаём внешний вид элементов, подходящих под селектор .review-card. */
 .review-card { background:#f8f5f9; border-color:#e6dfe9; }
-/* Задаём внешний вид элементов, подходящих под селектор .review-card p. */
 .review-card p { color:#524858; }
-/* Задаём внешний вид элементов, подходящих под селектор .faq-section. */
 .faq-section { border-color:#e6dfe9; }
-/* Задаём внешний вид элементов, подходящих под селектор .faq-section p. */
 .faq-section p { color:#84798a; }
-/* Задаём внешний вид элементов, подходящих под селектор .faq-list summary span. */
 .faq-list summary span { color:#79707e; }
-/* Задаём внешний вид элементов, подходящих под селектор .contact-band. */
 .contact-band { border-color:#e4dde7; }
-/* Задаём внешний вид элементов, подходящих под селектор .contact-band iframe,.contact-map. */
 .contact-band iframe,.contact-map { filter:none; }
-/* Задаём внешний вид элементов, подходящих под селектор .contact-map. */
 .contact-map { margin-top:24px; }
-/* Оформляем баннер или элемент слайдера. */
 .hero-info { color:#726779; }
-/* Оформляем баннер или элемент слайдера. */
 .hero-info>span:first-child,.quality { border-color:#cfc6d3; }
-/* Задаём внешний вид поля формы или кнопки. */
 .time-button { border-color:#d9d0de; background:#faf8fb; }
-/* Задаём внешний вид поля формы или кнопки. */
 .time-button span { color:#85778d; }
-/* Оформляем элемент при наведении указателя. */
 .time-button:hover { background:#da3a76; color:#fff; }
-/* Оформляем элемент при наведении указателя. */
 .time-button:hover span { color:#fff; }
-/* Оформляем навигацию или общий каркас страницы. */
 .account-nav { border-color:#e3dce7; }
-/* Задаём внешний вид поля формы или кнопки. */
 .account-nav>a,.account-nav button { color:#302936; background:#f0eaf3; }
-/* Задаём внешний вид поля формы или кнопки. */
 .link-button { color:#57445f; }
-/* Задаём внешний вид элементов, подходящих под селектор .danger. */
 .danger { color:#b22659; }
-/* Задаём внешний вид элементов, подходящих под селектор .status. */
 .status { background:#f0eaf3; border-color:#dbd0e1; color:#6f5779; }
-/* Задаём внешний вид элементов, подходящих под селектор .status.paid. */
 .status.paid { background:#e8f6ed; border-color:#b4dbbf; color:#2a7646; }
-/* Задаём внешний вид элементов, подходящих под селектор .status.pending. */
 .status.pending { background:#fff3d6; border-color:#e9d49e; color:#8f6b20; }
-/* Задаём внешний вид элементов, подходящих под селектор .table-wrap. */
 .table-wrap { background:#fff; border-color:#e5dde9; }
-/* Задаём внешний вид элементов, подходящих под селектор th. */
 th { background:#f3edf6; color:#76647e; }
-/* Задаём внешний вид элементов, подходящих под селектор td,th. */
 td,th { border-color:#ece6ef; }
-/* Оформляем панель администратора. */
 .admin-sidebar { background:#faf6fc; border-color:#e5dbe9; }
-/* Задаём внешний вид элементов, подходящих под селектор .brand. */
 .brand { color:#a82360; }
-/* Оформляем панель администратора. */
 .admin-sidebar nav a { color:#695772; }
-/* Оформляем элемент при наведении указателя. */
 .admin-sidebar nav a:hover { background:#ecdeef; color:#8c1f55; }
-/* Оформляем панель администратора. */
 .admin-top { border-color:#e9e0ee; }
-/* Оформляем панель администратора. */
 .dashboard-stats .panel { background:#fbf7fd; }
-/* Оформляем кресла и схему зала. */
 .seat-panel { background:#f5f2f6; }
-/* Задаём внешний вид элементов, подходящих под селектор .screen. */
 .screen { border-color:#87768f; box-shadow:0 -8px 25px #9980aa24; }
-/* Задаём внешний вид элементов, подходящих под селектор .screen span,.row-number. */
 .screen span,.row-number { color:#86728f; }
-/* Оформляем кресла и схему зала. */
 .seat span { color:#fff; }
-/* Оформляем кресла и схему зала. */
 .seat.occupied span { background:#a64e64; color:#ffd5e2; }
-/* Оформляем кресла и схему зала. */
 .seat.unavailable span { background:#d2cad7; color:#8f7c98; border-color:#b9aabd; }
-/* Задаём внешний вид элементов, подходящих под селектор .step-pill. */
 .step-pill { color:#8d7d96; }
-/* Оформляем бронирование, заказ или билет. */
 .ticket { background:#fff; }
-/* Оформляем карточку или страницу фильма. */
 .movie-detail .lead-copy { color:#55495b; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-affiche .reference-sessions. */
 .reference-affiche .reference-sessions { margin-top:55px; }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-affiche .filter-bar. */
 .reference-affiche .filter-bar { background:#f6f2f8; border-color:#e9e0ee; }
-/* Задаём внешний вид поля формы или кнопки. */
 .news-card .btn { margin-top:10px; }
-/* Переопределяем расположение и размеры элементов для указанной ширины экрана. */
 @media(min-width:1600px) { .reference-hero { --banner-width:1200px; } }
-/* Переопределяем расположение и размеры элементов для указанной ширины экрана. */
 @media(max-width:1250px) {
   .reference-header .header-inner { gap:24px; }
   .refund-link { margin-left:15px; font-size:14px; }
@@ -374,7 +195,6 @@ td,th { border-color:#ece6ef; }
   .footer-main { gap:25px; grid-template-columns:160px 1.2fr 1fr; }
   .footer-social { grid-column:2; }
 }
-/* Переопределяем расположение и размеры элементов для указанной ширины экрана. */
 @media(max-width:1023px) {
   .shell { width:calc(100% - 64px); }
   .reference-header .header-inner { height:80px; }
@@ -397,7 +217,6 @@ td,th { border-color:#ece6ef; }
   .reference-support { gap:30px; }
   .reference-support h2 { font-size:24px; }
 }
-/* Переопределяем расположение и размеры элементов для указанной ширины экрана. */
 @media(max-width:767px) {
   .shell { width:calc(100% - 32px); }
   .reference-header .header-inner { height:64px; width:calc(100% - 32px); gap:16px; }
@@ -481,22 +300,9 @@ td,th { border-color:#ece6ef; }
   .admin-sidebar nav a { background:#f0e5f4; }
   .reference-extra .section-head .text-link { white-space:normal; text-align:right; }
 }
-/* Переопределяем расположение и размеры элементов для указанной ширины экрана. */
 @media print { .reference-header,.reference-footer { display:none!important; } }
-/* Задаём внешний вид элементов, подходящих под селектор .reference-logo .desktop-logo. */
+
 /* Название нового кинотеатра в том же визуальном стиле. */
-.reference-logo .desktop-logo{width:190px;height:64px}
-/* Задаём внешний вид элементов, подходящих под селектор .mobile-logo. */
-.mobile-logo{width:155px;height:48px}
-/* Оформляем навигацию или общий каркас страницы. */
-.footer-logo{width:190px;height:64px}
-/* Оформляем навигацию или общий каркас страницы. */
-.footer-main{grid-template-columns:210px 1.3fr 1fr auto}
-/* Оформляем бронирование, заказ или билет. */
-.ticket-top>strong{font-size:19px}
-/* Оформляем навигацию или общий каркас страницы. */
-.reference-header .refund-link{margin-left:24px}
-/* Переопределяем расположение и размеры элементов для указанной ширины экрана. */
+.reference-logo .desktop-logo{width:190px;height:64px}.mobile-logo{width:155px;height:48px}.footer-logo{width:190px;height:64px}.footer-main{grid-template-columns:210px 1.3fr 1fr auto}.ticket-top>strong{font-size:19px}.reference-header .refund-link{margin-left:24px}
 @media(max-width:1023px){.footer-main{grid-template-columns:190px 1fr}}
-/* Переопределяем расположение и размеры элементов для указанной ширины экрана. */
 @media(max-width:767px){.footer-main{grid-template-columns:1fr}.reference-header .header-inner{gap:10px}.ticket-top>strong{font-size:17px}}

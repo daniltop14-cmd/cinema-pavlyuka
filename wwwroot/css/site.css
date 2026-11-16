@@ -1,633 +1,372 @@
-/* Пояснения к рукописным правилам стилей: комментарий описывает следующий блок. */
-/* Задаём общие цвета и размеры через CSS-переменные. */
+/* Базовые стили общих блоков, форм, карточек, билетов и схемы кресел. Правила ниже применяются к HTML-классам в Razor-представлениях. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 :root{--bg:#101113;--surface:#191a1e;--surface2:#202126;--border:#2b2d33;--text:#f4f3ef;--muted:#a0a1a8;--red:#ed393f;--green:#4caa83;--yellow:#f4c453;--radius:16px}
-/* Задаём внешний вид элементов, подходящих под селектор *. */
 *{box-sizing:border-box}
-/* Задаём внешний вид элементов, подходящих под селектор html. */
 html{scroll-behavior:smooth;scroll-padding-top:30px}
-/* Задаём базовую типографику страницы. */
 body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:15px;line-height:1.65}
-/* Задаём внешний вид элементов, подходящих под селектор a. */
 a{color:inherit;text-decoration:none}
-/* Оформляем элемент при наведении указателя. */
 a:hover{color:var(--red)}
-/* Задаём внешний вид поля формы или кнопки. */
+/* Формы и кнопки: Стили применяются к полям Razor-форм; данные этих форм проверяет контроллер. */
 button,input,select,textarea{font:inherit}
-/* Задаём внешний вид поля формы или кнопки. */
 button,a,input,summary,textarea,select{-webkit-tap-highlight-color:transparent}
-/* Задаём внешний вид поля формы или кнопки. */
 button{cursor:pointer}
-/* Отмечаем неактивное состояние элемента. */
 button:disabled{cursor:not-allowed;opacity:.45}
-/* Показываем состояние фокуса для управления с клавиатуры. */
 button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--yellow);outline-offset:5px}
-/* Задаём базовую типографику страницы. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 h1,h2,h3,p{margin-top:0}
-/* Задаём базовую типографику страницы. */
 h1,h2,h3{font-weight:700;letter-spacing:-.04em;line-height:1.14}
-/* Задаём базовую типографику страницы. */
 h1{font-size:clamp(36px,4.2vw,60px);margin-bottom:24px}
-/* Задаём внешний вид элементов, подходящих под селектор h2. */
 h2{font-size:clamp(28px,3vw,40px);margin-bottom:22px}
-/* Задаём внешний вид элементов, подходящих под селектор h3. */
 h3{font-size:21px}
-/* Задаём базовую типографику страницы. */
 p{color:#c3c3ca}
-/* Задаём внешний вид элементов, подходящих под селектор img. */
 img{max-width:100%;display:block}
-/* Задаём внешний вид поля формы или кнопки. */
+/* Формы и кнопки: Стили применяются к полям Razor-форм; данные этих форм проверяет контроллер. */
 button{border:0}
-/* Задаём внешний вид элементов, подходящих под селектор main. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 main{min-height:50vh}
-/* Задаём сетку и ширину контейнера. */
 .shell{width:min(1296px,calc(100% - 96px));margin-inline:auto}
-/* Задаём внешний вид элементов, подходящих под селектор .section. */
 .section{padding-block:60px}
-/* Задаём внешний вид элементов, подходящих под селектор .page-section. */
 .page-section{padding-block:55px 80px;min-height:60vh}
-/* Задаём внешний вид элементов, подходящих под селектор .eyebrow. */
 .eyebrow{font-size:10px;letter-spacing:.19em;font-weight:700;color:var(--muted);margin-bottom:15px}
-/* Задаём внешний вид элементов, подходящих под селектор .red. */
 .red{color:var(--red)}
-/* Задаём внешний вид элементов, подходящих под селектор .muted. */
 .muted{color:var(--muted)}
-/* Задаём внешний вид элементов, подходящих под селектор .small. */
 .small{font-size:12px}
-/* Задаём внешний вид элементов, подходящих под селектор .readable. */
 .readable{max-width:760px}
-/* Задаём внешний вид элементов, подходящих под селектор .lead-copy. */
 .lead-copy{font-size:18px;max-width:820px;line-height:1.8}
-/* Задаём внешний вид элементов, подходящих под селектор .section-head. */
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:22px;margin-bottom:30px}
-/* Задаём внешний вид элементов, подходящих под селектор .section-head h1,.section-head h2. */
 .section-head h1,.section-head h2{margin:0}
-/* Задаём внешний вид элементов, подходящих под селектор .text-link. */
 .text-link{font-size:14px;display:inline-flex;align-items:center;gap:24px;font-weight:600}
-/* Задаём внешний вид поля формы или кнопки. */
+/* Формы и кнопки: Стили применяются к полям Razor-форм; данные этих форм проверяет контроллер. */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:30px;background:var(--red);color:white;border:1px solid var(--red);font-size:14px;font-weight:650;padding:15px 25px;border-radius:8px;line-height:1.3;transition:background .2s,transform .2s;white-space:normal}
-/* Оформляем элемент при наведении указателя. */
 .btn:hover{background:#cb2d33;border-color:#cb2d33;color:white;transform:translateY(-1px)}
-/* Задаём внешний вид поля формы или кнопки. */
 .btn-outline{background:transparent;border-color:#45464c;color:var(--text)}
-/* Оформляем элемент при наведении указателя. */
 .btn-outline:hover{border-color:var(--red)}
-/* Задаём внешний вид поля формы или кнопки. */
 .btn-small{padding:10px 15px;font-size:12px;gap:8px}
-/* Задаём внешний вид поля формы или кнопки. */
 .btn-light{color:#b91921;background:white;border-color:white}
-/* Оформляем элемент при наведении указателя. */
 .btn-light:hover{color:#91141b;background:#eee;border-color:#eee}
-/* Задаём внешний вид элементов, подходящих под селектор .full-width. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .full-width{width:100%}
-/* Задаём внешний вид элементов, подходящих под селектор .panel. */
 .panel{border:1px solid var(--border);border-radius:var(--radius);padding:30px;background:var(--surface)}
-/* Задаём внешний вид элементов, подходящих под селектор .topline. */
 .topline{border-bottom:1px solid #222329;color:#a1a1a8;font-size:10px}
-/* Задаём сетку и ширину контейнера. */
 .topline .shell{display:flex;justify-content:space-between;padding-block:9px;letter-spacing:.03em}
-/* Задаём внешний вид элементов, подходящих под селектор .topline .muted. */
 .topline .muted{padding-inline:12px}
-/* Оформляем навигацию или общий каркас страницы. */
+/* Общий каркас: Правила оформляют шапку, навигацию и подвал из _Layout.cshtml. */
 .site-header{background:#121315;position:relative;z-index:10;border-bottom:1px solid #232429}
-/* Оформляем навигацию или общий каркас страницы. */
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:30px;height:91px}
-/* Задаём внешний вид элементов, подходящих под селектор .brand. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .brand{font-size:32px;font-weight:900;letter-spacing:-.09em;color:#fff;white-space:nowrap}
-/* Задаём внешний вид элементов, подходящих под селектор .brand-icon. */
 .brand-icon{color:var(--red);font-size:34px;vertical-align:bottom;margin-right:8px}
-/* Задаём внешний вид элементов, подходящих под селектор .brand-dot. */
 .brand-dot{color:var(--red)}
-/* Оформляем навигацию или общий каркас страницы. */
+/* Общий каркас: Правила оформляют шапку, навигацию и подвал из _Layout.cshtml. */
 .site-header nav{display:flex;gap:23px;font-size:12px;font-weight:600}
-/* Оформляем элемент при наведении указателя. */
 .site-header nav a:hover{color:white;text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:12px}
-/* Задаём внешний вид элементов, подходящих под селектор .account-link. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .account-link{font-size:12px;font-weight:600;padding:11px 15px;border:1px solid #42434a;border-radius:7px;white-space:nowrap}
-/* Задаём внешний вид элементов, подходящих под селектор .menu-toggle. */
 .menu-toggle{display:none;background:none;color:white}
-/* Оформляем баннер или элемент слайдера. */
+/* Слайдер: HTML баннеров создаёт Index.cshtml, а JavaScript меняет активный слайд. */
 .hero-slider{position:relative;height:640px;overflow:hidden;background:#080d14}
-/* Оформляем баннер или элемент слайдера. */
 .hero-slide{display:none;position:absolute;inset:0}
-/* Оформляем баннер или элемент слайдера. */
 .hero-slide.is-active{display:block}
-/* Оформляем баннер или элемент слайдера. */
 .hero-art{position:absolute;inset:0;background:url('../images/hero.svg') center right/cover}
-/* Оформляем баннер или элемент слайдера. */
 .hero-art:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,10,17,.98) 0%,rgba(6,10,17,.88) 24%,rgba(6,10,17,.25) 64%,rgba(6,10,17,.1)),linear-gradient(0deg,#101113,transparent 26%)}
-/* Оформляем баннер или элемент слайдера. */
 .hero-art-1{filter:hue-rotate(85deg)}
-/* Оформляем баннер или элемент слайдера. */
 .hero-art-2{filter:hue-rotate(170deg)}
-/* Оформляем баннер или элемент слайдера. */
 .hero-grain{position:absolute;inset:0;opacity:.15;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.45' filter='url(%23n)'/%3E%3C/svg%3E")}
-/* Оформляем баннер или элемент слайдера. */
 .hero-content{position:relative;padding-top:73px}
-/* Оформляем баннер или элемент слайдера. */
 .hero-content .eyebrow{color:#d1d4d9;font-size:10px}
-/* Задаём внешний вид элементов, подходящих под селектор .live-dot. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .live-dot{display:inline-block;background:var(--red);width:6px;height:6px;border-radius:100%;margin-right:8px}
-/* Оформляем баннер или элемент слайдера. */
+/* Слайдер: HTML баннеров создаёт Index.cshtml, а JavaScript меняет активный слайд. */
 .hero-kicker{font-size:14px;color:#a7b2bf;margin-top:36px;margin-bottom:12px}
-/* Оформляем баннер или элемент слайдера. */
 .hero-content h1{max-width:660px;font-size:clamp(42px,5.2vw,72px);line-height:1.03;letter-spacing:-.05em}
-/* Оформляем баннер или элемент слайдера. */
 .hero-info{display:flex;gap:18px;align-items:center;color:#c2c6ce;font-size:12px;margin-bottom:20px;flex-wrap:wrap}
-/* Оформляем баннер или элемент слайдера. */
 .hero-info>span:first-child{border:1px solid #717780;border-radius:4px;padding:0 5px}
-/* Задаём внешний вид элементов, подходящих под селектор .quality. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .quality{font-weight:bold;border:1px solid #737982;border-radius:3px;line-height:1.5;padding:0 5px}
-/* Оформляем баннер или элемент слайдера. */
+/* Слайдер: HTML баннеров создаёт Index.cshtml, а JavaScript меняет активный слайд. */
 .hero-description{font-size:14px;max-width:450px;color:#b9bec7;line-height:1.8;margin-bottom:28px}
-/* Оформляем баннер или элемент слайдера. */
 .hero-actions{display:flex;align-items:center;gap:25px}
-/* Оформляем баннер или элемент слайдера. */
 .hero-more{font-size:12px}
-/* Оформляем баннер или элемент слайдера. */
 .hero-watermark{position:absolute;right:6%;bottom:98px;font-size:15px;letter-spacing:.36em;opacity:.55;writing-mode:vertical-rl}
-/* Оформляем баннер или элемент слайдера. */
 .slider-controls{position:absolute;bottom:26px;left:0;right:0;display:flex;align-items:center;justify-content:space-between}
-/* Оформляем баннер или элемент слайдера. */
 .slide-dots{display:flex;gap:15px}
-/* Оформляем баннер или элемент слайдера. */
 .slide-dot{background:transparent;color:#9297a0;border-top:2px solid #414650;padding:9px 26px 0 0;font-size:10px}
-/* Оформляем баннер или элемент слайдера. */
 .slide-dot.active{color:#fff;border-color:var(--red)}
-/* Оформляем баннер или элемент слайдера. */
 .slider-caption{font-size:9px;letter-spacing:.18em;color:#999fa9}
-/* Оформляем баннер или элемент слайдера. */
 .slider-caption span{margin-left:14px}
-/* Оформляем баннер или элемент слайдера. */
 .slider-arrows{display:flex;gap:9px}
-/* Оформляем баннер или элемент слайдера. */
 .slider-arrows button{width:37px;height:37px;border:1px solid #52545d;background:transparent;color:white;border-radius:50%}
-/* Задаём внешний вид элементов, подходящих под селектор .date-strip. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .date-strip{display:flex;gap:9px;align-items:center;padding:22px 0 32px;overflow:auto}
-/* Задаём внешний вид элементов, подходящих под селектор .date-tab. */
 .date-tab{min-width:99px;border:1px solid #32333a;border-radius:8px;padding:11px 18px;display:flex;flex-direction:column;gap:1px}
-/* Задаём внешний вид элементов, подходящих под селектор .date-tab span. */
 .date-tab span{font-size:10px;color:var(--muted);text-transform:capitalize}
-/* Задаём внешний вид элементов, подходящих под селектор .date-tab strong. */
 .date-tab strong{font-size:14px;font-weight:600}
-/* Задаём внешний вид элементов, подходящих под селектор .date-tab.selected. */
 .date-tab.selected{border-color:var(--red);background:var(--red)}
-/* Задаём внешний вид элементов, подходящих под селектор .date-tab.selected span. */
 .date-tab.selected span{color:#ffd8d9}
-/* Задаём внешний вид элементов, подходящих под селектор .calendar-link. */
 .calendar-link{margin-left:auto;font-size:12px;white-space:nowrap;padding:15px}
-/* Оформляем карточку или страницу фильма. */
+/* Фильмы и сеансы: Классы карточек и расписания используются на главной и в афише. */
 .movie-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:35px 24px}
-/* Оформляем карточку или страницу фильма. */
 .poster-wrap{position:relative;display:block;overflow:hidden;border-radius:12px;background:#23242a;aspect-ratio:2/3}
-/* Оформляем карточку или страницу фильма. */
 .poster-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-/* Оформляем элемент при наведении указателя. */
 .poster-wrap:hover img{transform:scale(1.035)}
-/* Оформляем карточку или страницу фильма. */
 .poster-wrap .age{position:absolute;right:12px;top:12px;background:#16191ca6;border:1px solid #ffffff50;border-radius:4px;font-size:10px;padding:1px 5px;color:white}
-/* Задаём внешний вид элементов, подходящих под селектор .premiere. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .premiere{position:absolute;top:12px;left:12px;background:var(--red);color:white;font-size:9px;font-weight:600;border-radius:4px;padding:3px 8px}
-/* Оформляем карточку или страницу фильма. */
+/* Фильмы и сеансы: Классы карточек и расписания используются на главной и в афише. */
 .poster-cta{position:absolute;bottom:20px;right:20px;color:white;font-size:12px;opacity:0}
-/* Оформляем элемент при наведении указателя. */
 .poster-wrap:hover .poster-cta{opacity:1}
-/* Оформляем карточку или страницу фильма. */
 .movie-meta{font-size:11px;color:var(--muted);margin-top:15px;margin-bottom:9px}
-/* Оформляем карточку или страницу фильма. */
 .movie-meta span{margin-inline:5px}
-/* Оформляем карточку или страницу фильма. */
 .movie-card h3{font-size:19px;margin-bottom:15px;min-height:44px;line-height:1.2}
-/* Задаём внешний вид элементов, подходящих под селектор .card-actions. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .card-actions{display:flex;justify-content:space-between;gap:6px;align-items:center}
-/* Задаём внешний вид элементов, подходящих под селектор .card-actions .text-link. */
 .card-actions .text-link{font-size:11px}
-/* Задаём внешний вид элементов, подходящих под селектор .upcoming. */
 .upcoming{border-top:1px solid var(--border)}
-/* Задаём сетку и ширину контейнера. */
+/* Фильмы и сеансы: Классы карточек и расписания используются на главной и в афише. */
 .session-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-/* Задаём внешний вид элементов, подходящих под селектор .session-card. */
 .session-card{border:1px solid var(--border);border-radius:12px;padding:24px;background:var(--surface);transition:border .2s}
-/* Оформляем элемент при наведении указателя. */
 .session-card:hover{border-color:var(--red);color:inherit}
-/* Задаём внешний вид элементов, подходящих под селектор .session-time. */
 .session-time{font-size:29px;font-weight:600;letter-spacing:-.05em}
-/* Задаём внешний вид элементов, подходящих под селектор .session-time small. */
 .session-time small{font-size:11px;letter-spacing:0;color:var(--muted);margin-left:12px;font-weight:400}
-/* Задаём внешний вид элементов, подходящих под селектор .session-card h3. */
 .session-card h3{font-size:17px;margin-top:22px;min-height:39px}
-/* Задаём внешний вид элементов, подходящих под селектор .session-card p. */
 .session-card p{font-size:11px}
-/* Задаём внешний вид элементов, подходящих под селектор .session-card>div. */
 .session-card>div{border-top:1px solid var(--border);padding-top:17px;display:flex;justify-content:space-between;font-size:11px}
-/* Задаём внешний вид элементов, подходящих под селектор .session-card>div>span. */
 .session-card>div>span{color:var(--muted);font-size:10px}
-/* Задаём внешний вид элементов, подходящих под селектор .about-band. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .about-band{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
-/* Задаём внешний вид элементов, подходящих под селектор .about-image. */
 .about-image{position:relative;overflow:hidden;border-radius:14px;min-height:385px;background:#151722}
-/* Задаём внешний вид элементов, подходящих под селектор .about-image img. */
 .about-image img{width:100%;height:430px;object-fit:cover}
-/* Задаём внешний вид элементов, подходящих под селектор .image-label. */
 .image-label{position:absolute;bottom:26px;left:28px;right:20px;font-size:9px;letter-spacing:.2em;color:#b8b9c5}
-/* Задаём внешний вид элементов, подходящих под селектор .about-copy>p. */
 .about-copy>p{font-size:13px;line-height:1.9;color:var(--muted)}
-/* Задаём внешний вид элементов, подходящих под селектор .about-stats. */
 .about-stats{display:flex;gap:50px;padding-block:15px 30px}
-/* Задаём внешний вид элементов, подходящих под селектор .about-stats strong. */
 .about-stats strong{display:block;font-size:32px;line-height:1.5;letter-spacing:-.06em}
-/* Задаём внешний вид элементов, подходящих под селектор .about-stats span. */
 .about-stats span{font-size:10px;color:var(--muted)}
-/* Задаём сетку и ширину контейнера. */
 .hall-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card. */
 .hall-card{border:1px solid var(--border);padding:26px;border-radius:12px;background:#181b22;position:relative;overflow:hidden;min-height:200px;isolation:isolate}
-/* Оформляем элемент при наведении указателя. */
 .hall-card:hover{color:inherit;border-color:#5b5b67}
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card>span:not(.hall-orb). */
 .hall-card>span:not(.hall-orb){font-size:10px;color:var(--muted)}
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card h3,.hall-card h2. */
 .hall-card h3,.hall-card h2{font-size:21px;margin-top:30px;margin-bottom:12px}
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card p. */
 .hall-card p{font-size:11px;line-height:1.7}
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card b. */
 .hall-card b{float:right;color:#ddd;font-size:19px}
-/* Задаём внешний вид элементов, подходящих под селектор .hall-orb. */
 .hall-orb{position:absolute;right:-40px;top:-35px;width:180px;height:180px;border:1px solid #ffffff19;border-radius:50%;background:radial-gradient(circle at 50% 70%,#3563c56b,transparent 68%);z-index:-1}
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card.red. */
 .hall-card.red{color:var(--text);background:#24191b}
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card.red .hall-orb. */
 .hall-card.red .hall-orb{background:radial-gradient(circle,#d22d4252,transparent 68%)}
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card.green. */
 .hall-card.green{background:#18221e}
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card.green .hall-orb. */
 .hall-card.green .hall-orb{background:radial-gradient(circle,#2bbf7c42,transparent 68%)}
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card.orange. */
 .hall-card.orange{background:#241e18}
-/* Задаём внешний вид элементов, подходящих под селектор .hall-card.orange .hall-orb. */
 .hall-card.orange .hall-orb{background:radial-gradient(circle,#dd872d52,transparent 68%)}
-/* Задаём внешний вид элементов, подходящих под селектор .promo-band. */
 .promo-band{background:#d82d36;margin-block:50px 0;overflow:hidden}
-/* Задаём сетку и ширину контейнера. */
 .promo-band .shell{display:flex;justify-content:space-between;align-items:center;min-height:350px;padding-block:45px}
-/* Задаём внешний вид элементов, подходящих под селектор .promo-band h2. */
 .promo-band h2{font-size:44px;line-height:1.09}
-/* Задаём внешний вид элементов, подходящих под селектор .promo-band p. */
 .promo-band p{color:#ffd0d2;font-size:13px;max-width:460px}
-/* Задаём внешний вид элементов, подходящих под селектор .promo-band .eyebrow. */
 .promo-band .eyebrow{color:#ffced0}
-/* Задаём внешний вид элементов, подходящих под селектор .promo-mark. */
 .promo-mark{font-size:300px;line-height:1;color:#ff818660;transform:rotate(-15deg);margin-right:50px}
-/* Задаём сетку и ширину контейнера. */
 .review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-/* Задаём внешний вид элементов, подходящих под селектор .review-card. */
 .review-card{background:var(--surface);border:1px solid var(--border);padding:28px;border-radius:12px}
-/* Задаём внешний вид элементов, подходящих под селектор .stars. */
 .stars{font-size:17px;letter-spacing:4px;color:var(--red);margin-bottom:18px}
-/* Задаём внешний вид элементов, подходящих под селектор .review-card p. */
 .review-card p{font-size:13px;line-height:1.9;min-height:73px}
-/* Задаём внешний вид элементов, подходящих под селектор .review-card strong. */
 .review-card strong{display:block;font-size:12px}
-/* Задаём внешний вид элементов, подходящих под селектор .review-card>span. */
 .review-card>span{display:block;font-size:10px;color:var(--muted);margin-top:3px}
-/* Задаём внешний вид элементов, подходящих под селектор .faq-section. */
 .faq-section{display:grid;grid-template-columns:1fr 1.7fr;gap:70px;border-top:1px solid var(--border)}
-/* Задаём внешний вид элементов, подходящих под селектор .faq-section>div>p. */
 .faq-section>div>p{font-size:13px}
-/* Задаём внешний вид элементов, подходящих под селектор .faq-list details. */
 .faq-list details{border-bottom:1px solid var(--border)}
-/* Задаём внешний вид элементов, подходящих под селектор summary. */
 summary{cursor:pointer;list-style:none;font-weight:600;font-size:14px;padding-block:22px}
-/* Задаём внешний вид элементов, подходящих под селектор summary::-webkit-details-marker. */
 summary::-webkit-details-marker{display:none}
-/* Задаём внешний вид элементов, подходящих под селектор .faq-list summary. */
 .faq-list summary{display:flex;justify-content:space-between;gap:10px}
-/* Задаём внешний вид элементов, подходящих под селектор .faq-list summary span. */
 .faq-list summary span{font-size:22px;color:var(--muted);font-weight:400}
-/* Задаём внешний вид элементов, подходящих под селектор .faq-list details[open] summary span. */
 .faq-list details[open] summary span{transform:rotate(45deg)}
-/* Задаём внешний вид элементов, подходящих под селектор details p. */
 details p{font-size:13px;color:var(--muted);padding-right:30px}
-/* Задаём внешний вид элементов, подходящих под селектор .contact-band. */
 .contact-band{display:grid;grid-template-columns:1fr 1.7fr;gap:70px;border-top:1px solid var(--border)}
-/* Задаём внешний вид элементов, подходящих под селектор .contact-band iframe,.contact-map. */
 .contact-band iframe,.contact-map{width:100%;height:280px;border:0;border-radius:12px;filter:grayscale(1) brightness(.8)}
-/* Задаём внешний вид элементов, подходящих под селектор .contact-band p. */
 .contact-band p{font-size:13px}
-/* Оформляем навигацию или общий каркас страницы. */
+/* Общий каркас: Правила оформляют шапку, навигацию и подвал из _Layout.cshtml. */
 .site-footer{border-top:1px solid var(--border);background:#0c0d0e;padding-top:50px}
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:50px;padding-bottom:45px}
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-grid p{font-size:13px;color:#777b84;margin-top:20px}
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-grid>div>strong{font-size:12px;display:block;margin-bottom:20px}
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-grid>div>a:not(.brand),.footer-grid>div>span{display:block;color:var(--muted);font-size:11px;margin-top:10px}
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-grid>div>div{display:flex;gap:20px;font-size:10px;margin-top:15px}
-/* Оформляем навигацию или общий каркас страницы. */
 .footer-bottom{border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:20px;font-size:9px;color:#777b84;padding-block:23px}
-/* Задаём внешний вид поля формы или кнопки. */
+/* Формы и кнопки: Стили применяются к полям Razor-форм; данные этих форм проверяет контроллер. */
 .form-panel{display:flex;flex-direction:column;align-items:stretch;gap:10px}
-/* Задаём внешний вид поля формы или кнопки. */
 .form-panel>h2{margin-bottom:5px}
-/* Задаём внешний вид поля формы или кнопки. */
 .form-panel label{font-size:12px;font-weight:600;margin-top:10px}
-/* Задаём внешний вид поля формы или кнопки. */
 .form-panel>.btn{margin-top:20px}
-/* Задаём внешний вид поля формы или кнопки. */
 .form-panel>a{align-self:flex-start}
-/* Задаём внешний вид поля формы или кнопки. */
 .form-panel p{margin-bottom:0}
-/* Задаём внешний вид поля формы или кнопки. */
 .form-panel small{font-size:11px}
-/* Задаём внешний вид поля формы или кнопки. */
 input:not([type=checkbox]):not([type=hidden]),select,textarea{display:block;width:100%;background:#111215;color:var(--text);border:1px solid #3a3b43;padding:12px 14px;border-radius:7px;line-height:1.4;color-scheme:dark;min-width:0}
-/* Показываем состояние фокуса для управления с клавиатуры. */
 input:focus,textarea:focus,select:focus{border-color:var(--red);outline:2px solid #ed393f35;box-shadow:none}
-/* Задаём внешний вид элементов, подходящих под селектор textarea. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 textarea{resize:vertical}
-/* Задаём внешний вид поля формы или кнопки. */
+/* Формы и кнопки: Стили применяются к полям Razor-форм; данные этих форм проверяет контроллер. */
 input[type=checkbox]{accent-color:var(--red);width:17px;height:17px;flex-shrink:0}
-/* Задаём внешний вид элементов, подходящих под селектор .check-label. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .check-label{display:flex;align-items:center;gap:9px}
-/* Задаём внешний вид элементов, подходящих под селектор .two-columns. */
 .two-columns{display:grid;grid-template-columns:1fr 1fr;gap:35px}
-/* Задаём внешний вид элементов, подходящих под селектор .contact-map. */
 .contact-map{margin-top:25px}
-/* Задаём сетку и ширину контейнера. */
 .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;margin-top:35px}
-/* Задаём сетку и ширину контейнера. */
 .feature-grid h3{font-size:25px}
-/* Задаём сетку и ширину контейнера. */
 .feature-grid p{font-size:14px}
-/* Задаём внешний вид элементов, подходящих под селектор .wide-image. */
 .wide-image{width:100%;max-height:470px;object-fit:cover;border-radius:16px;margin-block:40px}
-/* Задаём внешний вид элементов, подходящих под селектор .service-card img. */
 .service-card img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px;margin-bottom:25px}
-/* Задаём внешний вид элементов, подходящих под селектор .service-card h2. */
 .service-card h2{font-size:28px}
-/* Задаём внешний вид элементов, подходящих под селектор .service-card .text-link. */
 .service-card .text-link{display:block;margin-top:20px}
-/* Задаём внешний вид элементов, подходящих под селектор .auth-wrap. */
 .auth-wrap{max-width:560px}
-/* Задаём внешний вид элементов, подходящих под селектор .auth-wrap>h1. */
 .auth-wrap>h1{font-size:42px}
-/* Задаём внешний вид элементов, подходящих под селектор .notice. */
 .notice{border:1px solid #5b5050;background:#242029;border-radius:10px;padding:17px 22px;margin-block:20px;color:#e4ddec;font-size:14px}
-/* Задаём внешний вид элементов, подходящих под селектор .notice.success. */
 .notice.success{border-color:#326b51;background:#172d24;color:#bdedcf}
-/* Задаём внешний вид элементов, подходящих под селектор .notice.error. */
 .notice.error{border-color:#8f393e;background:#321d22;color:#ffced0}
-/* Задаём внешний вид элементов, подходящих под селектор .validation. */
 .validation{color:#ffb4b8;font-size:13px}
-/* Задаём внешний вид элементов, подходящих под селектор .validation ul. */
 .validation ul{padding-left:20px;margin:0}
-/* Задаём внешний вид элементов, подходящих под селектор .validation:empty. */
 .validation:empty{display:none}
-/* Задаём внешний вид элементов, подходящих под селектор .empty. */
 .empty{text-align:center;padding:65px 30px}
-/* Задаём внешний вид элементов, подходящих под селектор .empty h2. */
 .empty h2{font-size:29px}
-/* Задаём внешний вид элементов, подходящих под селектор .filter-bar. */
 .filter-bar{display:flex;align-items:flex-end;gap:18px;background:var(--surface);border:1px solid var(--border);padding:20px;border-radius:12px;margin-bottom:30px}
-/* Задаём внешний вид элементов, подходящих под селектор .filter-bar>div. */
 .filter-bar>div{flex:1}
-/* Задаём внешний вид элементов, подходящих под селектор .filter-bar label. */
 .filter-bar label{font-size:11px;display:block;margin-bottom:7px}
-/* Задаём внешний вид поля формы или кнопки. */
+/* Формы и кнопки: Стили применяются к полям Razor-форм; данные этих форм проверяет контроллер. */
 .filter-bar .btn{align-self:flex-end;min-height:47px}
-/* Задаём внешний вид элементов, подходящих под селектор .schedule-list. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .schedule-list{display:flex;flex-direction:column;gap:25px;margin-top:30px}
-/* Оформляем карточку или страницу фильма. */
+/* Фильмы и сеансы: Классы карточек и расписания используются на главной и в афише. */
 .schedule-movie{display:grid;grid-template-columns:180px 1fr;gap:30px;border:1px solid var(--border);padding:25px;border-radius:15px;background:var(--surface)}
-/* Оформляем карточку или страницу фильма. */
 .schedule-movie img{border-radius:10px;object-fit:cover;aspect-ratio:2/3;width:100%;height:auto}
-/* Оформляем карточку или страницу фильма. */
 .schedule-movie h2{font-size:28px}
-/* Оформляем карточку или страницу фильма. */
 .schedule-movie .movie-meta{margin-top:0}
-/* Оформляем карточку или страницу фильма. */
 .schedule-movie p{font-size:13px;max-width:800px}
-/* Задаём внешний вид поля формы или кнопки. */
 .session-buttons{display:flex;gap:10px;flex-wrap:wrap}
-/* Задаём внешний вид поля формы или кнопки. */
+/* Формы и кнопки: Стили применяются к полям Razor-форм; данные этих форм проверяет контроллер. */
 .time-button{min-width:115px;display:flex;flex-direction:column;text-align:center;border:1px solid #44464e;padding:12px 16px;border-radius:8px}
-/* Оформляем элемент при наведении указателя. */
 .time-button:hover{background:var(--red);color:#fff;border-color:var(--red)}
-/* Задаём внешний вид поля формы или кнопки. */
 .time-button strong{font-size:23px;line-height:1.2}
-/* Задаём внешний вид поля формы или кнопки. */
 .time-button span{font-size:9px;color:#bcbec6;margin-block:6px}
-/* Задаём внешний вид поля формы или кнопки. */
 .time-button small{font-size:11px}
-/* Оформляем карточку или страницу фильма. */
+/* Фильмы и сеансы: Классы карточек и расписания используются на главной и в афише. */
 .movie-detail{display:grid;grid-template-columns:290px 1fr;gap:65px;align-items:center;margin-top:30px}
-/* Оформляем карточку или страницу фильма. */
 .detail-poster{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:16px}
-/* Оформляем карточку или страницу фильма. */
 .movie-detail .btn{margin-top:15px;margin-right:12px}
-/* Задаём внешний вид элементов, подходящих под селектор .day-sessions. */
 .day-sessions{border-top:1px solid var(--border);padding-block:24px}
-/* Задаём внешний вид элементов, подходящих под селектор .day-sessions h3. */
 .day-sessions h3{font-size:19px;text-transform:capitalize}
-/* Оформляем бронирование, заказ или билет. */
+/* Заказ и билет: Оформление берёт данные из Razor-страниц Booking и Account; CSS меняет только их вид. */
 .booking-layout{display:grid;grid-template-columns:1fr 320px;gap:25px}
-/* Оформляем кресла и схему зала. */
+/* Схема мест: Классы из Views/Booking/Seats.cshtml показывают свободные, выбранные и занятые кресла. */
 .seat-panel{min-width:0;padding:40px 25px}
-/* Задаём внешний вид элементов, подходящих под селектор .screen. */
 .screen{margin:0 auto 55px;width:80%;height:20px;border-top:4px solid #c9d8e6;border-radius:50%;box-shadow:0 -8px 32px #7cc8ff38;text-align:center}
-/* Задаём внешний вид элементов, подходящих под селектор .screen span. */
 .screen span{font-size:9px;letter-spacing:.35em;color:#8d9ca9;position:relative;top:15px}
-/* Оформляем кресла и схему зала. */
 .seat-scroll{overflow:auto;padding:10px 0 25px}
-/* Оформляем кресла и схему зала. */
 .seat-map{width:max-content;margin:auto}
-/* Оформляем кресла и схему зала. */
 .seat-row{display:flex;gap:8px;align-items:center;margin-bottom:9px;justify-content:center}
-/* Задаём внешний вид элементов, подходящих под селектор .row-number. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .row-number{font-size:10px;width:20px;color:#7c808d;text-align:center}
-/* Оформляем кресла и схему зала. */
+/* Схема мест: Классы из Views/Booking/Seats.cshtml показывают свободные, выбранные и занятые кресла. */
 .seat{position:relative;display:block;width:31px;height:31px;cursor:pointer}
-/* Оформляем кресла и схему зала. */
 .seat input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
-/* Оформляем кресла и схему зала. */
 .seat span{display:flex;align-items:center;justify-content:center;border-radius:7px 7px 4px 4px;border-bottom:3px solid #25573e;background:#397c5e;color:#d4f5e2;font-size:10px;width:100%;height:100%;transition:transform .1s,background .1s;pointer-events:none}
-/* Показываем состояние фокуса для управления с клавиатуры. */
 .seat input:focus-visible+span{outline:3px solid white;outline-offset:2px}
-/* Оформляем элемент при наведении указателя. */
 .seat.available:hover span{transform:translateY(-2px);background:#4aaa7e}
-/* Оформляем кресла и схему зала. */
 .seat input:checked+span{background:var(--yellow);color:#4b3a12;border-color:#b88820}
-/* Оформляем кресла и схему зала. */
 .seat.occupied span{background:#993f47;border-color:#6e2c34;color:#e6afb4}
-/* Оформляем кресла и схему зала. */
 .seat.unavailable span{background:#3d4048;border-color:#2e3036;color:#8d9099}
-/* Оформляем кресла и схему зала. */
 .seat.occupied,.seat.unavailable{cursor:not-allowed}
-/* Оформляем кресла и схему зала. */
 .seat-legend{display:flex;justify-content:center;gap:22px;margin-top:30px;flex-wrap:wrap}
-/* Оформляем кресла и схему зала. */
 .seat-legend>span{font-size:10px;display:flex;align-items:center;gap:7px;color:var(--muted)}
-/* Оформляем кресла и схему зала. */
 .seat-legend i{width:12px;height:12px;display:inline-block;border-radius:3px}
-/* Оформляем кресла и схему зала. */
 .seat-legend .available{background:var(--green)}
-/* Оформляем кресла и схему зала. */
 .seat-legend .chosen{background:var(--yellow)}
-/* Оформляем кресла и схему зала. */
 .seat-legend .occupied{background:#993f47}
-/* Оформляем кресла и схему зала. */
 .seat-legend .unavailable{background:#555964}
-/* Оформляем бронирование, заказ или билет. */
+/* Заказ и билет: Оформление берёт данные из Razor-страниц Booking и Account; CSS меняет только их вид. */
 .booking-summary{align-self:start}
-/* Оформляем бронирование, заказ или билет. */
 .booking-summary h2{font-size:24px}
-/* Оформляем бронирование, заказ или билет. */
 .booking-summary p{font-size:13px}
-/* Оформляем бронирование, заказ или билет. */
 .booking-summary>small{display:block;font-size:10px;margin-top:18px}
-/* Задаём внешний вид элементов, подходящих под селектор .summary-divider. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .summary-divider{border-top:1px solid var(--border);margin-block:25px}
-/* Задаём внешний вид элементов, подходящих под селектор .summary-total. */
 .summary-total{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-block:22px;margin-top:20px}
-/* Задаём внешний вид элементов, подходящих под селектор .summary-total strong. */
 .summary-total strong{font-size:28px;letter-spacing:-.04em}
-/* Задаём внешний вид элементов, подходящих под селектор .step-pill. */
 .step-pill{font-size:10px;color:var(--muted)}
-/* Оформляем бронирование, заказ или билет. */
+/* Заказ и билет: Оформление берёт данные из Razor-страниц Booking и Account; CSS меняет только их вид. */
 .ticket{background:#f4f2e9;color:#16171b;padding:32px;border-radius:15px;border:1px solid #ccc;margin-bottom:25px;break-inside:avoid}
-/* Оформляем бронирование, заказ или билет. */
 .ticket h2{font-size:31px;margin-top:30px}
-/* Оформляем бронирование, заказ или билет. */
 .ticket p{color:#5c5c68}
-/* Оформляем бронирование, заказ или билет. */
 .ticket-top,.ticket-bottom{display:flex;justify-content:space-between;gap:15px;align-items:center;font-size:10px}
-/* Оформляем бронирование, заказ или билет. */
 .ticket-top>strong{font-size:24px;font-weight:900}
-/* Оформляем бронирование, заказ или билет. */
 .ticket-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:15px;padding-block:25px}
-/* Оформляем бронирование, заказ или билет. */
 .ticket-grid span{display:block;font-size:10px;color:#747580}
-/* Оформляем бронирование, заказ или билет. */
 .ticket-grid strong{font-size:20px}
-/* Оформляем бронирование, заказ или билет. */
 .ticket-bottom{border-top:2px dashed #c4c4c9;margin-top:10px;padding-top:20px}
-/* Оформляем бронирование, заказ или билет. */
 .ticket-bottom strong{color:#247146;font-size:11px}
-/* Оформляем бронирование, заказ или билет. */
 .ticket>small{display:block;font-size:9px;margin-top:17px;color:#6b6b75}
-/* Оформляем навигацию или общий каркас страницы. */
+/* Общий каркас: Правила оформляют шапку, навигацию и подвал из _Layout.cshtml. */
 .account-nav{display:flex;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--border);padding-bottom:25px;margin-bottom:30px}
-/* Задаём внешний вид поля формы или кнопки. */
+/* Формы и кнопки: Стили применяются к полям Razor-форм; данные этих форм проверяет контроллер. */
 .account-nav>a,.account-nav button{background:var(--surface);border-radius:6px;font-size:12px;padding:10px 14px}
-/* Задаём внешний вид поля формы или кнопки. */
 .account-nav>form{margin-left:auto}
-/* Задаём внешний вид поля формы или кнопки. */
 .link-button{color:var(--text);background:none;border:0;padding:5px 0;font-size:12px;text-align:left}
-/* Оформляем элемент при наведении указателя. */
 .link-button:hover{color:var(--red)}
-/* Задаём внешний вид элементов, подходящих под селектор .danger. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .danger{color:#ff8c94}
-/* Оформляем бронирование, заказ или билет. */
+/* Заказ и билет: Оформление берёт данные из Razor-страниц Booking и Account; CSS меняет только их вид. */
 .order-card{display:grid;grid-template-columns:90px 1fr auto;gap:25px;margin-bottom:20px;align-items:center}
-/* Оформляем бронирование, заказ или билет. */
 .order-card img{border-radius:8px;aspect-ratio:2/3;object-fit:cover}
-/* Оформляем бронирование, заказ или билет. */
 .order-card h2{font-size:25px;margin-bottom:10px}
-/* Оформляем бронирование, заказ или билет. */
 .order-card p{font-size:12px;margin-bottom:8px}
-/* Оформляем бронирование, заказ или билет. */
 .order-actions{display:flex;flex-direction:column;gap:10px;align-items:stretch}
-/* Оформляем бронирование, заказ или билет. */
 .order-actions>strong{font-size:22px;text-align:right}
-/* Оформляем бронирование, заказ или билет. */
 .order-actions .btn{width:100%;font-size:12px}
-/* Задаём внешний вид элементов, подходящих под селектор .status. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .status{display:inline-block;background:#2d2e37;color:#d7d8df;border:1px solid #454650;padding:3px 9px;border-radius:5px;font-size:10px;white-space:nowrap}
-/* Задаём внешний вид элементов, подходящих под селектор .status.paid. */
 .status.paid{background:#183729;color:#ade6c8;border-color:#32694e}
-/* Задаём внешний вид элементов, подходящих под селектор .status.pending. */
 .status.pending{background:#40351a;color:#f4d485;border-color:#7a6329}
-/* Задаём внешний вид элементов, подходящих под селектор .pager. */
 .pager{display:flex;justify-content:center;gap:20px;align-items:center;margin-top:30px;font-size:12px}
-/* Задаём внешний вид элементов, подходящих под селектор .table-wrap. */
+/* Админка: Классы из Areas/Admin/Views оформляют меню, таблицы и показатели. */
 .table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;background:var(--surface)}
-/* Задаём внешний вид элементов, подходящих под селектор table. */
 table{width:100%;border-collapse:collapse;font-size:13px}
-/* Задаём внешний вид элементов, подходящих под селектор th,td. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 th,td{padding:18px;text-align:left;border-bottom:1px solid var(--border);vertical-align:middle;min-width:90px}
-/* Задаём внешний вид элементов, подходящих под селектор th. */
 th{background:#222329;color:#b0b1ba;font-size:10px;letter-spacing:.04em;font-weight:600}
-/* Задаём внешний вид элементов, подходящих под селектор tr:last-child td. */
 tr:last-child td{border-bottom:0}
-/* Задаём внешний вид элементов, подходящих под селектор td small. */
 td small{color:var(--muted);font-size:10px}
-/* Задаём внешний вид поля формы или кнопки. */
+/* Формы и кнопки: Стили применяются к полям Razor-форм; данные этих форм проверяет контроллер. */
 td>form{margin:0}
-/* Задаём внешний вид элементов, подходящих под селектор .table-actions. */
+/* Админка: Классы из Areas/Admin/Views оформляют меню, таблицы и показатели. */
 .table-actions{display:flex;align-items:center;gap:15px}
-/* Задаём внешний вид элементов, подходящих под селектор .table-actions a. */
 .table-actions a{font-size:12px}
-/* Задаём внешний вид поля формы или кнопки. */
+/* Формы и кнопки: Стили применяются к полям Razor-форм; данные этих форм проверяет контроллер. */
 .inline-form{display:flex;gap:8px;align-items:center;min-width:270px}
-/* Задаём внешний вид поля формы или кнопки. */
 .inline-form select{font-size:12px;padding:8px}
-/* Отмечаем неактивное состояние элемента. */
+/* Схема мест: Классы из Views/Booking/Seats.cshtml показывают свободные, выбранные и занятые кресла. */
 .disabled-seat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-height:350px;overflow:auto}
-/* Отмечаем неактивное состояние элемента. */
 .disabled-seat-grid label{font-size:10px}
-/* Оформляем панель администратора. */
+/* Админка: Классы из Areas/Admin/Views оформляют меню, таблицы и показатели. */
 .admin-layout{display:grid;grid-template-columns:235px minmax(0,1fr);min-height:100vh}
-/* Оформляем панель администратора. */
 .admin-sidebar{padding:30px 22px;border-right:1px solid var(--border);background:#131416}
-/* Оформляем панель администратора. */
 .admin-sidebar>small{display:block;font-size:8px;letter-spacing:.16em;color:var(--muted);margin-block:15px 30px}
-/* Оформляем панель администратора. */
 .admin-sidebar nav{display:flex;flex-direction:column;gap:4px;margin-bottom:40px}
-/* Оформляем панель администратора. */
 .admin-sidebar nav a{padding:10px 12px;font-size:12px;border-radius:6px;color:#c4c6ce}
-/* Оформляем элемент при наведении указателя. */
 .admin-sidebar nav a:hover{background:#282a31;color:white}
-/* Оформляем панель администратора. */
 .admin-sidebar>a:not(.brand){font-size:11px;color:var(--muted)}
-/* Оформляем панель администратора. */
 .admin-main{padding:25px 35px 60px;min-width:0}
-/* Оформляем панель администратора. */
 .admin-top{display:flex;justify-content:space-between;font-size:10px;border-bottom:1px solid var(--border);padding-bottom:20px;margin-bottom:35px;color:var(--muted)}
-/* Оформляем панель администратора. */
 .admin-main h1{font-size:38px}
-/* Оформляем панель администратора. */
 .dashboard-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:15px;margin-bottom:40px}
-/* Оформляем панель администратора. */
 .dashboard-stats .panel{padding:20px}
-/* Оформляем панель администратора. */
 .dashboard-stats span{font-size:10px;color:var(--muted)}
-/* Оформляем панель администратора. */
 .dashboard-stats strong{font-size:30px;display:block;margin-top:12px;letter-spacing:-.05em}
-/* Оформляем панель администратора. */
 .admin-main h2{font-size:26px}
-/* Оформляем панель администратора. */
 .admin-main .hall-grid{grid-template-columns:repeat(2,1fr)}
-/* Задаём внешний вид элементов, подходящих под селектор .skip-link. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .skip-link{position:absolute;left:12px;top:-80px;z-index:999;background:white;color:black;padding:10px}
-/* Показываем состояние фокуса для управления с клавиатуры. */
 .skip-link:focus{top:10px}
-/* Переопределяем расположение и размеры элементов для указанной ширины экрана. */
+/* Адаптивность: Ширина экрана определяет сетку, размеры карточек и расположение меню. */
 @media(min-width:1600px){.hero-art{background-position:center 50%}.hero-content h1{font-size:78px}}
-/* Переопределяем расположение и размеры элементов для указанной ширины экрана. */
 @media(max-width:1250px){.shell{width:calc(100% - 60px)}.header-inner{gap:20px}.site-header nav{gap:13px;font-size:11px}.brand{font-size:28px}.account-link{padding:9px;font-size:11px}.hero-slider{height:620px}.hero-content h1{max-width:570px}.movie-grid{gap:28px 18px}.card-actions .text-link{display:none}.card-actions .btn{width:100%}.about-band{gap:40px}.about-stats{gap:30px}.session-grid{gap:12px}.session-card{padding:19px}.session-card>div{flex-direction:column;gap:7px}.booking-layout{grid-template-columns:1fr 285px}.seat-row{gap:5px}.seat{width:27px;height:29px}.dashboard-stats{grid-template-columns:repeat(3,1fr)}.admin-main{padding-inline:25px}}
-/* Переопределяем расположение и размеры элементов для указанной ширины экрана. */
 @media(max-width:1000px){.site-header nav{display:none;position:absolute;left:0;right:0;top:90px;padding:20px 30px;background:#17181d;border-bottom:1px solid #444;flex-wrap:wrap;gap:20px}.site-header nav.open{display:flex}.menu-toggle{display:block;margin-left:auto}.header-inner{height:80px}.site-header nav{top:80px}.hero-slider{height:610px}.hero-content{padding-top:60px}.movie-grid{grid-template-columns:repeat(3,1fr)}.session-grid,.hall-grid{grid-template-columns:repeat(2,1fr)}.about-band{gap:30px}.about-copy h2{font-size:33px}.about-stats{gap:25px}.about-image img{height:440px}.review-grid{gap:13px}.review-card{padding:20px}.booking-layout{grid-template-columns:1fr}.booking-summary{max-width:none}.booking-summary .summary-total{margin-top:0}.seat-row{gap:9px}.seat{width:34px;height:34px}.step-pill{display:none}.feature-grid{grid-template-columns:1fr}.service-card{display:grid;grid-template-columns:180px 1fr;gap:10px 25px}.service-card img{grid-row:span 4;margin:0}.service-card h2{margin:0}.service-card p{margin:0}.service-card .text-link{margin-top:5px}.movie-detail{gap:35px;grid-template-columns:240px 1fr}.movie-detail h1{font-size:39px}.movie-detail .lead-copy{font-size:15px}.admin-layout{grid-template-columns:190px 1fr}.admin-sidebar{padding-inline:15px}.admin-main{padding-inline:20px}.admin-main .hall-grid{grid-template-columns:1fr}.faq-section,.contact-band{gap:40px}}
-/* Переопределяем расположение и размеры элементов для указанной ширины экрана. */
 @media(max-width:700px){.shell{width:calc(100% - 36px)}.topline .shell>span:last-child{display:none}.topline{font-size:9px}.header-inner{height:72px}.site-header nav{top:72px}.brand{font-size:26px}.brand-icon{font-size:29px}.account-link{font-size:10px}.menu-toggle{font-size:11px;padding:8px 0}.hero-slider{height:620px}.hero-content{padding-top:44px}.hero-kicker{margin-top:35px;font-size:12px;max-width:220px}.hero-content h1{font-size:46px;max-width:350px}.hero-art{background-position:65% center;opacity:.8}.hero-art:after{background:linear-gradient(90deg,#060a11e8,#060a1190 65%,#060a1140),linear-gradient(0deg,#101113,transparent 35%)}.hero-description{font-size:12px;max-width:340px;margin-bottom:23px}.hero-content .eyebrow{font-size:8px;letter-spacing:.14em}.hero-actions{gap:20px;flex-wrap:wrap}.hero-actions .btn{padding:14px 20px}.hero-more{font-size:10px}.hero-watermark{display:none}.slider-caption{display:none}.slide-dot{padding-right:20px}.section{padding-block:38px}.page-section{padding-block:35px 55px}.section-head{gap:15px;margin-bottom:20px;align-items:flex-end}.section-head .text-link{font-size:10px;white-space:nowrap;gap:10px}.section-head h2{font-size:27px}.section-head>.muted{display:none}.eyebrow{font-size:8px;letter-spacing:.13em;margin-bottom:12px}.date-strip{padding-top:7px;padding-bottom:22px;gap:7px}.date-tab{min-width:79px;padding:10px 12px}.date-tab strong{font-size:12px}.date-tab span{font-size:9px}.calendar-link{display:none}.movie-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 13px}.movie-meta{font-size:9px;line-height:1.6;margin-top:10px}.movie-card h3{font-size:16px;min-height:39px;margin-bottom:12px}.poster-wrap{border-radius:8px}.poster-wrap .age{top:8px;right:8px;font-size:8px}.premiere{top:8px;left:8px;font-size:7px;padding:3px 5px}.card-actions .btn{font-size:10px;padding:10px 8px}.session-grid{gap:12px}.session-card{padding:17px}.session-time{font-size:25px}.session-time small{display:block;margin:3px 0;font-size:10px}.session-card h3{font-size:15px;min-height:34px;margin-top:17px}.session-card p{font-size:9px}.session-card>div>span{font-size:9px}.about-band{grid-template-columns:1fr;gap:30px}.about-image{min-height:0}.about-image img{height:280px}.about-copy h2{font-size:36px}.about-stats{gap:45px}.hall-grid{gap:12px}.hall-card{padding:19px;min-height:175px}.hall-card h3{font-size:17px}.hall-card>span:not(.hall-orb){font-size:8px}.hall-card p{font-size:9px}.promo-band{margin-top:25px}.promo-band .shell{min-height:320px;position:relative}.promo-band h2{font-size:33px}.promo-band p{font-size:12px;max-width:290px}.promo-band .shell>div:first-child{z-index:1}.promo-mark{position:absolute;right:-70px;bottom:0;font-size:240px;opacity:.35;margin:0}.review-grid{grid-template-columns:1fr}.review-card p{min-height:0}.review-card{padding:24px}.faq-section,.contact-band{grid-template-columns:1fr;gap:25px}.faq-section h2 br{display:none}.faq-section h2{margin-bottom:15px}.faq-list summary{font-size:13px;padding-block:19px}.contact-band iframe{height:250px}.footer-grid{grid-template-columns:1fr 1fr;gap:25px}.footer-grid>div:first-child{grid-column:span 2}.footer-grid p{margin-top:10px}.footer-bottom{flex-direction:column;gap:10px}.site-footer{padding-top:30px}.two-columns{grid-template-columns:1fr;gap:25px}.panel{padding:23px}.lead-copy{font-size:15px}.form-panel label{font-size:11px}.filter-bar{flex-wrap:wrap;gap:12px;padding:16px}.filter-bar>div{min-width:40%}.filter-bar .btn{width:100%;margin-top:5px}.schedule-movie{grid-template-columns:90px 1fr;gap:17px;padding:18px}.schedule-movie h2{font-size:21px}.schedule-movie p{font-size:11px}.schedule-movie .session-buttons{grid-column:span 2}.time-button{padding:9px 12px;min-width:98px}.time-button strong{font-size:21px}.time-button span{font-size:8px}.movie-detail{grid-template-columns:1fr;gap:25px}.detail-poster{max-width:220px}.movie-detail h1{font-size:38px}.movie-detail .eyebrow{font-size:9px}.day-sessions h3{font-size:16px}.seat-panel{padding:30px 10px}.seat-row{gap:6px}.seat{width:29px;height:30px}.row-number{width:15px}.seat-legend{gap:12px}.seat-legend>span{font-size:8px}.booking-summary{padding:25px}.booking-summary .eyebrow{font-size:10px}.screen{margin-bottom:40px}.order-card{grid-template-columns:65px 1fr;gap:18px}.order-card h2{font-size:20px}.order-card p{font-size:10px}.order-actions{grid-column:span 2;display:flex;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap}.order-actions>strong{font-size:19px}.order-actions .btn{width:auto}.account-nav{gap:6px}.account-nav>a,.account-nav button{font-size:10px;padding:8px 10px}.account-nav>form{margin-left:0}.ticket{padding:24px}.ticket-top{flex-wrap:wrap;font-size:8px}.ticket h2{font-size:28px}.ticket-grid{grid-template-columns:2fr 1fr 1fr;gap:18px}.ticket-grid strong{font-size:17px}.ticket-bottom{font-size:9px}.service-card{display:block}.service-card img{margin-bottom:22px}.service-card h2{margin-bottom:15px}.service-card p{margin-bottom:15px}.admin-layout{display:block}.admin-sidebar{border-right:0;border-bottom:1px solid var(--border);padding:20px}.admin-sidebar>small{margin-block:8px 15px}.admin-sidebar nav{flex-direction:row;flex-wrap:wrap;gap:3px;margin-bottom:10px}.admin-sidebar nav a{padding:6px 8px;font-size:10px;background:#202126}.admin-sidebar>form{display:inline-block;margin-left:20px}.admin-sidebar .brand{font-size:24px}.admin-main{padding:20px 18px 40px}.admin-top{margin-bottom:25px}.admin-main h1{font-size:31px}.dashboard-stats{grid-template-columns:repeat(2,1fr);gap:10px}.dashboard-stats .panel{padding:17px}.dashboard-stats strong{font-size:27px}.dashboard-stats span{font-size:9px}.admin-main .section-head{align-items:center}.admin-main .section-head .btn{font-size:11px;padding:11px 13px}.table-wrap th,.table-wrap td{padding:13px;font-size:11px}.disabled-seat-grid{grid-template-columns:repeat(2,1fr)}.auth-wrap>h1{font-size:36px}}
-/* Переопределяем расположение и размеры элементов для указанной ширины экрана. */
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
-/* Переопределяем расположение и размеры элементов для указанной ширины экрана. */
 @media print{body{background:#fff;color:#000}.site-header,.topline,.site-footer,.no-print,.skip-link,.notice{display:none!important}.shell{width:100%;margin:0}.page-section{padding:0}.ticket{margin:0 0 18px;padding:22px;background:#fff;box-shadow:none;border:1px solid #999}.ticket h2{font-size:24px}.ticket-grid strong{font-size:17px}}
-/* Задаём внешний вид элементов, подходящих под селектор .account-management. */
+/* Основа: Цвета, типографика и общие контейнеры задают базовый вид страниц. */
 .account-management{margin:24px 0}
-/* Задаём внешний вид элементов, подходящих под селектор .account-management-links. */
 .account-management-links{display:flex;flex-wrap:wrap;gap:12px}
-/* Задаём внешний вид элементов, подходящих под селектор .account-management h2. */
 .account-management h2{margin:8px 0 12px}
