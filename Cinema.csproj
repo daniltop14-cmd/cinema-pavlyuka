@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-  <!-- Веб-приложение ASP.NET Core MVC на .NET 8 с SQLite и Identity. -->
+  <!-- Собирает веб-приложение на .NET 8 и подключает пакеты MVC, SQLite и Identity. -->
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
