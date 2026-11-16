@@ -9,8 +9,10 @@ namespace Cinema.Migrations
     public partial class InitialSqlite : Migration
     {
         /// <inheritdoc />
+        // Up создаёт пустую схему SQLite. Сами фильмы, залы и роли добавляются позже в SeedData.
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            // Роли Identity: Admin, Manager и User; сами значения добавляет SeedData после миграции.
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -25,6 +27,7 @@ namespace Cinema.Migrations
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                 });
 
+            // Учётные записи Identity: email, имя, хеш пароля и признаки блокировки.
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
@@ -51,6 +54,7 @@ namespace Cinema.Migrations
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
+            // Обращения из формы контактов: имя, email, текст и время отправки.
             migrationBuilder.CreateTable(
                 name: "ContactMessages",
                 columns: table => new
@@ -67,6 +71,7 @@ namespace Cinema.Migrations
                     table.PrimaryKey("PK_ContactMessages", x => x.Id);
                 });
 
+            // Вопросы и ответы главной страницы вместе с порядком вывода.
             migrationBuilder.CreateTable(
                 name: "FaqItems",
                 columns: table => new
@@ -82,6 +87,7 @@ namespace Cinema.Migrations
                     table.PrimaryKey("PK_FaqItems", x => x.Id);
                 });
 
+            // Названия залов, цвет оформления и размеры схемы кресел.
             migrationBuilder.CreateTable(
                 name: "Halls",
                 columns: table => new
@@ -99,6 +105,7 @@ namespace Cinema.Migrations
                     table.PrimaryKey("PK_Halls", x => x.Id);
                 });
 
+            // Каталог фильмов: название, описание, жанр, возраст, обложка и дата премьеры.
             migrationBuilder.CreateTable(
                 name: "Movies",
                 columns: table => new
@@ -121,6 +128,7 @@ namespace Cinema.Migrations
                     table.PrimaryKey("PK_Movies", x => x.Id);
                 });
 
+            // Услуги кинотеатра с описанием, изображением и необязательной ценой.
             migrationBuilder.CreateTable(
                 name: "Services",
                 columns: table => new
@@ -137,6 +145,7 @@ namespace Cinema.Migrations
                     table.PrimaryKey("PK_Services", x => x.Id);
                 });
 
+            // Редактируемые тексты, ссылки и баннеры в виде пар ключ/значение.
             migrationBuilder.CreateTable(
                 name: "SiteSettings",
                 columns: table => new
@@ -149,6 +158,7 @@ namespace Cinema.Migrations
                     table.PrimaryKey("PK_SiteSettings", x => x.Key);
                 });
 
+            // Участники команды для страницы /Team.
             migrationBuilder.CreateTable(
                 name: "TeamMembers",
                 columns: table => new
@@ -164,6 +174,7 @@ namespace Cinema.Migrations
                     table.PrimaryKey("PK_TeamMembers", x => x.Id);
                 });
 
+            // Дополнительные разрешения ролей Identity; внешний ключ ведёт к AspNetRoles.
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
@@ -185,6 +196,7 @@ namespace Cinema.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            // Дополнительные свойства пользователя Identity; внешний ключ ведёт к AspNetUsers.
             migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
@@ -206,6 +218,7 @@ namespace Cinema.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            // Внешние способы входа Identity, связанные с AspNetUsers.
             migrationBuilder.CreateTable(
                 name: "AspNetUserLogins",
                 columns: table => new
@@ -226,6 +239,7 @@ namespace Cinema.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            // Связь пользователя с ролью Identity через два внешних ключа.
             migrationBuilder.CreateTable(
                 name: "AspNetUserRoles",
                 columns: table => new
@@ -250,6 +264,7 @@ namespace Cinema.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            // Токены Identity, принадлежащие пользователю.
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
                 columns: table => new
@@ -270,6 +285,7 @@ namespace Cinema.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            // Отзывы: автор из AspNetUsers, оценка, текст, дата и статус модерации.
             migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
@@ -293,6 +309,7 @@ namespace Cinema.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            // Конкретные кресла зала с рядом, номером и признаком доступности.
             migrationBuilder.CreateTable(
                 name: "Seats",
                 columns: table => new
@@ -315,6 +332,7 @@ namespace Cinema.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            // Показы фильма в зале: время начала и конца, цена, признак отмены.
             migrationBuilder.CreateTable(
                 name: "Sessions",
                 columns: table => new
@@ -345,6 +363,7 @@ namespace Cinema.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            // Заказы пользователя на сеанс: сумма, статус, срок действия и время создания.
             migrationBuilder.CreateTable(
                 name: "Bookings",
                 columns: table => new
@@ -375,6 +394,7 @@ namespace Cinema.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            // Связь заказа, сеанса и кресла с ценой и признаком Active; по ней определяется занятость.
             migrationBuilder.CreateTable(
                 name: "BookingSeats",
                 columns: table => new
@@ -411,6 +431,7 @@ namespace Cinema.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            // Подтверждения оплаты и возврата, привязанные к заказу.
             migrationBuilder.CreateTable(
                 name: "Payments",
                 columns: table => new
@@ -537,6 +558,7 @@ namespace Cinema.Migrations
         }
 
         /// <inheritdoc />
+        // Down откатывает эту миграцию: удаляет таблицы в порядке, учитывающем их внешние ключи.
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
