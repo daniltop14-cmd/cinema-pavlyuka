@@ -1,3 +1,5 @@
+@* Разметка и данные раздела Views → Shared → _Pager.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
+@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{
     int currentPage = ViewBag.Page ?? 1; bool next = ViewBag.HasNext ?? false;
     // Replace an existing page parameter instead of appending duplicate values.
@@ -5,4 +7,5 @@
     query["page"] = (currentPage - 1).ToString(); var prevUrl = Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(Context.Request.Path, query!);
     query["page"] = (currentPage + 1).ToString(); var nextUrl = Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(Context.Request.Path, query!);
 }
+@* Показываем следующий блок только при выполнении условия. *@
 @if (currentPage > 1 || next) { <nav class="pager" aria-label="Страницы">@if (currentPage > 1) { <a class="btn btn-outline" href="@prevUrl">← Назад</a> }<span>Страница @currentPage</span>@if (next) { <a class="btn btn-outline" href="@nextUrl">Далее →</a> }</nav> }

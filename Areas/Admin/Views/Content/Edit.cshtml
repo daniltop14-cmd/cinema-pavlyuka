@@ -1,20 +1,35 @@
+@* Разметка и данные раздела Areas → Admin → Views → Content → Edit.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
+@* Эта страница получает из контроллера модель указанного типа. *@
 @model ContentModel
+@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Редактирование содержимого"; }
+@* Заголовок задаёт тему блока на странице. *@
 <h1>@ViewData["Title"]</h1>
+@* Форма отправляет введённые данные в указанное действие контроллера. *@
 <form asp-action="Edit" method="post" class="panel form-panel readable">
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Id" type="hidden" />
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Kind" type="hidden" />
+@* Группируем элементы для оформления и расположения. *@
 <div asp-validation-summary="All" class="validation">
 </div>
 <label asp-for="Title">@(Model.Kind == "faq" ? "Вопрос" : Model.Kind == "team" ? "Имя участника" : "Название услуги")</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Title" required maxlength="300" />
 <label asp-for="Text">@(Model.Kind == "faq" ? "Ответ" : Model.Kind == "team" ? "Выполненные задачи" : "Описание")</label>
+@* Поле формы получает и отправляет значение модели. *@
 <textarea asp-for="Text" rows="6" required maxlength="3000">
 </textarea>@if (Model.Kind == "team") { <label asp-for="Extra">Роль в команде</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Extra" required maxlength="100" /> }@if (Model.Kind == "services") { <label asp-for="Price">Цена в рублях (необязательно)</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Price" type="text" inputmode="decimal" />
 <label asp-for="Extra">Путь изображения (/images/ или /uploads/)</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Extra" placeholder="/images/hall.svg" /> }@if (Model.Kind == "faq") { <label asp-for="Order">Порядок</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Order" type="number" /> }<button class="btn">Сохранить</button>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-action="Index" asp-route-kind="@Model.Kind">Отмена</a>
 </form>

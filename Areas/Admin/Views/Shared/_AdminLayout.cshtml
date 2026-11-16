@@ -1,41 +1,68 @@
+@* Разметка и данные раздела Areas → Admin → Views → Shared → _AdminLayout.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>@ViewData["Title"] · Управление кинотеатром</title>
+@* Подключаем внешний ресурс страницы, обычно CSS или иконку. *@
 <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.min.css" />
+@* Подключаем внешний ресурс страницы, обычно CSS или иконку. *@
 <link rel="stylesheet" href="~/css/fonts.css" /><link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /><link rel="stylesheet" href="~/css/reference.css" asp-append-version="true" />
 </head>
 <body class="admin-body">
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a class="skip-link" href="#main">Перейти к содержимому</a>
+@* Группируем элементы для оформления и расположения. *@
 <div class="admin-layout">
 <aside class="admin-sidebar">
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a class="brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/pavlyuk-logo.svg" alt="Кинотеатр им. Павлюка" width="180" height="60" /></a>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <small>ПАНЕЛЬ УПРАВЛЕНИЯ</small>
+@* Создаём общий навигационный или служебный блок страницы. *@
 <nav aria-label="Управление">
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Dashboard" asp-action="Index">Обзор</a>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Bookings" asp-action="Index">Заказы и оплаты</a>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Reviews" asp-action="Index">Отзывы</a>@if (User.IsInRole("Admin")) { <a asp-controller="Movies" asp-action="Index">Фильмы</a>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Sessions" asp-action="Index">Сеансы</a>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Halls" asp-action="Index">Кинозалы</a>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Users" asp-action="Index">Пользователи</a>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Content" asp-action="Index" asp-route-kind="services">Услуги</a>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Content" asp-action="Index" asp-route-kind="faq">Вопросы и ответы</a>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Content" asp-action="Index" asp-route-kind="team">Команда</a>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Content" asp-action="Messages">Обращения</a>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Content" asp-action="Settings">Главная и контакты</a> }</nav>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-area="" asp-controller="Account" asp-action="Orders">← Личный кабинет</a>
+@* Форма отправляет введённые данные в указанное действие контроллера. *@
 <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="link-button">Выйти</button>
 </form>
 </aside>
+@* Создаём смысловой блок страницы для разметки и стилей. *@
 <main id="main" class="admin-main">
+@* Группируем элементы для оформления и расположения. *@
 <div class="admin-top">
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span>@(User.IsInRole("Admin") ? "Администратор" : "Менеджер")</span>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-area="" asp-controller="Home" asp-action="Index">Открыть сайт ↗</a>
 </div>@if (TempData["Success"] is string success) { <div class="notice success" role="status">@success</div> }@if (TempData["Error"] is string error) { <div class="notice error" role="alert">@error</div> }@RenderBody()</main>
 </div>
+@* Подключаем браузерный JavaScript. *@
 <script src="~/js/site.js" asp-append-version="true">
 </script>@await RenderSectionAsync("Scripts", required: false)</body>
 </html>

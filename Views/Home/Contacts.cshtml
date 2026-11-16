@@ -1,35 +1,58 @@
+@* Разметка и данные раздела Views → Home → Contacts.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
+@* Эта страница получает из контроллера модель указанного типа. *@
 @model ContactMessage
+@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Контакты"; var settings = (Dictionary<string, string>)ViewBag.Settings; }
+@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section class="shell page-section">
+@* Группируем элементы для оформления и расположения. *@
 <div class="eyebrow">БУДЕМ НА СВЯЗИ</div>
+@* Заголовок задаёт тему блока на странице. *@
 <h1>До встречи в кинотеатре им. Павлюка<span class="red">.</span>
 </h1>
+@* Группируем элементы для оформления и расположения. *@
 <div class="two-columns">
+@* Группируем элементы для оформления и расположения. *@
 <div>
+@* Группируем элементы для оформления и расположения. *@
 <div class="panel">
+@* Заголовок задаёт тему блока на странице. *@
 <h2>Как нас найти</h2>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p>@settings.GetValueOrDefault("Address")</p>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p>@settings.GetValueOrDefault("Phone")</p>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p>@settings.GetValueOrDefault("Email")</p>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p>@settings.GetValueOrDefault("Hours")</p>
 
 </div>
 <iframe class="contact-map" title="Карта проезда" src="https://maps.google.com/maps?q=@(Uri.EscapeDataString(settings.GetValueOrDefault("MapQuery", "Самара")))&amp;output=embed" loading="lazy">
 </iframe>
 </div>
+@* Форма отправляет введённые данные в указанное действие контроллера. *@
 <form asp-action="Contacts" method="post" class="panel form-panel">
+@* Заголовок задаёт тему блока на странице. *@
 <h2>Напишите нам</h2>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p class="muted">Сообщение получит администратор кинотеатра.</p>
+@* Группируем элементы для оформления и расположения. *@
 <div asp-validation-summary="All" class="validation">
 </div>
 <label asp-for="Name">Ваше имя</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Name" required maxlength="80" autocomplete="name" />
 <label asp-for="Email">Электронная почта</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Email" type="email" required maxlength="150" autocomplete="email" />
 <label asp-for="Message">Сообщение</label>
+@* Поле формы получает и отправляет значение модели. *@
 <textarea asp-for="Message" required minlength="5" maxlength="4000" rows="6">
 </textarea>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p class="muted small">Отправляя форму, вы соглашаетесь на обработку указанных данных для ответа на обращение.</p>
+@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="btn">Отправить сообщение ↗</button>
 </form>
 </div>

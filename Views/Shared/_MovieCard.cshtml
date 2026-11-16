@@ -1,15 +1,27 @@
+@* Разметка и данные раздела Views → Shared → _MovieCard.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
+@* Эта страница получает из контроллера модель указанного типа. *@
 @model Movie
+@* Создаём смысловой блок страницы для разметки и стилей. *@
 <article class="movie-card">
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a class="poster-wrap" asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id">
+@* Выводим изображение с альтернативным текстом. *@
 <img src="@Model.PosterPath" alt="Постер фильма «@Model.Title»" loading="lazy" width="500" height="750" />
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span class="age">@Model.AgeRating+</span>@if (Model.IsFeatured) { <span class="premiere">Премьера</span> }<span class="poster-cta">О фильме ↗</span>
 </a>
+@* Группируем элементы для оформления и расположения. *@
 <div class="movie-meta">@Model.Genre <span>·</span> @Model.DurationMinutes мин</div>
+@* Заголовок задаёт тему блока на странице. *@
 <h3>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id">@Model.Title</a>
 </h3>
+@* Группируем элементы для оформления и расположения. *@
 <div class="card-actions">
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a class="text-link" asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id">Подробнее</a>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a class="btn btn-small" asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id" asp-fragment="sessions">Купить билет ↗</a>
 </div>
 </article>

@@ -1,27 +1,49 @@
+@* Разметка и данные раздела Views → Account → Orders.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
+@* Эта страница получает из контроллера модель указанного типа. *@
 @model List<Booking>
+@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Мой кабинет"; }
+@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section class="shell page-section">
+@* Группируем элементы для оформления и расположения. *@
 <div class="eyebrow">ВАШЕ ЛИЧНОЕ ПРОСТРАНСТВО</div>
+@* Заголовок задаёт тему блока на странице. *@
 <h1>Мой кабинет<span class="red">.</span>
 </h1>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <partial name="_AccountNav" />
+@* Показываем текстовое значение или пояснение пользователю. *@
 <partial name="_Management" />@if (Model.Count == 0) { <div class="panel empty">
+@* Заголовок задаёт тему блока на странице. *@
 <h2>Впереди много хороших историй</h2>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p>В этом разделе пока нет заказов.</p>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a class="btn" asp-controller="Movies" asp-action="Index">Выбрать фильм ↗</a>
 </div> }@foreach (var booking in Model) { <article class="panel order-card">
+@* Выводим изображение с альтернативным текстом. *@
 <img src="@booking.Session.Movie.PosterPath" alt="@booking.Session.Movie.Title" loading="lazy" />
+@* Группируем элементы для оформления и расположения. *@
 <div>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span class="eyebrow">ЗАКАЗ № @booking.Id</span>
+@* Заголовок задаёт тему блока на странице. *@
 <h2>@booking.Session.Movie.Title</h2>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p>@booking.Session.StartsAt.ToString("dd MMMM yyyy, HH:mm") · @booking.Session.Hall.Name</p>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p class="muted">@string.Join("; ", booking.BookingSeats.Select(x => $"ряд {x.Seat.Row}, место {x.Seat.Number}"))</p>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span class="status @booking.Status.ToString().ToLowerInvariant()">@Labels.Status(booking.Status)</span>
 </div>
+@* Группируем элементы для оформления и расположения. *@
 <div class="order-actions">
 <strong>@booking.Total.ToString("0") ₽</strong>@if (booking.Status == BookingStatus.Paid) { <a class="btn" asp-controller="Booking" asp-action="Ticket" asp-route-id="@booking.Id">Открыть билеты</a> }@if (booking.Status == BookingStatus.Pending) { <a class="btn" asp-controller="Booking" asp-action="Checkout" asp-route-id="@booking.Id">Оплатить</a>
+@* Форма отправляет введённые данные в указанное действие контроллера. *@
 <form asp-controller="Booking" asp-action="Cancel" method="post">
+@* Поле формы получает и отправляет значение модели. *@
 <input type="hidden" name="id" value="@booking.Id" />
+@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="btn btn-outline">Отменить бронь</button>
 </form> }</div>
 </article> }<partial name="_Pager" />

@@ -1,54 +1,89 @@
+@* Разметка и данные раздела Views → Booking → Seats.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
+@* Эта страница получает из контроллера модель указанного типа. *@
 @model SeatMapModel
+@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Выбор мест"; }
+@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section class="shell page-section">
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a class="text-link" asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Session.MovieId">← К фильму</a>
+@* Группируем элементы для оформления и расположения. *@
 <div class="section-head">
+@* Группируем элементы для оформления и расположения. *@
 <div>
+@* Группируем элементы для оформления и расположения. *@
 <div class="eyebrow">ВАШЕ МЕСТО В ИСТОРИИ</div>
+@* Заголовок задаёт тему блока на странице. *@
 <h1>@Model.Session.Movie.Title</h1>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p class="muted">@Model.Session.StartsAt.ToString("dd MMMM, HH:mm") · @Model.Session.Hall.Name · @Model.Session.Movie.AgeRating+</p>
 </div>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span class="step-pill">01 Выбор мест / 02 Оплата / 03 Билет</span>
 </div>
+@* Форма отправляет введённые данные в указанное действие контроллера. *@
 <form asp-action="Create" method="post" id="seat-form" data-price="@Model.Session.Price.ToString(System.Globalization.CultureInfo.InvariantCulture)">
+@* Поле формы получает и отправляет значение модели. *@
 <input type="hidden" name="sessionId" value="@Model.Session.Id" />
+@* Группируем элементы для оформления и расположения. *@
 <div class="booking-layout">
+@* Группируем элементы для оформления и расположения. *@
 <div class="seat-panel panel">
+@* Группируем элементы для оформления и расположения. *@
 <div class="screen">
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span>ЭКРАН</span>
 </div>
+@* Группируем элементы для оформления и расположения. *@
 <div class="seat-scroll">
+@* Группируем элементы для оформления и расположения. *@
 <div class="seat-map">@foreach (var row in Model.Seats.GroupBy(x => x.Row)) { <div class="seat-row">
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span class="row-number">@row.Key</span>@foreach (var seat in row) { var occupied = Model.Occupied.Contains(seat.Id); var unavailable = !seat.IsAccessible; <label class="seat @(occupied ? "occupied" : unavailable ? "unavailable" : "available")" title="Ряд @seat.Row, место @seat.Number">
+@* Поле формы получает и отправляет значение модели. *@
 <input type="checkbox" name="seatIds" value="@seat.Id" disabled="@(occupied || unavailable)" data-row="@seat.Row" data-number="@seat.Number" aria-label="Ряд @seat.Row, место @seat.Number: @(occupied ? "занято" : unavailable ? "недоступно" : "свободно")" />
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span>@seat.Number</span>
 </label> }<span class="row-number">@row.Key</span>
 </div> }</div>
 </div>
+@* Группируем элементы для оформления и расположения. *@
 <div class="seat-legend">
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span>
 <i class="available">
 </i>Свободно</span>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span>
 <i class="chosen">
 </i>Ваш выбор</span>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span>
 <i class="occupied">
 </i>Занято</span>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span>
 <i class="unavailable">
 </i>Недоступно</span>
 </div>
 </div>
 <aside class="panel booking-summary">
+@* Группируем элементы для оформления и расположения. *@
 <div class="eyebrow">ВАШ ВЕЧЕР</div>
+@* Заголовок задаёт тему блока на странице. *@
 <h2>Детали заказа</h2>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p>@Model.Session.Hall.Name<br />@Model.Session.StartsAt.ToString("dd MMMM · HH:mm")</p>
+@* Группируем элементы для оформления и расположения. *@
 <div class="summary-divider">
 </div>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p id="selected-seats" aria-live="polite">Выберите места на схеме</p>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p class="muted">@Model.Session.Price.ToString("0") ₽ за место · максимум 12</p>
+@* Группируем элементы для оформления и расположения. *@
 <div class="summary-total">
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span>Итого</span>
 <strong id="total" aria-live="polite">0 ₽</strong>
 </div>@if (User.Identity?.IsAuthenticated == true) { <button class="btn full-width" id="reserve-button" disabled>Забронировать ↗</button> } else { <a class="btn full-width" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">Войти для бронирования ↗</a> }<small class="muted">Бронь действует 10 минут. Доступность повторно проверяется на сервере.</small>

@@ -1,6 +1,11 @@
+@* Разметка и данные раздела Views → Shared → _Layout.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
+@* Подключаем типы указанного пространства имён. *@
 @using Cinema.Data
+@* Подключаем типы указанного пространства имён. *@
 @using Microsoft.EntityFrameworkCore
+@* Внедряем сервис, чтобы получить данные прямо в представлении. *@
 @inject CinemaDbContext SiteDb
+@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{
     var settings = await SiteDb.SiteSettings.AsNoTracking().ToDictionaryAsync(x => x.Key, x => x.Value);
     var siteName = settings.GetValueOrDefault("Name", "Кинотеатр им. Павлюка");
@@ -12,60 +17,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewData["Title"] · @siteName</title>
     <meta name="description" content="Кинотеатр: афиша, расписание, выбор мест и электронные билеты." />
+    @* Подключаем внешний ресурс страницы, обычно CSS или иконку. *@
     <link rel="icon" href="~/images/icon.svg" type="image/svg+xml" />
+    @* Подключаем внешний ресурс страницы, обычно CSS или иконку. *@
     <link rel="stylesheet" href="~/lib/bootstrap/bootstrap.min.css" />
+    @* Подключаем внешний ресурс страницы, обычно CSS или иконку. *@
     <link rel="stylesheet" href="~/css/fonts.css" asp-append-version="true" />
+    @* Подключаем внешний ресурс страницы, обычно CSS или иконку. *@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @* Подключаем внешний ресурс страницы, обычно CSS или иконку. *@
     <link rel="stylesheet" href="~/css/reference.css" asp-append-version="true" />
 </head>
 <body>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a class="skip-link" href="#main">Перейти к содержимому</a>
+@* Создаём общий навигационный или служебный блок страницы. *@
 <header class="site-header reference-header">
+    @* Группируем элементы для оформления и расположения. *@
     <div class="header-inner">
+        @* Ссылка ведёт к указанному действию или разделу сайта. *@
         <a class="reference-logo" asp-area="" asp-controller="Home" asp-action="Index" aria-label="На главную">
+            @* Выводим изображение с альтернативным текстом. *@
             <img class="desktop-logo" src="~/images/pavlyuk-logo.svg" alt="Кинотеатр им. Павлюка" width="190" height="64" />
+            @* Выводим изображение с альтернативным текстом. *@
             <img class="mobile-logo" src="~/images/pavlyuk-logo.svg" alt="Кинотеатр им. Павлюка" width="155" height="48" />
         </a>
+        @* Ссылка ведёт к указанному действию или разделу сайта. *@
         <a class="refund-link" asp-area="" asp-controller="Home" asp-action="Returns"><img src="~/images/reference/Refund-24.svg" alt="" width="20" height="20" /> Возврат билетов</a>
+        @* Создаём общий навигационный или служебный блок страницы. *@
         <nav id="main-nav" aria-label="Основная навигация">
+            @* Ссылка ведёт к указанному действию или разделу сайта. *@
             <a asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="schedule">Расписание</a>
+            @* Ссылка ведёт к указанному действию или разделу сайта. *@
             <a asp-area="" asp-controller="Movies" asp-action="Index">Афиша</a>
             <details class="nav-dropdown"><summary>О нас</summary><div>
+                @* Ссылка ведёт к указанному действию или разделу сайта. *@
                 <a asp-area="" asp-controller="Home" asp-action="About">О киноцентре</a>
+                @* Ссылка ведёт к указанному действию или разделу сайта. *@
                 <a asp-area="" asp-controller="Home" asp-action="Services">Услуги</a>
+                @* Ссылка ведёт к указанному действию или разделу сайта. *@
                 <a asp-area="" asp-controller="Reviews" asp-action="Index">Отзывы</a>
+                @* Ссылка ведёт к указанному действию или разделу сайта. *@
                 <a asp-area="" asp-controller="Home" asp-action="News">Новости и акции</a>
+                @* Ссылка ведёт к указанному действию или разделу сайта. *@
                 <a asp-area="" asp-controller="Home" asp-action="Contacts">Контакты</a>
+                @* Ссылка ведёт к указанному действию или разделу сайта. *@
                 <a asp-area="" asp-controller="Home" asp-action="Team">Команда проекта</a>
             </div></details>
             <details class="nav-dropdown"><summary>Помощь</summary><div>
+                @* Ссылка ведёт к указанному действию или разделу сайта. *@
                 <a asp-area="" asp-controller="Home" asp-action="Contacts">Служба поддержки</a>
+                @* Ссылка ведёт к указанному действию или разделу сайта. *@
                 <a asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="faq">Частые вопросы</a>
+                @* Ссылка ведёт к указанному действию или разделу сайта. *@
                 <a asp-area="" asp-controller="Home" asp-action="Returns">Возврат билетов</a>
+                @* Ссылка ведёт к указанному действию или разделу сайта. *@
                 <a asp-area="" asp-controller="Booking" asp-action="Index">Бронирование билетов</a>
             </div></details>
         </nav>
+        @* Ссылка ведёт к указанному действию или разделу сайта. *@
         <a class="header-search" asp-area="" asp-controller="Movies" asp-action="Index" aria-label="Поиск фильма"><img src="~/images/reference/Search-16.svg" alt="" width="20" height="20" /></a>
+        @* Ссылка ведёт к указанному действию или разделу сайта. *@
         <a class="account-link" asp-area="" asp-controller="Account" asp-action="Index">@(User.Identity?.IsAuthenticated == true ? "Личный кабинет" : "Войти")</a>
+        @* Кнопка запускает действие формы или браузерного скрипта. *@
         <button type="button" class="menu-toggle" aria-label="Меню" aria-controls="main-nav" aria-expanded="false"><img src="~/images/reference/MenuMobile-32.svg" alt="" width="32" height="32" /></button>
     </div>
 </header>
+@* Создаём смысловой блок страницы для разметки и стилей. *@
 <main id="main">
+    @* Показываем следующий блок только при выполнении условия. *@
     @if (TempData["Success"] is string success) { <div class="shell"><div class="notice success" role="status">@success</div></div> }
+    @* Показываем следующий блок только при выполнении условия. *@
     @if (TempData["Error"] is string error) { <div class="shell"><div class="notice error" role="alert">@error</div></div> }
     @RenderBody()
 </main>
+@* Создаём общий навигационный или служебный блок страницы. *@
 <footer class="reference-footer">
+    @* Группируем элементы для оформления и расположения. *@
     <div class="shell footer-main">
+        @* Группируем элементы для оформления и расположения. *@
         <div><a asp-area="" asp-controller="Home" asp-action="Index"><img class="footer-logo" src="~/images/pavlyuk-logo.svg" alt="Кинотеатр им. Павлюка" width="160" height="64" /></a></div>
+        @* Группируем элементы для оформления и расположения. *@
         <div class="footer-address"><p>@settings.GetValueOrDefault("Address")</p><p>тел.: @settings.GetValueOrDefault("Phone")</p><p>@settings.GetValueOrDefault("Email")</p><small>@settings.GetValueOrDefault("Hours")</small></div>
+        @* Создаём общий навигационный или служебный блок страницы. *@
         <nav aria-label="Ссылки в подвале"><a asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="schedule">Расписание</a><a asp-area="" asp-controller="Movies" asp-action="Index">Скоро в кино</a><a asp-area="" asp-controller="Home" asp-action="Services">Услуги</a><a asp-area="" asp-controller="Home" asp-action="News">Новости и акции</a><a asp-area="" asp-controller="Home" asp-action="Contacts">Служба поддержки</a></nav>
+        @* Группируем элементы для оформления и расположения. *@
         <div class="footer-social"><a href="@settings.GetValueOrDefault("SocialVk", "https://vk.com")" target="_blank" rel="noopener" aria-label="ВКонтакте">vk</a><a href="@settings.GetValueOrDefault("SocialTelegram", "https://t.me")" target="_blank" rel="noopener" aria-label="Телеграм">➤</a><a asp-area="" asp-controller="Account" asp-action="Orders" aria-label="Личный кабинет">◉</a></div>
     </div>
+    @* Группируем элементы для оформления и расположения. *@
     <div class="shell footer-payments"><img src="~/images/reference/visa.svg" alt="Visa" /><img src="~/images/reference/mastercard.svg" alt="Mastercard" /><img src="~/images/reference/mir.svg" alt="Мир" /></div>
+    @* Группируем элементы для оформления и расположения. *@
     <div class="shell footer-bottom"><span>© @DateTime.UtcNow.Year · @siteName</span><a asp-area="" asp-controller="Home" asp-action="Legal">Правовая информация</a><a asp-area="" asp-controller="Home" asp-action="Team">Команда и распределение задач</a></div>
 </footer>
+@* Подключаем браузерный JavaScript. *@
 <script src="~/lib/bootstrap/bootstrap.bundle.min.js"></script>
+@* Подключаем браузерный JavaScript. *@
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body></html>

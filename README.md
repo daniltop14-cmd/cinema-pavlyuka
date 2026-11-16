@@ -97,23 +97,90 @@ dotnet run
 
 В «Главная и контакты» редактируются заголовки/изображения/ссылки семи баннеров, новости, контакты и тексты. Ссылки баннеров должны быть внутренними, изображения — из /images/ или /uploads/. Карта и адрес учебные. Имена четырёх участников команды изменяются в /Admin без правок кода.
 
-## Структура
+## Полный разбор проекта по файлам
 
-| Папка | Содержимое |
+Все пути ниже указаны относительно папки `Cinema`, в которой находятся `Cinema.sln` и `Cinema.csproj`. Это одно приложение ASP.NET Core MVC: отдельного проекта на React, Vue или Node.js нет. Сервер создаёт HTML через Razor, браузер получает стили и JavaScript из `wwwroot`.
+
+### Главный загрузочный файл и порядок запуска
+
+**`Program.cs` — точка входа приложения.** С выполнения этого файла начинается запуск `dotnet run` или проекта в Visual Studio. Здесь создаётся `WebApplication`, читается конфигурация, регистрируются сервисы и собирается HTTP-конвейер.
+
+Порядок в `Program.cs`:
+
+1. Читается строка подключения `ConnectionStrings:DefaultConnection` из `appsettings.json`. Относительный путь к SQLite преобразуется в абсолютный, папка `App_Data` создаётся при необходимости.
+2. В DI-контейнере регистрируются `CinemaDbContext` с SQLite, ASP.NET Core Identity, MVC, `BookingService`, `IPaymentService`, `CinemaClock` и фоновый `BookingCleanupService`.
+3. Настраиваются cookie входа, защита POST-форм AntiForgery, русская локализация, обработка ошибок и HTTPS для режима не-Development.
+4. Подключаются статические файлы (`wwwroot`), маршрутизация, аутентификация и проверка ролей.
+5. Регистрируются два шаблона маршрутов: область `Admin` и обычные страницы.
+6. До приёма запросов применяются миграции базы (`MigrateAsync`) и выполняется начальное заполнение (`SeedData.InitializeAsync`). После этого `RunAsync` запускает сервер.
+
+`Cinema.csproj` задаёт .NET 8 и NuGet-пакеты. `Cinema.sln` — файл решения для Visual Studio. `Properties/launchSettings.json` содержит локальный профиль запуска и адреса. `appsettings.json` содержит строку подключения и другие настройки. `NuGet.Config` задаёт источник пакетов. `Migrations/` содержит миграцию `InitialSqlite` и снимок модели EF Core.
+
+### Где находятся роуты
+
+Основные шаблоны находятся в конце `Program.cs`:
+
+```csharp
+app.MapControllerRoute("areas", "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+```
+
+Первый шаблон ведёт в административную область, второй — в публичные контроллеры. По умолчанию `/` открывает `HomeController.Index`; `/Movies/Details/5` вызывает `MoviesController.Details(5)`. Название контроллера берётся без суффикса `Controller`, а название действия — из имени метода. Особый адрес `/Team` задан атрибутом `[HttpGet("/Team")]` у `HomeController.Team`. Атрибуты `[HttpGet]`, `[HttpPost]`, `[Authorize]` и `[Area("Admin")]` стоят рядом с соответствующими действиями или контроллерами.
+
+| Адрес или группа адресов | Серверный обработчик | Основная страница |
+|---|---|---|
+| `/`, `/Home/Index` | `Controllers/HomeController.cs` → `Index` | `Views/Home/Index.cshtml` |
+| `/Home/About`, `/Home/Services`, `/Home/News`, `/Home/Contacts`, `/Home/Returns`, `/Home/Legal`, `/Team` | `Controllers/HomeController.cs` | Одноимённые файлы в `Views/Home/` |
+| `/Movies`, `/Movies/Details/{id}` | `Controllers/MoviesController.cs` | `Views/Movies/Index.cshtml`, `Details.cshtml` |
+| `/Booking/Seats/{id}`, `/Booking/Checkout/{id}`, `/Booking/Ticket/{id}` | `Controllers/BookingController.cs` | Файлы в `Views/Booking/` |
+| `/Booking/Create`, `/Booking/Pay`, `/Booking/Cancel` | `Controllers/BookingController.cs`, POST-действия | После обработки — переход к заказу или билету |
+| `/Account/Login`, `/Account/Register`, `/Account/Orders`, `/Account/Profile`, `/Account/Password` | `Controllers/AccountController.cs` | Файлы в `Views/Account/` |
+| `/Reviews`, `/Reviews/Create` | `Controllers/ReviewsController.cs` | `Views/Reviews/Index.cshtml`; создание отзыва — POST |
+| `/Admin`, `/Admin/Dashboard` | `Areas/Admin/Controllers/DashboardController.cs` | `Areas/Admin/Views/Dashboard/Index.cshtml` |
+| `/Admin/Movies`, `/Admin/Sessions`, `/Admin/Halls`, `/Admin/Users` | Одноимённые контроллеры в `Areas/Admin/Controllers/` | Одноимённые папки в `Areas/Admin/Views/` |
+| `/Admin/Bookings`, `/Admin/Reviews`, `/Admin/Content` | Контроллеры в `Areas/Admin/Controllers/` | Соответствующие папки в `Areas/Admin/Views/` |
+
+Параметр `{id}` — идентификатор фильма, сеанса, заказа или записи в зависимости от действия. `HomeController.Index` также принимает параметр запроса `date`, а каталог фильмов — `date` и `genre`. Доступ к административным контроллерам проверяется на сервере: `Admin` управляет содержимым и пользователями; `Manager` получает только разрешённые разделы заказов, отзывов и сводки.
+
+### Где находятся страницы и общий HTML
+
+`Views/` — Razor-представления публичной части. `Views/Home/Index.cshtml` собирает главную страницу: баннеры, даты, расписание, новости, FAQ и другие блоки. `Views/Movies/` содержит афишу и страницу фильма. `Views/Booking/` показывает схему кресел, оформление заказа и билет. `Views/Account/` содержит формы входа, регистрации, профиль и заказы. `Views/Reviews/Index.cshtml` показывает отзывы.
+
+`Views/Shared/_Layout.cshtml` — общий каркас публичных страниц: `<head>`, меню, подвал, подключение CSS и JS. `Views/_ViewStart.cshtml` назначает этот layout всем обычным страницам. `Views/_ViewImports.cshtml` подключает пространства имён и MVC Tag Helpers для ссылок `asp-controller`, `asp-action` и форм.
+
+Файлы с подчёркиванием в начале имени — повторно используемые части разметки: `Views/Shared/_MovieCard.cshtml`, `_ScheduleMovie.cshtml`, `_Pager.cshtml`, а также `Views/Account/_AccountNav.cshtml` и `_Management.cshtml`. Они не являются самостоятельными URL.
+
+Админка устроена так же: её страницы лежат в `Areas/Admin/Views/`, общий каркас — `Areas/Admin/Views/Shared/_AdminLayout.cshtml`, а `Areas/Admin/Views/_ViewStart.cshtml` назначает его страницам области. Административная форма зала находится в `Areas/Admin/Views/Halls/Edit.cshtml`, а сохранение обрабатывает `Areas/Admin/Controllers/HallsController.cs`.
+
+### Где находятся стили, скрипты и изображения
+
+| Путь | Назначение |
 |---|---|
-| Controllers | Публичные страницы, аккаунт, билеты, отзывы |
-| Models | Сущности и статусы |
-| ViewModels | Формы и данные страниц |
-| Data | DbContext, начальные данные, фабрика для EF CLI |
-| Services | Бронирование, учебная оплата, очистка, часы |
-| Areas/Admin | Контроллеры и представления админки |
-| Views | Razor HTML |
-| wwwroot | CSS, JavaScript, Bootstrap, шрифты, изображения |
-| Migrations | InitialSqlite и снимок модели |
-| App_Data | Локальный файл базы после первого запуска |
-| tests | Необязательный интеграционный прогон |
+| `wwwroot/css/site.css` | Базовые цвета, кнопки, формы, карточки, схема мест, общие блоки и адаптивные правила |
+| `wwwroot/css/reference.css` | Светлое оформление главной страницы, баннерной ленты, расписания, шапки, подвала и админки; правила для разных размеров экрана |
+| `wwwroot/css/fonts.css` и `wwwroot/fonts/` | Подключение локальных шрифтов |
+| `wwwroot/js/site.js` | Мобильное меню, слайдер, прокрутка дат, поиск фильма на странице, предварительный расчёт заказа, таймер брони, печать и подтверждение действий |
+| `wwwroot/images/covers/` | SVG-обложки фильмов и широкие изображения для баннеров |
+| `wwwroot/images/` | Логотип, иконки и другие локальные изображения |
+| `wwwroot/lib/bootstrap/` | Локальная копия Bootstrap CSS и JS |
 
-Контроллер → DbContext/BookingService → SQLite → Razor. Repository, CQRS, MediatR, React и отдельного frontend-проекта нет.
+Стили и `site.js` подключаются в `_Layout.cshtml` и `_AdminLayout.cshtml`. Файлы из `wwwroot` доступны браузеру напрямую: например, `wwwroot/js/site.js` открывается как `/js/site.js`. Разметка слайдера расположена в `Views/Home/Index.cshtml`, список баннеров собирает `HomeController.Index` из `SiteSettings`, логика переключения — в `wwwroot/js/site.js`, а ширина и анимация ленты — в `wwwroot/css/reference.css`. Браузерный расчёт цены лишь показывает предварительную сумму; при создании брони сервер пересчитывает её по данным базы.
+
+### Где находится бэкенд и данные
+
+`Controllers/` принимает HTTP-запросы. `HomeController` отдаёт главную и информационные страницы; `MoviesController` — фильмы и сеансы; `BookingController` — выбор мест, заказ, оплату и билет; `AccountController` — регистрацию, вход, профиль и историю; `ReviewsController` — отзывы. `Areas/Admin/Controllers/` содержит действия панели управления.
+
+`Services/BookingService.cs` хранит правила бронирования: проверку сеанса и мест, расчёт суммы, создание и изменение заказа, освобождение просроченных мест. `Services/PaymentService.cs` задаёт интерфейс оплаты и текущую реализацию без реального платёжного провайдера. `Services/BookingCleanupService.cs` периодически очищает просроченные брони. `Services/CinemaClock.cs` переводит время для расписания кинотеатра.
+
+`Models/Entities.cs` описывает сущности SQLite: фильмы, залы, кресла, сеансы, заказы, билеты через `BookingSeat`, платежи, отзывы, настройки и пользователей. `ViewModels/` содержит модели форм и данные, передаваемые на страницы. `Data/CinemaDbContext.cs` связывает сущности с EF Core, задаёт индексы, ограничения и связи. `Data/SeedData.cs`, `ReferenceContent.cs`, `CoverCatalog.cs`, `PublicCopy.cs` отвечают за начальные и обновляемые данные. `Data/reference-movies.json` — исходные сведения для каталога. `Data/CinemaDesignTimeFactory.cs` нужна командам `dotnet ef` при создании миграций.
+
+Рабочий файл SQLite создаётся по адресу `App_Data/cinema.db` при первом запуске. Он не входит в Git-репозиторий; `.gitignore` также исключает `bin/`, `obj/`, пользовательские загрузки и локальные настройки. `tests/integration.cjs` и `tests/README.md` содержат отдельный HTTP/SQLite-прогон, который использует временную базу.
+
+### Как проходит запрос от браузера до базы
+
+На примере выбора места: ссылка на сеанс открывает `BookingController.Seats` → контроллер получает фильм, зал, кресла и занятость через `CinemaDbContext`/`BookingService` → `Views/Booking/Seats.cshtml` формирует HTML → `site.js` подсвечивает выбор и показывает предварительную сумму. После нажатия «Забронировать» форма делает POST в `BookingController.Create`. Контроллер вызывает `BookingService`, который в транзакции ещё раз проверяет доступность кресел, берёт цену из SQLite и сохраняет заказ. Затем посетитель переходит на страницу оформления или билета.
+
+Итого: **`Program.cs` запускает приложение; маршруты выбирают контроллер; контроллер обращается к сервисам и `CinemaDbContext`; Razor формирует страницу; CSS и JavaScript отвечают за её вид и действия в браузере.**
 
 ## Проверки и дальнейшие изменения
 
@@ -134,4 +201,3 @@ dotnet run
 Учебная оплата выделена в IPaymentService. Будущий реальный адаптер должен подтверждать оплату после проверки статуса у провайдера на сервере; данные карты хранить нельзя. Восстановление пароля по почте, реальный эквайринг и фискализация в учебный режим не входят.
 
 При ограниченных правах на профиль Windows можно задать DataProtection:KeysPath в доступную папку вне wwwroot и репозитория. На Windows ключи защищаются DPAPI. Не включайте ключи, пользовательские секреты и реальные базы в архив исходников.
-

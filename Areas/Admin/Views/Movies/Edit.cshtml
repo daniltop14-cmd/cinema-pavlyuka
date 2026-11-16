@@ -1,18 +1,29 @@
+@* Разметка и данные раздела Areas → Admin → Views → Movies → Edit.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
+@* Эта страница получает из контроллера модель указанного типа. *@
 @model Movie
+@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = Model.Id == 0 ? "Новый фильм" : "Изменить фильм"; }
+@* Заголовок задаёт тему блока на странице. *@
 <h1>@ViewData["Title"]</h1>
+@* Форма отправляет введённые данные в указанное действие контроллера. *@
 <form asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data" class="panel form-panel readable">
+@* Группируем элементы для оформления и расположения. *@
 <div asp-validation-summary="All" class="validation">
 </div>
 <label asp-for="Title">Название</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Title" required maxlength="150" />
 <label asp-for="Genre">Жанр</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Genre" required maxlength="60" />
 <label asp-for="Country">Страна</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Country" maxlength="100" />
 <label asp-for="DurationMinutes">Продолжительность, минут</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="DurationMinutes" type="number" min="1" max="600" required />
 <label asp-for="AgeRating">Возрастное ограничение</label>
+@* Поле формы получает и отправляет значение модели. *@
 <select asp-for="AgeRating">
 <option value="0">0+</option>
 <option value="6">6+</option>
@@ -21,16 +32,23 @@
 <option value="18">18+</option>
 </select>
 <label asp-for="Description">Описание</label>
+@* Поле формы получает и отправляет значение модели. *@
 <textarea asp-for="Description" rows="5" required maxlength="8000">
 </textarea>
 <label asp-for="ReleaseDate">Дата выхода</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="ReleaseDate" type="date" required />
 <label asp-for="TrailerUrl">Ссылка на трейлер (HTTPS, необязательно)</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="TrailerUrl" type="url" maxlength="500" />
 <label for="poster">Постер (JPEG / PNG, до 3 МБ)</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input id="poster" name="poster" type="file" accept="image/jpeg,image/png" />
 <label class="check-label">
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="IsFeatured" /> Меморандум / выделить фильм</label>
+@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="btn">Сохранить фильм</button>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-action="Index">Отмена</a>
 </form>

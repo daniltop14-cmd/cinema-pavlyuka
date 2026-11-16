@@ -1,15 +1,24 @@
+@* Разметка и данные раздела Areas → Admin → Views → Halls → Edit.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
+@* Эта страница получает из контроллера модель указанного типа. *@
 @model Hall
+@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Настройка зала"; }
+@* Заголовок задаёт тему блока на странице. *@
 <h1>Настройка зала</h1>
+@* Форма отправляет введённые данные в указанное действие контроллера. *@
 <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="panel form-panel readable">
+@* Группируем элементы для оформления и расположения. *@
 <div asp-validation-summary="All" class="validation">
 </div>
 <label asp-for="Name">Название</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Name" required maxlength="80" />
 <label asp-for="Description">Описание оборудования</label>
+@* Поле формы получает и отправляет значение модели. *@
 <textarea asp-for="Description" required maxlength="2000">
 </textarea>
 <label asp-for="Color">Цвет</label>
+@* Поле формы получает и отправляет значение модели. *@
 <select asp-for="Color">
 <option value="blue">Синий</option>
 <option value="red">Красный</option>
@@ -17,14 +26,20 @@
 <option value="orange">Оранжевый</option>
 </select>
 <label asp-for="Rows">Количество рядов</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Rows" type="number" min="1" max="20" />
 <label asp-for="SeatsPerRow">Мест в ряду</label>
+@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="SeatsPerRow" type="number" min="1" max="20" />
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p class="muted">Добавить ряды и места можно в любое время. Уменьшение схемы возможно, если в удаляемых местах нет истории заказов. Для отключения отдельного кресла отметьте его ниже.</p>
 <details>
 <summary>Недоступные кресла</summary>
+@* Группируем элементы для оформления и расположения. *@
 <div class="disabled-seat-grid">@foreach (var seat in Model.Seats.OrderBy(x => x.Row).ThenBy(x => x.Number)) { <label class="check-label">
+@* Поле формы получает и отправляет значение модели. *@
 <input type="checkbox" name="disabledSeats" value="@seat.Id" checked="@(!seat.IsAccessible)" /> Ряд @seat.Row · @seat.Number</label> }</div>
 </details>
+@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="btn">Сохранить зал</button>
 </form>

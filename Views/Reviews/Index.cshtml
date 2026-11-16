@@ -1,26 +1,45 @@
+@* Разметка и данные раздела Views → Reviews → Index.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
+@* Эта страница получает из контроллера модель указанного типа. *@
 @model List<Review>
+@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Отзывы"; }
+@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section class="shell page-section">
+@* Группируем элементы для оформления и расположения. *@
 <div class="eyebrow">ПОСЛЕ ФИНАЛЬНЫХ ТИТРОВ</div>
+@* Заголовок задаёт тему блока на странице. *@
 <h1>Ваши впечатления<span class="red">.</span>
 </h1>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p class="lead-copy">Истории продолжаются в ваших отзывах.</p>
+@* Группируем элементы для оформления и расположения. *@
 <div class="review-grid">@foreach (var review in Model) { <article class="review-card">
+@* Группируем элементы для оформления и расположения. *@
 <div class="stars" aria-label="Оценка @review.Rating из 5">@(new string('★', review.Rating))</div>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <p>@review.Text</p>
 <strong>@review.User.DisplayName</strong>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <span>@review.CreatedAtUtc.ToString("dd MMMM yyyy")</span>
 </article> }</div>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <partial name="_Pager" />
+@* Группируем элементы для оформления и расположения. *@
 <div class="panel readable mt-5">
+@* Заголовок задаёт тему блока на странице. *@
 <h2>Как прошёл ваш вечер?</h2>@if (User.Identity?.IsAuthenticated == true) { <form asp-action="Create" method="post" class="form-panel">
 <label for="rating">Ваша оценка</label>
+@* Поле формы получает и отправляет значение модели. *@
 <select id="rating" name="Rating">@for (var i = 5; i >= 1; i--) { <option value="@i">@i из 5</option> }</select>
 <label for="review-text">Ваш отзыв</label>
+@* Поле формы получает и отправляет значение модели. *@
 <textarea id="review-text" name="Text" required minlength="5" maxlength="2000" rows="4">
 </textarea>
+@* Показываем текстовое значение или пояснение пользователю. *@
 <small class="muted">Отзыв появится после проверки администратором.</small>
+@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="btn">Отправить отзыв ↗</button>
 </form> }else { <p>Войдите, чтобы поделиться впечатлениями.</p>
+@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a class="btn" asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Reviews">Войти</a> }</div>
 </section>
