@@ -1,39 +1,26 @@
-@* Разметка и данные раздела Views → Account → Register.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
-@* Эта страница получает из контроллера модель указанного типа. *@
+@* Данные для этой страницы готовит Controllers/AccountController.cs; Razor получает их через @model или ViewData. *@
+@* Тип данных, переданных контроллером при вызове View(...), указан после @model. *@
 @model RegisterModel
-@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Регистрация"; }
-@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section class="shell page-section auth-wrap">
-@* Группируем элементы для оформления и расположения. *@
 <div class="eyebrow">ВАША ИСТОРИЯ НАЧИНАЕТСЯ</div>
-@* Заголовок задаёт тему блока на странице. *@
 <h1>Добро пожаловать<span class="red">.</span>
 </h1>
-@* Форма отправляет введённые данные в указанное действие контроллера. *@
+@* Поля формы отправляются методом POST в действие Register контроллера; сервер повторно проверяет данные. *@
 <form asp-action="Register" method="post" class="panel form-panel">
-@* Группируем элементы для оформления и расположения. *@
 <div asp-validation-summary="All" class="validation">
 </div>
 <label asp-for="DisplayName">Ваше имя</label>
-@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="DisplayName" required maxlength="80" autocomplete="name" />
 <label asp-for="Email">Электронная почта</label>
-@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Email" type="email" required autocomplete="email" />
 <label asp-for="Password">Пароль</label>
-@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Password" required minlength="8" autocomplete="new-password" />
-@* Показываем текстовое значение или пояснение пользователю. *@
 <small class="muted">От 8 символов, заглавная и строчная латинские буквы и цифра.</small>
 <label asp-for="ConfirmPassword">Повторите пароль</label>
-@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="ConfirmPassword" required autocomplete="new-password" />
-@* Показываем текстовое значение или пояснение пользователю. *@
 <p class="muted small">Создавая аккаунт, вы соглашаетесь с <a asp-controller="Home" asp-action="Legal">условиями обработки данных</a>.</p>
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="btn full-width">Создать аккаунт ↗</button>
-@* Показываем текстовое значение или пояснение пользователю. *@
 <p class="mt-4 muted">Уже с нами? <a class="text-link" asp-action="Login">Войти</a>
 </p>
 </form>

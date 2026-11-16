@@ -1,34 +1,23 @@
-@* Разметка и данные раздела Views → Account → Login.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
-@* Эта страница получает из контроллера модель указанного типа. *@
+@* Данные для этой страницы готовит Controllers/AccountController.cs; Razor получает их через @model или ViewData. *@
+@* Тип данных, переданных контроллером при вызове View(...), указан после @model. *@
 @model LoginModel
-@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Вход"; }
-@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section class="shell page-section auth-wrap">
-@* Группируем элементы для оформления и расположения. *@
 <div class="eyebrow">С ВОЗВРАЩЕНИЕМ В КИНО</div>
-@* Заголовок задаёт тему блока на странице. *@
 <h1>Снова в кино<span class="red">.</span>
 </h1>
-@* Форма отправляет введённые данные в указанное действие контроллера. *@
+@* Поля формы отправляются методом POST в действие Login контроллера; сервер повторно проверяет данные. *@
 <form asp-action="Login" method="post" class="panel form-panel">
-@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="ReturnUrl" type="hidden" />
-@* Группируем элементы для оформления и расположения. *@
 <div asp-validation-summary="All" class="validation">
 </div>
 <label asp-for="Email">Электронная почта</label>
-@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Email" type="email" required autocomplete="username" />
 <label asp-for="Password">Пароль</label>
-@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Password" required autocomplete="current-password" />
 <label class="check-label">
-@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="RememberMe" /> Запомнить меня</label>
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="btn full-width">Войти ↗</button>
-@* Показываем текстовое значение или пояснение пользователю. *@
 <p class="mt-4 muted">Первый раз здесь? <a class="text-link" asp-action="Register">Создать аккаунт</a>
 </p>
 </form>

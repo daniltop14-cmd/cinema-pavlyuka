@@ -1,82 +1,57 @@
-@* Разметка и данные раздела Views → Home → Index.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
-@* Эта страница получает из контроллера модель указанного типа. *@
+@* Данные для этой страницы готовит Controllers/HomeController.cs; Razor получает их через @model или ViewData. *@
+@* Тип данных, переданных контроллером при вызове View(...), указан после @model. *@
 @model HomeModel
-@* Внедряем сервис, чтобы получить данные прямо в представлении. *@
 @inject CinemaClock Clock
-@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Расписание сеансов"; }
-@* Показываем следующий блок только при выполнении условия. *@
+@* HomeController.Index читает Banner0...Banner6 из SiteSettings SQLite и собирает Model.Banners. Если список пуст, блок не выводится. *@
 @if (Model.Banners.Count > 0)
 {
-    @* Создаём смысловой блок страницы для разметки и стилей. *@
     <section class="reference-hero" aria-label="Премьеры и акции" data-banner-count="@Model.Banners.Count">
-        @* Группируем элементы для оформления и расположения. *@
         <div class="reference-banner-track" data-banner-track>
-            @* Ссылка ведёт к указанному действию или разделу сайта. *@
             <a class="reference-banner banner-clone" href="@Model.Banners.Last().Target" tabindex="-1" aria-hidden="true"><img src="@Model.Banners.Last().Image" alt="" /></a>
-            @* Повторяем разметку для каждого элемента данных. *@
+            @* Каждая ссылка берёт изображение, название и внутренний адрес из очередного BannerModel. *@
             @for (var i = 0; i < Model.Banners.Count; i++)
             {
                 var banner = Model.Banners[i];
-                @* Ссылка ведёт к указанному действию или разделу сайта. *@
                 <a class="reference-banner" href="@banner.Target" data-banner-slide="@i" aria-label="@banner.Title" tabindex="@(i == 0 ? "0" : "-1")"><img src="@banner.Image" alt="@banner.Title" width="1600" height="500" fetchpriority="@(i == 0 ? "high" : "auto")" /></a>
             }
-            @* Ссылка ведёт к указанному действию или разделу сайта. *@
             <a class="reference-banner banner-clone" href="@Model.Banners.First().Target" tabindex="-1" aria-hidden="true"><img src="@Model.Banners.First().Image" alt="" /></a>
         </div>
-        @* Кнопка запускает действие формы или браузерного скрипта. *@
         <button class="banner-arrow previous" data-banner-prev aria-label="Предыдущий баннер">‹</button><button class="banner-arrow next" data-banner-next aria-label="Следующий баннер">›</button>
-        @* Группируем элементы для оформления и расположения. *@
         <div class="reference-banner-dots">@for (var i = 0; i < Model.Banners.Count; i++) { <button type="button" class="ref-dot @(i == 0 ? "active" : "")" data-banner-index="@i" aria-label="Баннер @(i + 1)" aria-pressed="@(i == 0 ? "true" : "false")"></button> }<button class="banner-pause" data-banner-pause aria-label="Остановить слайдер">Ⅱ</button></div>
     </section>
 }
-@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section id="schedule" class="shell reference-schedule">
-    @* Группируем элементы для оформления и расположения. *@
+    @* Даты считаются от местного времени CinemaClock; выбранная дата уходит в HomeController.Index как параметр date. *@
     <div class="section-head"><h1>Расписание сеансов</h1><button class="search-toggle" aria-label="Поиск по расписанию" aria-expanded="false" aria-controls="film-search"><img src="~/images/reference/Search-16.svg" alt="" width="20" height="20" /></button></div>
-    @* Поле формы получает и отправляет значение модели. *@
     <input id="film-search" type="search" placeholder="Название фильма" aria-label="Название фильма" hidden />
-    @* Группируем элементы для оформления и расположения. *@
     <div class="reference-date-row"><div class="date-strip" id="home-dates">
-    @* Повторяем разметку для каждого элемента данных. *@
     @for (var d = 0; d < 10; d++)
     {
         var day = Clock.Now.Date.AddDays(d);
-        @* Ссылка ведёт к указанному действию или разделу сайта. *@
         <a class="date-tab @(day == Model.ScheduleDate ? "selected" : "")" asp-action="Index" asp-route-date="@day.ToString("yyyy-MM-dd")" asp-fragment="schedule"><strong>@(d == 0 ? "Сегодня" : d == 1 ? "Завтра" : day.ToString("dddd"))</strong><span>@day.ToString("d MMMM")</span></a>
     }
     </div><button class="dates-next" type="button" data-dates-next aria-label="Следующие даты"><img src="~/images/reference/DayTabArrow-40.svg" alt="" /></button></div>
-    @* Группируем элементы для оформления и расположения. *@
     <div class="reference-sessions">
-        @* Показываем следующий блок только при выполнении условия. *@
+        @* Model.Movies получен из неотменённых сеансов выбранного дня; _ScheduleMovie показывает время и зал каждого фильма. *@
         @if (Model.Movies.Count == 0) { <div class="empty"><h2>На этот день сеансов не осталось</h2><p>Выберите другую дату в расписании.</p><a class="btn" asp-controller="Movies" asp-action="Index">Афиша на месяц</a></div> }
-        @* Повторяем разметку для каждого элемента данных. *@
+        @* Повторяем HTML для элементов коллекции Model.Movies.OrderBy(x => x.Id); эта коллекция подготовлена контроллером. *@
         @foreach (var movie in Model.Movies.OrderBy(x => x.Id))
         {
-            @* Показываем текстовое значение или пояснение пользователю. *@
+            @* Вставляем общий фрагмент _ScheduleMovie и передаём ему указанную модель. *@
             <partial name="_ScheduleMovie" model="@(new ScheduleCardModel { Movie = movie, Sessions = Model.Sessions.Where(x => x.MovieId == movie.Id).ToList() })" />
         }
     </div>
-    @* Показываем текстовое значение или пояснение пользователю. *@
     <p class="search-empty" hidden>По вашему запросу ничего не найдено.</p>
 </section>
-@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section class="shell reference-upcoming">
-    @* Группируем элементы для оформления и расположения. *@
     <div class="section-head"><h2>Скоро в кино</h2><a class="round-arrow" asp-controller="Movies" asp-action="Index" aria-label="Вся афиша">→</a></div>
-    @* Группируем элементы для оформления и расположения. *@
     <div class="reference-upcoming-grid">@foreach (var movie in Model.UpcomingMovies) { <article class="upcoming-card"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><div class="upcoming-poster"><img src="@movie.PosterPath" alt="@movie.Title" loading="lazy" width="330" height="470" /><span>с @movie.ReleaseDate.ToString("d MMMM")</span></div><h3>@movie.Title (@movie.AgeRating+)</h3><p>@movie.Genre</p></a></article> }</div>
 </section>
-@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section class="shell reference-news"><div class="section-head"><h2>Новости и акции</h2><a class="round-arrow" asp-controller="Home" asp-action="News" aria-label="Все новости и акции">→</a></div><div class="news-grid">
-@* Повторяем разметку для каждого элемента данных. *@
 @for (var i = 0; i < 3; i++) { var n = i; <a class="news-card" asp-controller="Home" asp-action="News" asp-fragment="news-@i"><img src="@Model.Settings.GetValueOrDefault($"News{n}Image", "/images/pavlyuk-news.svg")" alt="@Model.Settings.GetValueOrDefault($"News{n}Title")" loading="lazy" /><span>@Model.Settings.GetValueOrDefault($"News{n}Date")</span><h3>@Model.Settings.GetValueOrDefault($"News{n}Title")</h3><p>@Model.Settings.GetValueOrDefault($"News{n}Text")</p></a> }
 </div></section>
-@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section class="reference-support shell"><img src="~/images/reference/SupportBlock.svg" alt="Служба поддержки кинотеатра" /><div><h2>Есть вопросы?</h2><p>Свяжитесь с нами через форму обратной связи или найдите нужную информацию в часто задаваемых вопросах.</p><a class="btn btn-dark" asp-controller="Home" asp-action="Contacts">Служба поддержки</a></div></section>
-@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section id="faq" class="shell section faq-section"><div><h2>Частые вопросы</h2><p>Всё, что нужно знать перед сеансом.</p></div><div class="faq-list">@foreach (var item in Model.Faq) { <details><summary>@item.Question <span>+</span></summary><p>@item.Answer</p></details> }</div></section>
-@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section class="shell section reference-extra"><div class="section-head"><h2>О киноцентре</h2><a class="text-link" asp-controller="Home" asp-action="About">Подробнее →</a></div><p>@Model.Settings.GetValueOrDefault("About")</p><div class="hall-grid">@foreach (var hall in Model.Halls) { <a class="hall-card @hall.Color" asp-controller="Home" asp-action="About"><h3>@hall.Name</h3><p>@hall.Rows рядов · @(hall.Rows * hall.SeatsPerRow) мест</p></a> }</div></section>
-@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section class="shell section reference-extra"><div class="section-head"><h2>Отзывы зрителей</h2><a class="text-link" asp-controller="Reviews" asp-action="Index">Все отзывы →</a></div><div class="review-grid">@foreach (var review in Model.Reviews) { <article class="review-card"><div class="stars">@(new string('★', review.Rating))</div><p>@review.Text</p><strong>@review.User.DisplayName</strong><span>@review.CreatedAtUtc.ToString("d MMMM yyyy")</span></article> }</div></section>

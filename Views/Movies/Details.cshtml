@@ -1,56 +1,33 @@
-@* Разметка и данные раздела Views → Movies → Details.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
-@* Эта страница получает из контроллера модель указанного типа. *@
+@* Данные для этой страницы готовит Controllers/MoviesController.cs; Razor получает их через @model или ViewData. *@
+@* Тип данных, переданных контроллером при вызове View(...), указан после @model. *@
 @model Movie
-@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = Model.Title; var sessions = (List<Session>)ViewBag.Sessions; }
-@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section class="shell page-section">
-@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a class="text-link" asp-action="Index">← К афише</a>
-@* Группируем элементы для оформления и расположения. *@
 <div class="movie-detail">
-@* Выводим изображение с альтернативным текстом. *@
 <img class="detail-poster" src="@Model.PosterPath" alt="Постер @Model.Title" />
-@* Группируем элементы для оформления и расположения. *@
 <div>
-@* Группируем элементы для оформления и расположения. *@
 <div class="eyebrow">НА БОЛЬШОМ ЭКРАНЕ</div>
-@* Заголовок задаёт тему блока на странице. *@
 <h1>@Model.Title</h1>
-@* Группируем элементы для оформления и расположения. *@
 <div class="hero-info">
-@* Показываем текстовое значение или пояснение пользователю. *@
 <span>@Model.AgeRating+</span>
-@* Показываем текстовое значение или пояснение пользователю. *@
 <span>@Model.Genre</span>
-@* Показываем текстовое значение или пояснение пользователю. *@
 <span>@Model.DurationMinutes мин</span>
-@* Показываем текстовое значение или пояснение пользователю. *@
 <span class="quality">4K</span>
 </div>
-@* Показываем текстовое значение или пояснение пользователю. *@
 <p class="lead-copy">@Model.Description</p>
-@* Показываем текстовое значение или пояснение пользователю. *@
 <p class="muted">В прокате с @Model.ReleaseDate.ToString("dd MMMM yyyy")</p>@if (!string.IsNullOrWhiteSpace(Model.TrailerUrl)) { <a class="btn btn-outline" href="@Model.TrailerUrl" target="_blank" rel="noopener">Смотреть трейлер ↗</a> }<a class="btn" href="#sessions">Купить билет ↗</a>
 </div>
 </div>
-@* Группируем элементы для оформления и расположения. *@
 <div id="sessions" class="section">
-@* Группируем элементы для оформления и расположения. *@
 <div class="section-head">
-@* Заголовок задаёт тему блока на странице. *@
 <h2>Выберите свой сеанс</h2>
-@* Показываем текстовое значение или пояснение пользователю. *@
 <span class="muted">Цена за одно место</span>
 </div>@if (sessions.Count == 0) { <p class="empty panel">Новые сеансы скоро появятся в расписании.</p> }@foreach (var group in sessions.GroupBy(x => x.StartsAt.Date)) { <div class="day-sessions">
-@* Заголовок задаёт тему блока на странице. *@
 <h3>@group.Key.ToString("dddd, dd MMMM")</h3>
-@* Группируем элементы для оформления и расположения. *@
 <div class="session-buttons">@foreach (var session in group) { <a class="time-button" asp-controller="Booking" asp-action="Seats" asp-route-id="@session.Id">
 <strong>@session.StartsAt.ToString("HH:mm")</strong>
-@* Показываем текстовое значение или пояснение пользователю. *@
 <span>@session.Hall.Name</span>
-@* Показываем текстовое значение или пояснение пользователю. *@
 <small>@session.Price.ToString("0") ₽</small>
 </a> }</div>
 </div> }</div>

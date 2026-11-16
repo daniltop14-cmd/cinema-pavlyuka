@@ -1,7 +1,5 @@
-@* Разметка и данные раздела Views → Home → News.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
-@* Эта страница получает из контроллера модель указанного типа. *@
+@* Данные для этой страницы готовит Controllers/HomeController.cs; Razor получает их через @model или ViewData. *@
+@* Тип данных, переданных контроллером при вызове View(...), указан после @model. *@
 @model Dictionary<string, string>
-@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Новости и акции"; }
-@* Создаём смысловой блок страницы для разметки и стилей. *@
 <section class="shell page-section"><h1>Новости и акции</h1><p class="lead-copy">Актуальные события и специальные предложения кинотеатра.</p><div class="news-grid">@for (var i = 0; i < 3; i++) { <article id="news-@i" class="news-card"><img src="@Model.GetValueOrDefault($"News{i}Image")" alt="@Model.GetValueOrDefault($"News{i}Title")" /><span>@Model.GetValueOrDefault($"News{i}Date")</span><h2>@Model.GetValueOrDefault($"News{i}Title")</h2><p>@Model.GetValueOrDefault($"News{i}Text")</p><p class="muted">Подробности уточняйте через форму обратной связи.</p><a class="btn" asp-action="Contacts">Связаться с нами</a></article> }</div></section>

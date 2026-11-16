@@ -1,17 +1,10 @@
-@* Разметка и данные раздела Views → Account → _AccountNav.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
-@* Создаём общий навигационный или служебный блок страницы. *@
+@* Общую навигацию личного кабинета вставляют страницы Account; роль берётся из текущего пользователя Identity. *@
 <nav class="account-nav" aria-label="Личный кабинет">
-@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Account" asp-action="Orders" asp-route-filter="tickets">Мои билеты</a>
-@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Account" asp-action="Orders" asp-route-filter="active">Активные брони</a>
-@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Account" asp-action="Orders" asp-route-filter="cancelled">Отменённые</a>
-@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Account" asp-action="Orders">История покупок</a>
-@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-controller="Account" asp-action="Profile">Мой профиль</a>@if (User.IsInRole("Admin") || User.IsInRole("Manager")) { <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Панель управления ↗</a> }<form asp-controller="Account" asp-action="Logout" method="post">
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="link-button">Выйти</button>
 </form>
 </nav>
