@@ -1,16 +1,11 @@
-@* Разметка и данные раздела Areas → Admin → Views → Content → Index.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
-@* Эта страница получает из контроллера модель указанного типа. *@
+@* Данные для раздела Content готовит Areas/Admin/Controllers/ContentController.cs; Razor выводит их в HTML. *@
+@* Тип данных, переданных контроллером при вызове View(...), указан после @model. *@
 @model List<ContentModel>
-@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = ViewBag.Kind == "faq" ? "Вопросы и ответы" : ViewBag.Kind == "team" ? "Команда" : "Услуги"; }
-@* Группируем элементы для оформления и расположения. *@
 <div class="section-head">
-@* Заголовок задаёт тему блока на странице. *@
 <h1>@ViewData["Title"]</h1>
-@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a class="btn" asp-action="Edit" asp-route-kind="@ViewBag.Kind">Добавить +</a>
 </div>
-@* Группируем элементы для оформления и расположения. *@
 <div class="table-wrap">
 <table>
 <thead>
@@ -24,15 +19,11 @@
 <td>@item.Title<br />@item.Extra</td>
 <td>@item.Text</td>
 <td class="table-actions">
-@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-action="Edit" asp-route-kind="@ViewBag.Kind" asp-route-id="@item.Id">Изменить</a>
-@* Форма отправляет введённые данные в указанное действие контроллера. *@
+@* Поля формы отправляются методом POST в действие Delete контроллера; сервер повторно проверяет данные. *@
 <form asp-action="Delete" method="post" data-confirm="Удалить запись?">
-@* Поле формы получает и отправляет значение модели. *@
 <input type="hidden" name="kind" value="@ViewBag.Kind" />
-@* Поле формы получает и отправляет значение модели. *@
 <input type="hidden" name="id" value="@item.Id" />
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="link-button danger">Удалить</button>
 </form>
 </td>

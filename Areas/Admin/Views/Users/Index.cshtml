@@ -1,22 +1,16 @@
-@* Разметка и данные раздела Areas → Admin → Views → Users → Index.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
-@* Эта страница получает из контроллера модель указанного типа. *@
+@* Данные для раздела Users готовит Areas/Admin/Controllers/UsersController.cs; Razor выводит их в HTML. *@
+@* Тип данных, переданных контроллером при вызове View(...), указан после @model. *@
 @model List<ApplicationUser>
-@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Пользователи"; var roles = (Dictionary<string, IList<string>>)ViewBag.Roles; }
-@* Заголовок задаёт тему блока на странице. *@
 <h1>Пользователи</h1>
-@* Форма отправляет введённые данные в указанное действие контроллера. *@
+@* Поля формы отправляются методом GET в действие действие, указанное формой контроллера; сервер повторно проверяет данные. *@
 <form method="get" class="filter-bar">
-@* Группируем элементы для оформления и расположения. *@
 <div>
 <label for="search">Имя или email</label>
-@* Поле формы получает и отправляет значение модели. *@
 <input id="search" name="search" value="@ViewBag.Search" />
 </div>
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="btn">Найти</button>
 </form>
-@* Группируем элементы для оформления и расположения. *@
 <div class="table-wrap">
 <table>
 <thead>
@@ -31,29 +25,23 @@
 <td>@item.DisplayName</td>
 <td>@item.Email</td>
 <td>
-@* Форма отправляет введённые данные в указанное действие контроллера. *@
+@* Поля формы отправляются методом POST в действие Role контроллера; сервер повторно проверяет данные. *@
 <form asp-action="Role" method="post" class="inline-form">
-@* Поле формы получает и отправляет значение модели. *@
 <input type="hidden" name="id" value="@item.Id" />
-@* Поле формы получает и отправляет значение модели. *@
 <select name="role" aria-label="Роль @item.DisplayName">@foreach (var role in new[] { "User", "Manager", "Admin" }) { <option value="@role" selected="@roles[item.Id].Contains(role)">@Labels.Role(role)</option> }</select>
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="btn btn-small">Сохранить</button>
 </form>
 </td>
 <td>
-@* Форма отправляет введённые данные в указанное действие контроллера. *@
+@* Поля формы отправляются методом POST в действие Block контроллера; сервер повторно проверяет данные. *@
 <form asp-action="Block" method="post">
-@* Поле формы получает и отправляет значение модели. *@
 <input type="hidden" name="id" value="@item.Id" />
-@* Поле формы получает и отправляет значение модели. *@
 <input type="hidden" name="blocked" value="@(!blocked ? "true" : "false")" />
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="link-button">@(blocked ? "Разблокировать" : "Заблокировать")</button>
 </form>
 </td>
 </tr> }</tbody>
 </table>
 </div>
-@* Показываем текстовое значение или пояснение пользователю. *@
+@* Вставляем общий фрагмент _Pager и передаём ему указанную модель. *@
 <partial name="_Pager" />

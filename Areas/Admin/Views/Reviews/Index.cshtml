@@ -1,11 +1,8 @@
-@* Разметка и данные раздела Areas → Admin → Views → Reviews → Index.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
-@* Эта страница получает из контроллера модель указанного типа. *@
+@* Данные для раздела Reviews готовит Areas/Admin/Controllers/ReviewsController.cs; Razor выводит их в HTML. *@
+@* Тип данных, переданных контроллером при вызове View(...), указан после @model. *@
 @model List<Review>
-@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Отзывы"; }
-@* Заголовок задаёт тему блока на странице. *@
 <h1>Отзывы</h1>
-@* Группируем элементы для оформления и расположения. *@
 <div class="table-wrap">
 <table>
 <thead>
@@ -19,31 +16,24 @@
 </thead>
 <tbody>@foreach (var item in Model) { <tr>
 <td>@item.User.DisplayName<br />
-@* Показываем текстовое значение или пояснение пользователю. *@
 <small>@item.CreatedAtUtc.ToString("dd.MM.yyyy")</small>
 </td>
 <td>@item.Rating / 5</td>
 <td>@item.Text</td>
 <td>@(item.Status == ReviewStatus.Pending ? "На модерации" : item.Status == ReviewStatus.Approved ? "Одобрен" : "Отклонён")</td>
 <td>@if (User.IsInRole("Admin")) { <form asp-action="Moderate" method="post">
-@* Поле формы получает и отправляет значение модели. *@
 <input type="hidden" name="id" value="@item.Id" />
-@* Поле формы получает и отправляет значение модели. *@
 <input type="hidden" name="approved" value="true" />
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="link-button">Одобрить</button>
 </form>
-@* Форма отправляет введённые данные в указанное действие контроллера. *@
+@* Поля формы отправляются методом POST в действие Moderate контроллера; сервер повторно проверяет данные. *@
 <form asp-action="Moderate" method="post">
-@* Поле формы получает и отправляет значение модели. *@
 <input type="hidden" name="id" value="@item.Id" />
-@* Поле формы получает и отправляет значение модели. *@
 <input type="hidden" name="approved" value="false" />
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="link-button danger">Отклонить</button>
 </form> }</td>
 </tr> }</tbody>
 </table>
 </div>
-@* Показываем текстовое значение или пояснение пользователю. *@
+@* Вставляем общий фрагмент _Pager и передаём ему указанную модель. *@
 <partial name="_Pager" />

@@ -1,9 +1,7 @@
-@* Разметка и данные раздела Areas → Admin → Views → Content → Settings.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
-@* Эта страница получает из контроллера модель указанного типа. *@
+@* Данные для раздела Content готовит Areas/Admin/Controllers/ContentController.cs; Razor выводит их в HTML. *@
+@* Тип данных, переданных контроллером при вызове View(...), указан после @model. *@
 @model List<SiteSetting>
-@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Главная и контакты"; var labels = new Dictionary<string, string> { ["Name"] = "Название кинотеатра", ["CoverCatalogVersion"] = "Версия набора обложек", ["Tagline"] = "Слоган", ["About"] = "О кинотеатре", ["Promo"] = "Текст акции", ["Address"] = "Адрес", ["Phone"] = "Телефон", ["Email"] = "Электронная почта", ["Hours"] = "Режим работы", ["MapQuery"] = "Адрес на карте", ["SocialVk"] = "Ссылка ВКонтакте", ["SocialTelegram"] = "Ссылка Телеграм" }; }
-@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{
     for (var i = 0; i < 7; i++)
     {
@@ -19,12 +17,9 @@
         labels[$"News{i}Date"] = $"Новость {i + 1}: дата публикации";
     }
 }
-@* Заголовок задаёт тему блока на странице. *@
 <h1>Главная и контакты</h1>
-@* Показываем текстовое значение или пояснение пользователю. *@
 <p class="muted">Путь изображения начинается с /images/ или /uploads/, ссылка баннера ведёт на внутреннюю страницу сайта.</p>
-@* Форма отправляет введённые данные в указанное действие контроллера. *@
+@* Поля формы отправляются методом POST в действие Settings контроллера; сервер повторно проверяет данные. *@
 <form asp-action="Settings" method="post" class="panel form-panel readable">@foreach (var item in Model) { <label for="setting-@item.Key">@labels.GetValueOrDefault(item.Key, item.Key)</label>
-@* Поле формы получает и отправляет значение модели. *@
 <textarea id="setting-@item.Key" name="values[@item.Key]" rows="@(item.Value.Length > 100 ? 4 : 2)" required maxlength="8000">@item.Value</textarea> }<button class="btn">Сохранить настройки</button>
 </form>

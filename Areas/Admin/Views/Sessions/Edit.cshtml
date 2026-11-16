@@ -1,33 +1,23 @@
-@* Разметка и данные раздела Areas → Admin → Views → Sessions → Edit.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
-@* Эта страница получает из контроллера модель указанного типа. *@
+@* Данные для раздела Sessions готовит Areas/Admin/Controllers/SessionsController.cs; Razor выводит их в HTML. *@
+@* Тип данных, переданных контроллером при вызове View(...), указан после @model. *@
 @model Session
-@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = Model.Id == 0 ? "Новый сеанс" : "Изменить сеанс"; }
-@* Заголовок задаёт тему блока на странице. *@
 <h1>@ViewData["Title"]</h1>
-@* Форма отправляет введённые данные в указанное действие контроллера. *@
+@* Поля формы отправляются методом POST в действие Edit контроллера; сервер повторно проверяет данные. *@
 <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="panel form-panel readable">
-@* Группируем элементы для оформления и расположения. *@
 <div asp-validation-summary="All" class="validation">
 </div>
 <label asp-for="MovieId">Фильм</label>
-@* Поле формы получает и отправляет значение модели. *@
 <select asp-for="MovieId" asp-items="ViewBag.Movies">
 </select>
 <label asp-for="HallId">Кинозал</label>
-@* Поле формы получает и отправляет значение модели. *@
 <select asp-for="HallId" asp-items="ViewBag.Halls">
 </select>
 <label asp-for="StartsAt">Начало (местное время кинотеатра)</label>
-@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="StartsAt" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}" required />
 <label asp-for="Price">Стоимость места, ₽</label>
-@* Поле формы получает и отправляет значение модели. *@
 <input asp-for="Price" type="text" inputmode="decimal" required />
-@* Показываем текстовое значение или пояснение пользователю. *@
 <small class="muted">Используйте запятую для дробной части. Сеанс с заказами нельзя изменять.</small>
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="btn">Сохранить сеанс</button>
-@* Ссылка ведёт к указанному действию или разделу сайта. *@
 <a asp-action="Index">Отмена</a>
 </form>

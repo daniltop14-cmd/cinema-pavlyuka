@@ -1,29 +1,21 @@
-@* Разметка и данные раздела Areas → Admin → Views → Bookings → Index.cshtml. Пояснения размещены непосредственно перед соответствующими блоками. *@
-@* Эта страница получает из контроллера модель указанного типа. *@
+@* Данные для раздела Bookings готовит Areas/Admin/Controllers/BookingsController.cs; Razor выводит их в HTML. *@
+@* Тип данных, переданных контроллером при вызове View(...), указан после @model. *@
 @model List<Booking>
-@* Подготавливаем данные или заголовок для этой Razor-страницы. *@
 @{ ViewData["Title"] = "Заказы и оплаты"; }
-@* Заголовок задаёт тему блока на странице. *@
 <h1>Заказы и оплаты</h1>
-@* Форма отправляет введённые данные в указанное действие контроллера. *@
+@* Поля формы отправляются методом GET в действие действие, указанное формой контроллера; сервер повторно проверяет данные. *@
 <form method="get" class="filter-bar">
-@* Группируем элементы для оформления и расположения. *@
 <div>
 <label for="search">Номер, email или фильм</label>
-@* Поле формы получает и отправляет значение модели. *@
 <input name="search" id="search" value="@ViewBag.Search" />
 </div>
-@* Группируем элементы для оформления и расположения. *@
 <div>
 <label for="status">Статус</label>
-@* Поле формы получает и отправляет значение модели. *@
 <select name="status" id="status">
 <option value="">Все</option>@foreach (var status in Enum.GetValues<BookingStatus>()) { <option value="@status" selected="@(ViewBag.Status != null && (BookingStatus)ViewBag.Status == status)">@Labels.Status(status)</option> }</select>
 </div>
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="btn">Найти</button>
 </form>
-@* Группируем элементы для оформления и расположения. *@
 <div class="table-wrap">
 <table>
 <thead>
@@ -39,45 +31,34 @@
 </thead>
 <tbody>@foreach (var item in Model) { <tr>
 <td>№ @item.Id<br />
-@* Показываем текстовое значение или пояснение пользователю. *@
 <small>@item.User.Email</small>
 </td>
 <td>@item.Session.Movie.Title<br />
-@* Показываем текстовое значение или пояснение пользователю. *@
 <small>@item.Session.StartsAt.ToString("dd.MM HH:mm")</small>
 </td>
 <td>@item.Session.Hall.Name<br />
-@* Показываем текстовое значение или пояснение пользователю. *@
 <small>@string.Join("; ", item.BookingSeats.Select(x => $"{x.Seat.Row} ряд / {x.Seat.Number}"))</small>
 </td>
 <td>@item.Total.ToString("0") ₽</td>
 <td>@(item.Payment == null ? "Не оплачено" : item.Payment.IsRefunded ? "Возврат" : "Оплата")</td>
 <td>
-@* Показываем текстовое значение или пояснение пользователю. *@
 <span class="status">@Labels.Status(item.Status)</span>
 </td>
 <td>@if (item.Status == BookingStatus.Pending) { <form asp-action="Confirm" method="post" data-confirm="Подтвердить оплату заказа?">
-@* Поле формы получает и отправляет значение модели. *@
 <input name="id" value="@item.Id" type="hidden" />
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="link-button">Подтвердить</button>
 </form>
-@* Форма отправляет введённые данные в указанное действие контроллера. *@
+@* Поля формы отправляются методом POST в действие Cancel контроллера; сервер повторно проверяет данные. *@
 <form asp-action="Cancel" method="post">
-@* Поле формы получает и отправляет значение модели. *@
 <input name="id" value="@item.Id" type="hidden" />
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="link-button danger">Отменить</button>
 </form> }@if (item.Status == BookingStatus.Paid) { <form asp-action="Cancel" method="post" data-confirm="Выполнить возврат и освободить места?">
-@* Поле формы получает и отправляет значение модели. *@
 <input name="id" value="@item.Id" type="hidden" />
-@* Поле формы получает и отправляет значение модели. *@
 <input name="refund" value="true" type="hidden" />
-@* Кнопка запускает действие формы или браузерного скрипта. *@
 <button class="link-button danger">Возврат</button>
 </form> }</td>
 </tr> }</tbody>
 </table>
 </div>
-@* Показываем текстовое значение или пояснение пользователю. *@
+@* Вставляем общий фрагмент _Pager и передаём ему указанную модель. *@
 <partial name="_Pager" />
