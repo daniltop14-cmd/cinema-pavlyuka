@@ -1,143 +1,106 @@
-// Формирует главную и информационные страницы.
-// Пояснения ниже относятся к следующей строке или смысловому шагу.
-// Подключаем пространство имён Cinema.Data для типов ниже.
+// Читает содержимое из SQLite и передаёт его на главную и информационные страницы.
 using Cinema.Data;
-// Подключаем пространство имён Cinema.Models для типов ниже.
 using Cinema.Models;
-// Подключаем пространство имён Cinema.Services для типов ниже.
 using Cinema.Services;
-// Подключаем пространство имён Cinema.ViewModels для типов ниже.
 using Cinema.ViewModels;
-// Подключаем пространство имён Microsoft.AspNetCore.Mvc для типов ниже.
 using Microsoft.AspNetCore.Mvc;
-// Подключаем пространство имён Microsoft.EntityFrameworkCore для типов ниже.
 using Microsoft.EntityFrameworkCore;
 
-// Помещаем объявленные типы в указанное пространство имён.
 namespace Cinema.Controllers;
-// Формирует главную и информационные страницы.
 public class HomeController(CinemaDbContext db, CinemaClock clock) : Controller
 {
-    // Готовим основную страницу этого раздела и возвращаем представление.
+    // Параметр date приходит из URL; из SQLite выбираются фильмы, сеансы, баннеры и блоки главной страницы, затем передаются в Views/Home/Index.cshtml.
     public async Task<IActionResult> Index(DateTime? date)
     {
-        // Вычисляем today для дальнейших проверок или отображения.
         var today = clock.Now.Date;
-        // Вычисляем selected для дальнейших проверок или отображения.
         var selected = (date ?? today).Date;
-        // Выполняем следующую ветку только при истинности условия.
         if (selected < today || selected > today.AddDays(30)) selected = today;
-        // Обрабатываем отсутствие записи или необязательного значения.
         if (date == null)
         {
-            // Получаем next из базы или подготавливаем запрос к ней.
+            // Читаем из SQLite только неотменённые сеансы; дата и время ограничивают показ расписания.
             var next = await db.Sessions.AsNoTracking().Where(x => !x.IsCancelled && x.StartsAt > clock.Now)
-                // Упорядочиваем записи перед выводом.
                 .OrderBy(x => x.StartsAt).Select(x => (DateTime?)x.StartsAt).FirstOrDefaultAsync();
-            // Выполняем следующую ветку только при истинности условия.
             if (next.HasValue) selected = next.Value.Date;
         }
-        // Получаем settings из базы или подготавливаем запрос к ней.
+        // Загружаем тексты и ссылки из SQLite; на странице они используются для баннеров и информационных блоков.
         var settings = await db.SiteSettings.AsNoTracking().ToDictionaryAsync(x => x.Key, x => x.Value);
-        // Вычисляем model для дальнейших проверок или отображения.
         var model = new HomeModel
         {
-            // Записываем вычисленное значение в schedule date.
             ScheduleDate = selected,
-            // Загружаем связанную сущность вместе с основной записью.
+            // Читаем из SQLite только неотменённые сеансы; дата и время ограничивают показ расписания.
             Sessions = await db.Sessions.AsNoTracking().Include(x => x.Movie).Include(x => x.Hall)
-                // Оставляем в выборке только записи, подходящие под условие.
                 .Where(x => !x.IsCancelled && x.StartsAt > clock.Now && x.StartsAt >= selected && x.StartsAt < selected.AddDays(1))
-                // Упорядочиваем записи перед выводом.
                 .OrderBy(x => x.StartsAt).ToListAsync(),
-            // Оставляем в выборке только записи, подходящие под условие.
+            // Выбираем из SQLite фильмы по дате премьеры и сортируем их для афиши.
             UpcomingMovies = await db.Movies.AsNoTracking().Where(x => x.ReleaseDate > today && x.ReleaseDate <= today.AddDays(31))
-                // Упорядочиваем записи перед выводом.
                 .OrderBy(x => x.ReleaseDate).ThenBy(x => x.Id).Take(14).ToListAsync(),
-            // Выполняем запрос к SQLite асинхронно.
+            // Загружаем описание залов из SQLite для вывода страницы или списка выбора.
             Halls = await db.Halls.AsNoTracking().ToListAsync(),
-            // Оставляем в выборке только записи, подходящие под условие.
+            // Берём из SQLite только отзывы, прошедшие модерацию; черновики посетители не видят.
             Reviews = await db.Reviews.AsNoTracking().Include(x => x.User).Where(x => x.Status == ReviewStatus.Approved)
-                // Упорядочиваем записи перед выводом.
                 .OrderByDescending(x => x.CreatedAtUtc).Take(3).ToListAsync(),
-            // Упорядочиваем записи перед выводом.
+            // Загружаем вопросы и ответы из SQLite в заданном администратором порядке.
             Faq = await db.FaqItems.AsNoTracking().OrderBy(x => x.SortOrder).ToListAsync(),
-            // Записываем вычисленное значение в settings.
             Settings = settings
         };
-        // Записываем вычисленное значение в movies.
         model.Movies = model.Sessions.Select(x => x.Movie).DistinctBy(x => x.Id).ToList();
-        // Повторяем следующий блок для заданного диапазона значений.
         for (var i = 0; i < 7; i++)
-            // Выполняем следующую ветку только при истинности условия.
             if (settings.TryGetValue($"Banner{i}Image", out var image))
-                // Записываем вычисленное значение в add(new banner model { image.
                 model.Banners.Add(new BannerModel { Image = image, Title = settings.GetValueOrDefault($"Banner{i}Title", "Премьера"), Target = settings.GetValueOrDefault($"Banner{i}Target", "/Movies") });
-        // Передаём данные в Razor-представление и возвращаем HTML.
+
         return View(model);
     }
-    // Объявляем метод About: параметры приходят из запроса или вызова сервиса.
     public async Task<IActionResult> About()
     {
-        // Оставляем в выборке только записи, подходящие под условие.
+        // Читаем значение нужного ключа настроек из SQLite; администратор меняет его через раздел содержимого.
         ViewBag.About = await db.SiteSettings.Where(x => x.Key == "About").Select(x => x.Value).FirstOrDefaultAsync();
-        // Передаём данные в Razor-представление и возвращаем HTML.
+        // Загружаем описание залов из SQLite для вывода страницы или списка выбора.
         return View(await db.Halls.AsNoTracking().ToListAsync());
     }
 
-    // Объявляем метод Services: параметры приходят из запроса или вызова сервиса.
+    // Загружаем услуги из SQLite; их описание и цена задаются в админке.
     public async Task<IActionResult> Services() => View(await db.Services.AsNoTracking().ToListAsync());
-    // Объявляем метод News: параметры приходят из запроса или вызова сервиса.
+    // Загружаем тексты и ссылки из SQLite; на странице они используются для баннеров и информационных блоков.
     public async Task<IActionResult> News() => View(await db.SiteSettings.AsNoTracking().ToDictionaryAsync(x => x.Key, x => x.Value));
-    // Объявляем метод Returns: параметры приходят из запроса или вызова сервиса.
     public IActionResult Returns() => View();
-    // Назначаем адрес или тип GET-запроса для этого действия.
     [HttpGet]
-    // Объявляем метод Contacts: параметры приходят из запроса или вызова сервиса.
+    // GET читает адрес и контакты из SQLite; POST получает поля формы, проверяет их и сохраняет обращение.
     public async Task<IActionResult> Contacts()
     {
-        // Записываем вычисленное значение в settings.
+        // Загружаем тексты и ссылки из SQLite; на странице они используются для баннеров и информационных блоков.
         ViewBag.Settings = await db.SiteSettings.AsNoTracking().ToDictionaryAsync(x => x.Key, x => x.Value);
-        // Передаём данные в Razor-представление и возвращаем HTML.
+
         return View(new ContactMessage());
     }
 
-    // Разрешаем изменение данных только через POST-запрос.
     [HttpPost]
-    // Объявляем метод Contacts: параметры приходят из запроса или вызова сервиса.
+    // GET читает адрес и контакты из SQLite; POST получает поля формы, проверяет их и сохраняет обращение.
     public async Task<IActionResult> Contacts([Bind("Name,Email,Message")] ContactMessage input)
     {
-        // Если форма содержит ошибки проверки, не сохраняем данные.
+        // Проверяем атрибуты модели и ошибки привязки формы; при ошибках снова показываем форму.
         if (ModelState.IsValid)
         {
-            // Добавляем новую сущность в контекст для последующего сохранения.
             db.ContactMessages.Add(input);
-            // Сохраняем накопленные изменения в SQLite.
+            // Записываем накопленные изменения сущностей в SQLite.
             await db.SaveChangesAsync();
-            // Записываем вычисленное значение в temp data["success"].
             TempData["Success"] = "Сообщение отправлено. Спасибо за обращение!";
-            // После операции перенаправляем браузер на указанную страницу.
             return RedirectToAction(nameof(Contacts));
         }
 
-        // Записываем вычисленное значение в settings.
+        // Загружаем тексты и ссылки из SQLite; на странице они используются для баннеров и информационных блоков.
         ViewBag.Settings = await db.SiteSettings.AsNoTracking().ToDictionaryAsync(x => x.Key, x => x.Value);
-        // Передаём данные в Razor-представление и возвращаем HTML.
+
         return View(input);
     }
 
-    // Назначаем адрес или тип GET-запроса для этого действия.
     [HttpGet("/Team")]
-    // Объявляем метод Team: параметры приходят из запроса или вызова сервиса.
+    // Загружаем список сотрудников из SQLite для страницы команды.
     public async Task<IActionResult> Team() => View(await db.TeamMembers.AsNoTracking().ToListAsync());
-    // Объявляем метод Legal: параметры приходят из запроса или вызова сервиса.
     public IActionResult Legal() => View();
-    // Объявляем метод Error: параметры приходят из запроса или вызова сервиса.
     public IActionResult Error()
     {
-        // Записываем вычисленное значение в status code.
         Response.StatusCode = 500;
-        // Передаём данные в Razor-представление и возвращаем HTML.
+
         return View();
     }
 }
